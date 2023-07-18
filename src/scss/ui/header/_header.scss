@@ -38,7 +38,7 @@
 
     &__logo{
         @include m.texto-fluido(2rem, 8rem);
-        @include m.texto-degradado(v.$azul, v.$secundario);
+        @include m.texto-degradado(v.$azul, v.$morado);
         text-align: center;
         @include m.tablet {
             text-align: left;
@@ -63,7 +63,7 @@
     }
 
     &__boton{
-        @include m.boton(v.$secundario, v.$blanco);
+        @include m.boton(v.$morado, v.$blanco);
         text-transform: uppercase;
         margin: 2rem 0;
         @include m.tablet {

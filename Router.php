@@ -50,8 +50,9 @@ class Router
 
         // Utilizar el layout de acuerdo a la URL
         $url_actual = $_SERVER['PATH_INFO'] ?? '/';
-        
-        if(str_contains($url_actual,'admin')){
+        if(strlen($url_actual)==1){
+            include_once __DIR__ . '/views/layout_inicio.php';
+        } else if(str_contains($url_actual,'admin')){
             include_once __DIR__ . '/views/admin_layout.php';
         }else {
             include_once __DIR__ . '/views/layout.php';

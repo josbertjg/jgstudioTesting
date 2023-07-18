@@ -8,17 +8,17 @@ $desktop: 1024px;
 $xl_desktop: 1200px;
 
 // Colores
-$azul: #007df4;
-$secundario: #00c8c2;
-
-$negro: #1a1b15;
 $blanco: #FFFFFF;
-$gris: #64748B;
-$gris-claro: #F8FAFC;
-$gris-oscuro: #1E293B;
+$azul:#296cff;
+$morado:#6733E2;
+$rosado:#FC5185;
+$blanco:white;
+$negro:#333333;
+$amarillo:rgb(207, 207, 0);
+$gris:rgb(247, 247, 247);
+$shadow-color:rgba(0, 0, 0, 0.246);
 
-$rojo: rgb(169, 0, 0);
-$verde: #02db02;
+$shadow: 0 8px 16px 0 $shadow-color;
 
 // Fuentes
 $delgada: 300;

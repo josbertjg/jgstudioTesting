@@ -22,6 +22,411 @@
     }
 }
 
+//TEXTO DEGRADADO
+@mixin textoDegradado(){
+    background: linear-gradient(to right,lighten(v.$rosado,5),lighten(v.$morado,20));
+    background-clip: text;
+    color: transparent;  
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
+}
+//MENU
+@mixin menu{
+nav{
+    height: 15vh;
+    position: absolute;
+    z-index: 2;
+    padding: 0 !important;
+    transition: all 200ms;
+    //CONTENEDOR DE TODO
+    & > div{
+        @media screen and (max-width:440px) {
+            flex-direction: column;
+        }
+    }
+    .bgnav + div{
+        justify-content: end;
+        @media screen and (max-width:440px) {
+            justify-content: center;
+        }
+    }
+    //BACKGROUND DEL NAV
+    .bgnav{
+        position: absolute;
+        z-index: -1;
+        height: 100%;
+        width: 0%;
+        background-color: v.$blanco;
+        box-shadow: v.$shadow;
+        transition: all 200ms;
+    }
+    //LOGO
+    .navbar-brand{
+        @media screen and (max-width:440px) {
+            display: flex;
+            justify-content: center;
+        }
+        img{
+            margin-left: 2rem;
+            height: 9vh;
+            transition: all 200ms;
+            fill: v.$morado;
+            @media screen and (max-width:1200px) {
+                height: 7vh;
+            }
+            @media screen and (max-width:992px) {
+                height: 9vh;
+            }
+            @media screen and (max-width:768px) {
+                height: 6vh;
+            }
+        }
+    }
+    //IMAGEN DEL OFFCANVAS
+    .offcanvas-title{
+        img{
+            height: 4rem;
+        }
+    }
+    //ITEMS
+    li:not(#btnPlanes){
+        a{
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            padding: .5rem;
+            border-radius: 5px;
+            margin-right: .5rem;
+            text-align: center;
+            transition: all 100ms;
+            @media screen and (max-width:1200px) {
+                font-size: 1rem;
+                margin-right: .25rem;
+            }
+            @media screen and (max-width:992px) {
+                display: inline-block;
+                width: 100%;
+                background-color: v.$morado;
+                margin-bottom: .5rem;
+            }
+
+            &:hover{
+                cursor: pointer;
+                border-top: 5px v.$morado solid;
+                color: white;
+                background-color: rgba(255, 255, 255, 0.05);
+            }
+        }
+    }
+    //BOTON VER PRECIOS
+    #btnPlanes{
+        a{
+            font-size: 1.2rem;
+            margin-right: 2rem;
+            color: white;
+            padding: 1rem 3rem;
+            border-radius: 50px;
+            border: 1px grey solid;
+            background-color: transparent;
+            font-weight: bold;
+            transition: all 300ms;
+            @media screen and (max-width:1200px) {
+                margin-right: 0rem;
+                font-size: 1rem;
+                padding: .5rem 1.5rem;
+            }
+            @media screen and (max-width:992px) {
+                margin-right: 2rem;
+                font-size: 1.2rem;
+                padding: 1rem 3rem;
+            }
+            @media screen and (max-width:768px) {
+                font-size: .9rem;
+                padding: .5rem 1.5rem;
+            }
+            
+            &:hover{
+                border: 1px v.$morado solid;
+                background-color: v.$morado;
+            }
+        }
+    }
+}
+//CLASE QUE CAMBIA EL MENU
+.menuStyled{
+    height: 10vh!important;
+    .bgnav{
+        top: 0%;
+        width: 100%!important;
+        transition: all 200ms;
+        @media screen and (max-width:440px) {
+            height: 19vh;
+        }
+    }
+    .navbar-brand{
+        @media screen and (max-width:440px) {
+            display: flex;
+            justify-content: center;
+        }
+        img{
+            height: 9vh!important;
+            @media screen and (max-width:1200px) {
+                margin-left: 5px;
+            }
+            @media screen and (max-width:482px) {
+                height: 3rem !important;
+            }
+            @media screen and (max-width:440px) {
+                height: 4rem !important;
+            }
+        }
+    }
+    a{
+        color: black !important;
+        &:hover{
+            color: v.$morado;
+        }
+        @media screen and (max-width:992px) {
+            color: white !important;
+        }
+    }
+    #btnPlanes a{
+        border: 1px v.$morado solid !important;
+        color: v.$morado !important;
+        transition: all 200ms;
+        &:hover{
+            color: white !important;
+        }
+    }
+}
+}
+//HEADER
+@mixin header($fondo){
+    header{
+        background: {
+            image: url($fondo),linear-gradient(to bottom,v.$negro,v.$negro);
+            position: center;
+            repeat: no-repeat;
+            size: cover;
+            attachment:fixed;
+            blend-mode:soft-light;
+        }
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        color: white;
+
+        h1{
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            @media screen and (max-width:768px) {
+                font-size: 3rem;
+            }
+            @media screen and (max-width:530px) {
+                font-size: 2rem;
+            }
+        }
+        P{
+            width: 60%;
+            text-align: center;
+            font-size: 1.2rem;
+            @media screen and (max-width:768px) {
+                width: 80%;
+                font-size: 1rem;
+            }
+            @media screen and (max-width:530px) {
+                width: 95%;
+            }
+            @media screen and (max-width:320px) {
+                text-align: justify;
+            }
+        }
+        b{
+            @include textoDegradado();
+            font-size: 1.4rem;
+            cursor: pointer;
+            @media screen and (max-width:768px) {
+                font-size: 1.2rem;
+            }
+            @media screen and (max-width:530px) {
+                font-size: 1.05rem;
+            }
+        }
+        //BOTONES FANTASMA HEADER
+        div{
+            margin-top: 5rem;
+            & a:not(a:last-child){
+                margin-right: 2rem;
+            }
+            a{
+                @include btnFantasma;
+                display: inline-block;
+                font-size: 1.2rem;
+                color: white;
+                letter-spacing: 1px;
+                font-weight: bold;
+                &:hover{
+                    transform: translateY(-10px);
+                    color: white;
+                }
+            }
+        }
+    }
+}
+@mixin footer {
+    footer{
+        display: inline-block;
+        background-color: v.$negro;
+        min-height: 50vh;
+        margin: 0%;
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        padding: 2rem;
+        section{
+            height: 240px;
+            width: 25%;
+            @media screen and (max-width:992px) {
+                height: 100%;
+                width: 40%;
+            }
+             ul{
+                list-style-type: none;
+                margin: 0%;
+                padding: 0%;
+            }
+        }
+        & > section:first-child{
+            margin-right: 10rem;
+            @media screen and (max-width:992px) {
+                padding-left: 5rem !important;
+            }
+            img{
+                display: inline-block;
+                height: 4rem;
+                margin-bottom: 4rem;
+            }
+            p{
+                color: grey;
+                text-align: justify;
+                font-size: 1.1rem;
+                font-weight: bold;
+                line-height: 2rem;
+                width: 100%;
+            }
+        }
+        & > section:nth-child(2){
+            h1{
+                color: white;
+            }
+            ul{
+                padding-top: 1rem;
+                li{
+                    margin-bottom: .45rem;
+                    a{
+                        color: grey;
+                        transition: all 200ms;
+                        &:hover{
+                            color: v.$morado;
+                        }
+                    }
+                }
+                & li:last-child{
+                    margin: 0%;
+                }
+            }
+        }
+        & > section:last-child{
+            h1{
+                color: white;
+            }
+            & > ul{
+                padding-top: 1rem;
+                //REDES SOCIALES
+                ul{
+                    display: flex;
+                    a{
+                        color: grey;
+                        margin-right: 1rem;
+                        font-size: 1.5rem;
+                        transition: all 200ms;
+                        &:hover{
+                            color: v.$morado;
+                        }
+                    }
+                }
+                li{
+                    margin-bottom: .5rem;
+                    a{
+                        color: grey;
+                        transition: all 200ms;
+                        &:hover{
+                            color: v.$morado;
+                        }
+                    }
+                }
+                & li:last-child{
+                    margin: 0%;
+                }
+            }
+        }
+    }
+}
+@mixin btnFantasma {
+    padding: 1rem 2rem;
+    border-radius: 50px;
+    background-color: v.$morado;
+    border: 2px v.$morado solid;
+    transition: all 300ms;
+    @media screen and (max-width:400px) {
+        padding: .5rem 1rem;
+        font-size: 1rem;
+    }
+    &:hover{
+        background-color: transparent;
+        border: 2px v.$morado solid;
+    }
+}
+@mixin encabezados {
+    //TITULO Y SUBTITULO
+    & > h5{
+        display: inline-block;
+        @include textoDegradado();
+        cursor: pointer;
+        @media screen and (max-width:768px) {
+            
+        }
+    }
+    & > h1{
+        font-size: 3rem;
+        font-weight: bold;
+        letter-spacing: 1px;
+        text-align: center;
+        @media screen and (max-width:768px) {
+            font-size: 2.5rem;
+        }
+        @media screen and (max-width:530px) {
+            font-size: 2rem;
+        }
+        @media screen and (max-width:425px) {
+            font-size: 1.5rem;
+        }
+    }
+    b{
+        @include textoDegradado();
+        cursor: pointer;
+        font-size: 1.1rem;
+        a{
+            color: transparent;
+        }
+    }
+}
+
+// ------------------------------
+
 @mixin boton($bgColor, $colorTexto) {
     background-color: $bgColor;
     padding: 1.5rem 4rem;
@@ -77,7 +482,7 @@
     text-align: center;
     font-size: 1.8rem;
     font-weight: v.$delgada;
-    color: v.$gris-oscuro;
+    color: v.$gris;
     margin-bottom: 5rem;
 }
 @mixin texto-fluido($min, $max) {

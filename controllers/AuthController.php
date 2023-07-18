@@ -7,6 +7,17 @@ use Model\Usuario;
 use MVC\Router;
 
 class AuthController {
+    public static function inicio(Router $router) {
+        // Render a la vista 
+        $router->render('inicio/index'
+        // , 
+        // [
+        //     'titulo' => 'Iniciar Sesión',
+        //     'alertas' => $alertas
+        // ]
+    );
+    }
+
     public static function login(Router $router) {
 
         $alertas = [];

@@ -5,6 +5,7 @@ html {
     font-size: 62.5%;
     box-sizing: border-box;
     height: 100%;
+    scroll-behavior: smooth !important;
 }
 *, *:before, *:after {
     box-sizing: inherit;
@@ -15,6 +16,9 @@ body {
 }
 a {
     text-decoration: none;
+}
+li{
+    list-style-type: none;
 }
 img {
     width: 100%;
