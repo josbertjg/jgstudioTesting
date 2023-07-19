@@ -23,30 +23,31 @@ class AuthController {
         $alertas = [];
 
         if($_SERVER['REQUEST_METHOD'] === 'POST') {
-    
-            $usuario = new Usuario($_POST);
 
+            $usuario = new Usuario($_POST);
             $alertas = $usuario->validarLogin();
             
             if(empty($alertas)) {
-                // Verificar quel el usuario exista
-                $usuario = Usuario::where('email', $usuario->email);
-                if(!$usuario || !$usuario->confirmado ) {
-                    Usuario::setAlerta('error', 'El Usuario No Existe o no esta confirmado');
+                // Verificar que el usuario exista
+                $usuario = Usuario::where('correo', $usuario->correo);
+                if(!$usuario) {
+                    Usuario::setAlerta('error', 'El Usuario No Existe en la base de datos');
                 } else {
                     // El Usuario existe
-                    if( password_verify($_POST['password'], $usuario->password) ) {
-                        
+                    // $test = password_verify($_POST['clave'], $usuario->clave);
+                    // debuguear($_POST['clave']);
+                    
+                    if( $_POST['clave'] == $usuario->clave ) {
                         // Iniciar la sesión
                         session_start();    
                         $_SESSION['id'] = $usuario->id;
                         $_SESSION['nombre'] = $usuario->nombre;
                         $_SESSION['apellido'] = $usuario->apellido;
-                        $_SESSION['email'] = $usuario->email;
-                        $_SESSION['admin'] = $usuario->admin ?? null;
+                        $_SESSION['correo'] = $usuario->correo;
+                        $_SESSION['id_rol'] = $usuario->id_rol;
 
                         // Redireccion
-                        if($usuario->admin) {
+                        if($usuario->id_rol == 1) {
                             header('Location: /admin/dashboard');
                         } else {
                             header('Location: /finalizar-registro');
@@ -66,6 +67,17 @@ class AuthController {
             'titulo' => 'Iniciar Sesión',
             'alertas' => $alertas
         ]);
+    }
+
+    public static function xy(Router $router) {
+        // Render a la vista 
+        $router->render('admin/dashboard'
+        // , 
+        // [
+        //     'titulo' => 'Iniciar Sesión',
+        //     'alertas' => $alertas
+        // ]
+    );
     }
 
     public static function logout() {

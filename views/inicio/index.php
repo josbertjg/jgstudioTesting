@@ -1,12 +1,12 @@
 <nav class="navbar fixed-top navbar-expand-lg w-100">
     <div class="d-flex justify-content-sm-between w-100">
         <a class="navbar-brand" href="../index.html#inicio">
-          <img src=".../img/logo-white.png" alt="neopixels logo">
+          <img src="build/img/logo-white.png" alt="neopixels logo">
         </a>
         <div class="bgnav"></div>
         <div class="container-fluid d-flex align-items-center">
           <li id="btnPlanes" class="order-lg-last order-first">
-            <a href="./html/planes.html">Ver Planes</a>
+            <a href="/login">Login</a>
           </li>
           <button class="navbar-toggler bg-light" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
             <span class="navbar-toggler-icon"></span>
@@ -14,7 +14,7 @@
           <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
             <div class="offcanvas-header">
               <h5 class="offcanvas-title" id="offcanvasNavbarLabel">
-                <img src="../img/logo.png" alt="">
+                <img src="build/img/logo.png" alt="">
               </h5>
               <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
@@ -44,7 +44,7 @@
     <h1>Web & Marketing</h1>
     <p>Estudiamos tu nicho y desarrollamos una estrategia de Marketing Digital para crear <b>Posicionamiento</b> a tu imagen y marca, impulsando a la vez tus <b>Ventas</b> y transformando a tus visitantes en tus mejores <b>Clientes.</b></p>
     <div>
-        <a href="./html/planes.html">Ver Planes</a>
+        <a href="/login">Login</a>
         <a href="#contacto">Contáctanos</a>
     </div>
 </header>
@@ -101,7 +101,7 @@
         <div class="">
             <article class="mt-4">
                 <div class="bg-portafolio"></div>
-                <img src="./img/rr78.png" alt="rr78 neopixels">
+                <img src="build/img/rr78.png" alt="rr78 neopixels">
                 <div class="contenido">
                     <h5>Diseño Web</h5>
                     <h1>Repuestos R&R78</h1>
@@ -110,7 +110,7 @@
             </article>
             <article class="mt-4">
                 <div class="bg-portafolio"></div>
-                <img src="./img/serviciototal.png" alt="servicio total neopixels">
+                <img src="build/img/serviciototal.png" alt="servicio total neopixels">
                 <div class="contenido">
                     <h5>Diseño Web</h5>
                     <h1>Servicio Total</h1>
@@ -119,7 +119,7 @@
             </article>
             <article class="mt-4">
                 <div class="bg-portafolio"></div>
-                <img src="./img/oncars.png" alt="oncars neopixels">
+                <img src="build/img/oncars.png" alt="oncars neopixels">
                 <div class="contenido">
                     <h5>Diseño Web</h5>
                     <h1>Oncar's</h1>
@@ -128,7 +128,7 @@
             </article>
             <article class="mt-4">
                 <div class="bg-portafolio"></div>
-                <img src="./img/rr78rs.png" alt="rr78 neopixels">
+                <img src="build/img/rr78rs.png" alt="rr78 neopixels">
                 <div class="contenido">
                     <h5>RRSS</h5>
                     <h1>Repuestos RR78</h1>
@@ -143,7 +143,7 @@
             <div>
                 <h5>¡Es un gusto que nos conozcas!</h5>
                 <h1>Un poco de Nosotros</h1>
-                <img src="./img/about.png" alt="sobre neopixels">
+                <img src="build/img/about.png" alt="sobre neopixels">
             </div>
             <div class="">
                 <article class="me-4">
@@ -231,14 +231,14 @@
                 </form>
             </section>
             <section>
-                <img src="./img/correo.png" alt="correo-neopixels">
+                <img src="build/img/correo.png" alt="correo-neopixels">
             </section>
         </div>
     </section>
 </main>
 <footer class="">
     <section class="col-lg-3 col-12">
-        <img src="../img/logo-white.png" alt="logo neopixels">
+        <img src="build/img/logo-white.png" alt="logo neopixels">
         <p>Creado, diseñado y desarrollado por Josbert Guedez Co-Fundador de Neopixels, Copyright © 2022, todos los derechos reservados para Neopixels.</p>
     </section>
     <section class="col-lg-3 col-6">

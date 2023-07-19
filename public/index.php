@@ -9,6 +9,9 @@ $router = new Router();
 
 // Inicio
 $router->get('/', [AuthController::class, 'inicio']);
+
+$router->get('/admin/dashboard', [AuthController::class, 'xy']);
+$router->post('/admin/dashboard', [AuthController::class, 'xy']);
 // $router->post('/', [AuthController::class, 'login']);
 // Login
 $router->get('/login', [AuthController::class, 'login']);

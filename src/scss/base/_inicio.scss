@@ -3,7 +3,7 @@
 //MENU
 @include m.menu;
 //HEADER
-@include m.header(".../img/banner.png");
+@include m.header("../img/banner.png");
 //SERVICIOS
 #servicios{
     min-height: 90vh;
