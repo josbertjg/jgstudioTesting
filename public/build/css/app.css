@@ -1,0 +1,1608 @@
+html {
+  line-height: 1.15; /* 1 */
+  -webkit-text-size-adjust: 100%; /* 2 */
+}
+
+/* Sections
+   ========================================================================== */
+/**
+ * Remove the margin in all browsers.
+ */
+body {
+  margin: 0;
+}
+
+/**
+ * Render the `main` element consistently in IE.
+ */
+main {
+  display: block;
+}
+
+/**
+ * Correct the font size and margin on `h1` elements within `section` and
+ * `article` contexts in Chrome, Firefox, and Safari.
+ */
+h1 {
+  font-size: 2em;
+  margin: 0.67em 0;
+}
+
+/* Grouping content
+   ========================================================================== */
+/**
+ * 1. Add the correct box sizing in Firefox.
+ * 2. Show the overflow in Edge and IE.
+ */
+hr {
+  box-sizing: content-box; /* 1 */
+  height: 0; /* 1 */
+  overflow: visible; /* 2 */
+}
+
+/**
+ * 1. Correct the inheritance and scaling of font size in all browsers.
+ * 2. Correct the odd `em` font sizing in all browsers.
+ */
+pre {
+  font-family: monospace, monospace; /* 1 */
+  font-size: 1em; /* 2 */
+}
+
+/* Text-level semantics
+   ========================================================================== */
+/**
+ * Remove the gray background on active links in IE 10.
+ */
+a {
+  background-color: transparent;
+}
+
+/**
+ * 1. Remove the bottom border in Chrome 57-
+ * 2. Add the correct text decoration in Chrome, Edge, IE, Opera, and Safari.
+ */
+abbr[title] {
+  border-bottom: none; /* 1 */
+  text-decoration: underline; /* 2 */
+  -webkit-text-decoration: underline dotted;
+          text-decoration: underline dotted; /* 2 */
+}
+
+/**
+ * Add the correct font weight in Chrome, Edge, and Safari.
+ */
+b,
+strong {
+  font-weight: bolder;
+}
+
+/**
+ * 1. Correct the inheritance and scaling of font size in all browsers.
+ * 2. Correct the odd `em` font sizing in all browsers.
+ */
+code,
+kbd,
+samp {
+  font-family: monospace, monospace; /* 1 */
+  font-size: 1em; /* 2 */
+}
+
+/**
+ * Add the correct font size in all browsers.
+ */
+small {
+  font-size: 80%;
+}
+
+/**
+ * Prevent `sub` and `sup` elements from affecting the line height in
+ * all browsers.
+ */
+sub,
+sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+
+sub {
+  bottom: -0.25em;
+}
+
+sup {
+  top: -0.5em;
+}
+
+/* Embedded content
+   ========================================================================== */
+/**
+ * Remove the border on images inside links in IE 10.
+ */
+img {
+  border-style: none;
+}
+
+/* Forms
+   ========================================================================== */
+/**
+ * 1. Change the font styles in all browsers.
+ * 2. Remove the margin in Firefox and Safari.
+ */
+button,
+input,
+optgroup,
+select,
+textarea {
+  font-family: inherit; /* 1 */
+  font-size: 100%; /* 1 */
+  line-height: 1.15; /* 1 */
+  margin: 0; /* 2 */
+}
+
+/**
+ * Show the overflow in IE.
+ * 1. Show the overflow in Edge.
+ */
+button,
+input { /* 1 */
+  overflow: visible;
+}
+
+/**
+ * Remove the inheritance of text transform in Edge, Firefox, and IE.
+ * 1. Remove the inheritance of text transform in Firefox.
+ */
+button,
+select { /* 1 */
+  text-transform: none;
+}
+
+/**
+ * Correct the inability to style clickable types in iOS and Safari.
+ */
+button,
+[type=button],
+[type=reset],
+[type=submit] {
+  -webkit-appearance: button;
+}
+
+/**
+ * Remove the inner border and padding in Firefox.
+ */
+button::-moz-focus-inner,
+[type=button]::-moz-focus-inner,
+[type=reset]::-moz-focus-inner,
+[type=submit]::-moz-focus-inner {
+  border-style: none;
+  padding: 0;
+}
+
+/**
+ * Restore the focus styles unset by the previous rule.
+ */
+button:-moz-focusring,
+[type=button]:-moz-focusring,
+[type=reset]:-moz-focusring,
+[type=submit]:-moz-focusring {
+  outline: 1px dotted ButtonText;
+}
+
+/**
+ * Correct the padding in Firefox.
+ */
+fieldset {
+  padding: 0.35em 0.75em 0.625em;
+}
+
+/**
+ * 1. Correct the text wrapping in Edge and IE.
+ * 2. Correct the color inheritance from `fieldset` elements in IE.
+ * 3. Remove the padding so developers are not caught out when they zero out
+ *    `fieldset` elements in all browsers.
+ */
+legend {
+  box-sizing: border-box; /* 1 */
+  color: inherit; /* 2 */
+  display: table; /* 1 */
+  max-width: 100%; /* 1 */
+  padding: 0; /* 3 */
+  white-space: normal; /* 1 */
+}
+
+/**
+ * Add the correct vertical alignment in Chrome, Firefox, and Opera.
+ */
+progress {
+  vertical-align: baseline;
+}
+
+/**
+ * Remove the default vertical scrollbar in IE 10+.
+ */
+textarea {
+  overflow: auto;
+}
+
+/**
+ * 1. Add the correct box sizing in IE 10.
+ * 2. Remove the padding in IE 10.
+ */
+[type=checkbox],
+[type=radio] {
+  box-sizing: border-box; /* 1 */
+  padding: 0; /* 2 */
+}
+
+/**
+ * Correct the cursor style of increment and decrement buttons in Chrome.
+ */
+[type=number]::-webkit-inner-spin-button,
+[type=number]::-webkit-outer-spin-button {
+  height: auto;
+}
+
+/**
+ * 1. Correct the odd appearance in Chrome and Safari.
+ * 2. Correct the outline style in Safari.
+ */
+[type=search] {
+  -webkit-appearance: textfield; /* 1 */
+  outline-offset: -2px; /* 2 */
+}
+
+/**
+ * Remove the inner padding in Chrome and Safari on macOS.
+ */
+[type=search]::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+
+/**
+ * 1. Correct the inability to style clickable types in iOS and Safari.
+ * 2. Change font properties to `inherit` in Safari.
+ */
+::-webkit-file-upload-button {
+  -webkit-appearance: button; /* 1 */
+  font: inherit; /* 2 */
+}
+
+/* Interactive
+   ========================================================================== */
+/*
+ * Add the correct display in Edge, IE 10+, and Firefox.
+ */
+details {
+  display: block;
+}
+
+/*
+ * Add the correct display in all browsers.
+ */
+summary {
+  display: list-item;
+}
+
+/* Misc
+   ========================================================================== */
+/**
+ * Add the correct display in IE 10+.
+ */
+template {
+  display: none;
+}
+
+/**
+ * Add the correct display in IE 10.
+ */
+[hidden] {
+  display: none;
+}
+
+/** Media Queries **/
+html {
+  height: 100%;
+  scroll-behavior: smooth !important;
+}
+
+body {
+  font-family: "Outfit", sans-serif;
+}
+
+a {
+  text-decoration: none !important;
+}
+
+li {
+  list-style-type: none;
+}
+
+h1 {
+  font-size: 4rem;
+}
+
+h2 {
+  font-size: 3.6rem;
+}
+
+h3 {
+  font-size: 3rem;
+}
+
+.text-center {
+  text-align: center;
+}
+
+nav {
+  height: 15vh;
+  position: absolute;
+  z-index: 2;
+  padding: 0 !important;
+  transition: all 200ms;
+}
+@media screen and (max-width: 440px) {
+  nav > div {
+    flex-direction: column;
+  }
+}
+nav .bgnav + div {
+  justify-content: end;
+}
+@media screen and (max-width: 440px) {
+  nav .bgnav + div {
+    justify-content: center;
+  }
+}
+nav .bgnav {
+  position: absolute;
+  z-index: -1;
+  height: 100%;
+  width: 0%;
+  background-color: white;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.246);
+  transition: all 200ms;
+}
+@media screen and (max-width: 440px) {
+  nav .navbar-brand {
+    display: flex;
+    justify-content: center;
+  }
+}
+nav .navbar-brand img {
+  margin-left: 2rem;
+  height: 9vh;
+  transition: all 200ms;
+  fill: #6733E2;
+}
+@media screen and (max-width: 1200px) {
+  nav .navbar-brand img {
+    height: 7vh;
+  }
+}
+@media screen and (max-width: 992px) {
+  nav .navbar-brand img {
+    height: 9vh;
+  }
+}
+@media screen and (max-width: 768px) {
+  nav .navbar-brand img {
+    height: 6vh;
+  }
+}
+nav .offcanvas-title img {
+  height: 4rem;
+}
+nav li:not(#btnPlanes) a {
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  padding: 0.5rem;
+  border-radius: 5px;
+  margin-right: 0.5rem;
+  text-align: center;
+  transition: all 100ms;
+}
+@media screen and (max-width: 1200px) {
+  nav li:not(#btnPlanes) a {
+    font-size: 1rem;
+    margin-right: 0.25rem;
+  }
+}
+@media screen and (max-width: 992px) {
+  nav li:not(#btnPlanes) a {
+    display: inline-block;
+    width: 100%;
+    background-color: #6733E2;
+    margin-bottom: 0.5rem;
+  }
+}
+nav li:not(#btnPlanes) a:hover {
+  cursor: pointer;
+  border-top: 5px #6733E2 solid;
+  color: white;
+  background-color: rgba(255, 255, 255, 0.05);
+}
+nav #btnPlanes a {
+  font-size: 1.2rem;
+  margin-right: 2rem;
+  color: white;
+  padding: 1rem 3rem;
+  border-radius: 50px;
+  border: 1px grey solid;
+  background-color: transparent;
+  font-weight: bold;
+  transition: all 300ms;
+}
+@media screen and (max-width: 1200px) {
+  nav #btnPlanes a {
+    margin-right: 0rem;
+    font-size: 1rem;
+    padding: 0.5rem 1.5rem;
+  }
+}
+@media screen and (max-width: 992px) {
+  nav #btnPlanes a {
+    margin-right: 2rem;
+    font-size: 1.2rem;
+    padding: 1rem 3rem;
+  }
+}
+@media screen and (max-width: 768px) {
+  nav #btnPlanes a {
+    font-size: 0.9rem;
+    padding: 0.5rem 1.5rem;
+  }
+}
+nav #btnPlanes a:hover {
+  border: 1px #6733E2 solid;
+  background-color: #6733E2;
+}
+
+.menuStyled {
+  height: 10vh !important;
+}
+.menuStyled .bgnav {
+  top: 0%;
+  width: 100% !important;
+  transition: all 200ms;
+}
+@media screen and (max-width: 440px) {
+  .menuStyled .bgnav {
+    height: 19vh;
+  }
+}
+@media screen and (max-width: 440px) {
+  .menuStyled .navbar-brand {
+    display: flex;
+    justify-content: center;
+  }
+}
+.menuStyled .navbar-brand img {
+  height: 9vh !important;
+}
+@media screen and (max-width: 1200px) {
+  .menuStyled .navbar-brand img {
+    margin-left: 5px;
+  }
+}
+@media screen and (max-width: 482px) {
+  .menuStyled .navbar-brand img {
+    height: 3rem !important;
+  }
+}
+@media screen and (max-width: 440px) {
+  .menuStyled .navbar-brand img {
+    height: 4rem !important;
+  }
+}
+.menuStyled a {
+  color: black !important;
+}
+.menuStyled a:hover {
+  color: #6733E2;
+}
+@media screen and (max-width: 992px) {
+  .menuStyled a {
+    color: white !important;
+  }
+}
+.menuStyled #btnPlanes a {
+  border: 1px #6733E2 solid !important;
+  color: #6733E2 !important;
+  transition: all 200ms;
+}
+.menuStyled #btnPlanes a:hover {
+  color: white !important;
+}
+
+header {
+  background-image: url("../img/banner.png"), linear-gradient(to bottom, #333333, #333333);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  background-blend-mode: soft-light;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+header h1 {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+}
+@media screen and (max-width: 768px) {
+  header h1 {
+    font-size: 3rem;
+  }
+}
+@media screen and (max-width: 530px) {
+  header h1 {
+    font-size: 2rem;
+  }
+}
+header P {
+  width: 60%;
+  text-align: center;
+  font-size: 1.2rem;
+}
+@media screen and (max-width: 768px) {
+  header P {
+    width: 80%;
+    font-size: 1rem;
+  }
+}
+@media screen and (max-width: 530px) {
+  header P {
+    width: 95%;
+  }
+}
+@media screen and (max-width: 320px) {
+  header P {
+    text-align: justify;
+  }
+}
+header b {
+  background: linear-gradient(to right, #fc6a97, #aa8cef);
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+  font-size: 1.4rem;
+  cursor: pointer;
+}
+@media screen and (max-width: 768px) {
+  header b {
+    font-size: 1.2rem;
+  }
+}
+@media screen and (max-width: 530px) {
+  header b {
+    font-size: 1.05rem;
+  }
+}
+header div {
+  margin-top: 5rem;
+}
+header div a:not(a:last-child) {
+  margin-right: 2rem;
+}
+header div a {
+  padding: 1rem 2rem;
+  border-radius: 50px;
+  background-color: #6733E2;
+  border: 2px #6733E2 solid;
+  transition: all 300ms;
+  display: inline-block;
+  font-size: 1.2rem;
+  color: white;
+  letter-spacing: 1px;
+  font-weight: bold;
+}
+@media screen and (max-width: 400px) {
+  header div a {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+  }
+}
+header div a:hover {
+  background-color: transparent;
+  border: 2px #6733E2 solid;
+}
+header div a:hover {
+  transform: translateY(-10px);
+  color: white;
+}
+
+#servicios {
+  min-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 7rem 0 4rem 0;
+  box-sizing: content-box;
+}
+#servicios > h5 {
+  display: inline-block;
+  background: linear-gradient(to right, #fc6a97, #aa8cef);
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+  cursor: pointer;
+}
+#servicios > h1 {
+  font-size: 3rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+  text-align: center;
+}
+@media screen and (max-width: 768px) {
+  #servicios > h1 {
+    font-size: 2.5rem;
+  }
+}
+@media screen and (max-width: 530px) {
+  #servicios > h1 {
+    font-size: 2rem;
+  }
+}
+@media screen and (max-width: 425px) {
+  #servicios > h1 {
+    font-size: 1.5rem;
+  }
+}
+#servicios b {
+  background: linear-gradient(to right, #fc6a97, #aa8cef);
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+  cursor: pointer;
+  font-size: 1.1rem;
+}
+#servicios b a {
+  color: transparent;
+}
+#servicios > p {
+  margin-bottom: 5rem;
+  text-align: center;
+}
+#servicios .row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#servicios article {
+  position: relative;
+  width: 350px;
+  height: 400px;
+  background-color: rgb(247, 247, 247);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.246);
+  margin-bottom: 1rem;
+  transition: all 200ms;
+}
+#servicios article:hover {
+  background-color: #6733E2;
+  cursor: pointer;
+}
+#servicios article:hover i {
+  background: white;
+  color: #6733E2;
+  border: 6px #6733E2 solid;
+}
+#servicios article:hover h2 {
+  color: white;
+}
+#servicios article:hover p {
+  color: white;
+}
+#servicios article:hover a {
+  background-color: white;
+  color: #6733E2;
+}
+#servicios article i {
+  display: inline-block;
+  position: absolute;
+  top: -2rem;
+  font-size: 1.5rem;
+  background: linear-gradient(to right, #FC5185, #6733E2);
+  color: white;
+  padding: 1.5rem;
+  border-radius: 100%;
+  border: 6px white solid;
+  transition: all 200ms;
+}
+#servicios article h2 {
+  color: #6733E2;
+  margin: 1.5rem 0;
+  transition: all 200ms;
+}
+@media screen and (max-width: 350px) {
+  #servicios article h2 {
+    margin: 2rem 0 0.5rem 0;
+  }
+}
+#servicios article p {
+  font-size: 1.2rem;
+  text-align: center;
+  color: grey;
+  transition: all 200ms;
+}
+#servicios article a {
+  padding: 1rem 2rem;
+  border-radius: 50px;
+  background-color: #6733E2;
+  border: 2px #6733E2 solid;
+  transition: all 300ms;
+  color: white;
+  font-weight: bold;
+  margin-top: 1.5rem;
+}
+@media screen and (max-width: 400px) {
+  #servicios article a {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+  }
+}
+#servicios article a:hover {
+  background-color: transparent;
+  border: 2px #6733E2 solid;
+}
+#servicios article a:hover {
+  color: white;
+  border: 2px white solid;
+}
+
+#portafolio {
+  min-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 5rem 0 0rem 0;
+  box-sizing: content-box;
+}
+#portafolio > h5 {
+  display: inline-block;
+  background: linear-gradient(to right, #fc6a97, #aa8cef);
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+  cursor: pointer;
+}
+#portafolio > h1 {
+  font-size: 3rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+  text-align: center;
+}
+@media screen and (max-width: 768px) {
+  #portafolio > h1 {
+    font-size: 2.5rem;
+  }
+}
+@media screen and (max-width: 530px) {
+  #portafolio > h1 {
+    font-size: 2rem;
+  }
+}
+@media screen and (max-width: 425px) {
+  #portafolio > h1 {
+    font-size: 1.5rem;
+  }
+}
+#portafolio b {
+  background: linear-gradient(to right, #fc6a97, #aa8cef);
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+  cursor: pointer;
+  font-size: 1.1rem;
+}
+#portafolio b a {
+  color: transparent;
+}
+#portafolio p {
+  text-align: center;
+}
+#portafolio > div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  width: 100%;
+  height: 60%;
+}
+#portafolio article {
+  position: relative;
+  width: 20rem;
+  height: 22rem;
+  border-radius: 10px;
+  overflow: hidden;
+  cursor: pointer;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.246);
+}
+#portafolio article:hover .bg-portafolio {
+  transform: translateY(0px);
+  background: linear-gradient(to top, #4f1cc6, transparent);
+}
+#portafolio article:hover .contenido h5 {
+  transform: translateY(-50px);
+}
+#portafolio article:hover .contenido h1 {
+  transform: translateY(-50px);
+}
+#portafolio article:hover .contenido a {
+  transform: translateY(-50px);
+}
+#portafolio article .bg-portafolio {
+  position: absolute;
+  z-index: 1;
+  top: 0%;
+  left: 0%;
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(to top, #4d4d4d, transparent);
+  transform: translateY(90px);
+  transition: all 400ms;
+}
+#portafolio article .contenido {
+  position: absolute;
+  bottom: 0;
+  z-index: 1;
+  height: 30%;
+  padding: 0.5rem;
+  transform: translateY(30px);
+  transition: all 400ms;
+}
+#portafolio article .contenido h5 {
+  color: white;
+  font-size: 1rem;
+  font-weight: 400;
+  letter-spacing: 1px;
+  margin: 0;
+  transition: all 400ms;
+}
+#portafolio article .contenido h1 {
+  color: white;
+  font-size: 1.5rem;
+  transition: all 500ms;
+}
+#portafolio article .contenido a {
+  display: inline-block;
+  transform: translateY(100px);
+  color: #6733E2;
+  background-color: white;
+  border: 2px white solid;
+  padding: 0.5rem 1rem;
+  font-weight: 500;
+  letter-spacing: 1px;
+  font-size: 1.1rem;
+  border-radius: 50px;
+  transition: all 500ms;
+}
+#portafolio article .contenido a:hover {
+  background-color: transparent;
+  border: 2px white solid;
+  color: white;
+}
+#portafolio article img {
+  display: inline-block;
+  position: relative;
+  height: 100%;
+  width: 100%;
+  border-radius: 10px;
+}
+#portafolio article:first-of-type {
+  margin-right: 2rem;
+}
+@media screen and (max-width: 639px) {
+  #portafolio article:first-of-type {
+    margin-right: 0%;
+  }
+}
+#portafolio article:nth-of-type(2) {
+  margin-right: 2rem;
+}
+@media screen and (max-width: 639px) {
+  #portafolio article:nth-of-type(2) {
+    margin-right: 0;
+  }
+}
+@media screen and (max-width: 1023px) {
+  #portafolio article:nth-of-type(2) {
+    margin-right: 0;
+  }
+}
+#portafolio article:nth-of-type(3) {
+  margin-right: 2rem;
+}
+@media screen and (max-width: 1343px) {
+  #portafolio article:nth-of-type(3) {
+    margin-right: 0;
+  }
+}
+@media screen and (max-width: 1023px) {
+  #portafolio article:nth-of-type(3) {
+    margin-right: 2rem;
+  }
+}
+@media screen and (max-width: 639px) {
+  #portafolio article:nth-of-type(3) {
+    margin-right: 0%;
+  }
+}
+@media screen and (max-width: 1351px) {
+  #portafolio article:last-of-type {
+    margin: 2rem 0 0 0;
+  }
+}
+#portafolio > a {
+  padding: 1rem 2rem;
+  border-radius: 50px;
+  background-color: #6733E2;
+  border: 2px #6733E2 solid;
+  transition: all 300ms;
+  color: white;
+  font-weight: 600;
+  letter-spacing: 1px;
+  font-size: 1rem;
+}
+@media screen and (max-width: 400px) {
+  #portafolio > a {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+  }
+}
+#portafolio > a:hover {
+  background-color: transparent;
+  border: 2px #6733E2 solid;
+}
+#portafolio > a:hover {
+  color: #6733E2;
+}
+
+#about {
+  background-color: #6733E2;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+#about > div {
+  display: flex;
+  justify-content: center;
+  padding: 10vh 0rem 4rem 0;
+}
+@media screen and (max-width: 992px) {
+  #about > div {
+    flex-direction: column;
+  }
+}
+#about > div > div:first-child {
+  width: 50%;
+}
+#about > div > div:first-child h5 {
+  color: white;
+  margin-top: 4rem;
+}
+#about > div > div:first-child h1 {
+  font-size: 3rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+  color: white;
+  margin-bottom: 3rem;
+}
+#about > div > div:first-child img {
+  height: 30rem;
+  border-radius: 10px;
+}
+@media screen and (max-width: 1399px) {
+  #about > div > div:first-child img {
+    height: 25rem;
+  }
+}
+@media screen and (max-width: 1200px) {
+  #about > div > div:first-child img {
+    height: 20rem;
+  }
+}
+@media screen and (max-width: 992px) {
+  #about > div > div:first-child img {
+    height: 30rem;
+  }
+}
+@media screen and (max-width: 732px) {
+  #about > div > div:first-child img {
+    height: 20rem;
+  }
+}
+@media screen and (max-width: 500px) {
+  #about > div > div:first-child img {
+    height: 13rem;
+  }
+}
+@media screen and (max-width: 350px) {
+  #about > div > div:first-child img {
+    height: 11rem;
+  }
+}
+#about > div > div:last-child {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 50%;
+}
+@media screen and (max-width: 992px) {
+  #about > div > div:last-child {
+    width: 100%;
+    margin-top: 4rem;
+  }
+}
+#about > div > div:last-child article {
+  display: inline-block;
+  background-color: white;
+  height: 16rem;
+  width: 16rem;
+  padding: 1rem;
+  box-sizing: content-box;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  transition: all 200ms;
+}
+@media screen and (max-width: 1223px) {
+  #about > div > div:last-child article {
+    height: 18rem;
+    width: 12rem;
+    margin-bottom: 2rem;
+  }
+}
+#about > div > div:last-child article:hover {
+  transform: scale(1.05);
+  cursor: pointer;
+}
+#about > div > div:last-child article i {
+  padding: 1rem;
+  background-color: #6733E2;
+  color: white;
+  border-radius: 100%;
+  font-size: 1.5rem;
+}
+#about > div > div:last-child article p {
+  text-align: center;
+}
+#about > div > div:last-child article:first-child i {
+  padding: 1rem 1.3rem;
+}
+@media screen and (max-width: 472px) {
+  #about > div > div:last-child article:first-of-type {
+    margin-right: 0 !important;
+  }
+}
+@media screen and (max-width: 719px) {
+  #about > div > div:last-child article:nth-of-type(2) {
+    margin-right: 0 !important;
+  }
+}
+@media screen and (max-width: 743px) {
+  #about > div > div:last-child article:nth-of-type(2) {
+    margin-right: 0rem !important;
+  }
+}
+#about > div > div:last-child article:nth-of-type(3) {
+  margin-right: 1.5rem;
+}
+@media screen and (max-width: 967px) {
+  #about > div > div:last-child article:nth-of-type(3) {
+    margin-right: 0rem;
+  }
+}
+@media screen and (max-width: 719px) {
+  #about > div > div:last-child article:nth-of-type(3) {
+    margin-right: 1.5rem !important;
+  }
+}
+@media screen and (max-width: 495px) {
+  #about > div > div:last-child article:nth-of-type(3) {
+    margin-right: 0rem !important;
+  }
+}
+@media screen and (max-width: 495px) {
+  #about > div > div:last-child article:last-of-type {
+    margin-right: 0;
+  }
+}
+
+#contacto {
+  padding: 0% !important;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+#contacto > div:first-child {
+  height: 50vh;
+  padding: 10vh 0 0 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+#contacto > div:first-child > h5 {
+  display: inline-block;
+  background: linear-gradient(to right, #fc6a97, #aa8cef);
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+  cursor: pointer;
+}
+#contacto > div:first-child > h1 {
+  font-size: 3rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+  text-align: center;
+}
+@media screen and (max-width: 768px) {
+  #contacto > div:first-child > h1 {
+    font-size: 2.5rem;
+  }
+}
+@media screen and (max-width: 530px) {
+  #contacto > div:first-child > h1 {
+    font-size: 2rem;
+  }
+}
+@media screen and (max-width: 425px) {
+  #contacto > div:first-child > h1 {
+    font-size: 1.5rem;
+  }
+}
+#contacto > div:first-child b {
+  background: linear-gradient(to right, #fc6a97, #aa8cef);
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+  cursor: pointer;
+  font-size: 1.1rem;
+}
+#contacto > div:first-child b a {
+  color: transparent;
+}
+#contacto > div:first-child p {
+  width: 60%;
+  font-size: 1.2rem;
+  margin-top: 1rem;
+  text-align: center;
+}
+@media screen and (max-width: 500px) {
+  #contacto > div:first-child p {
+    width: 90%;
+  }
+}
+#contacto #social-media {
+  min-height: 50vh;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding-bottom: 4rem;
+}
+#contacto #social-media a {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 2rem;
+  padding: 1rem;
+  height: 12rem;
+  width: 15rem;
+  transition: all 300ms;
+  overflow: hidden;
+  border: 3px #6733E2 solid;
+  border-radius: 5px;
+}
+#contacto #social-media a:hover i {
+  color: white;
+}
+#contacto #social-media a:hover h1 {
+  color: white;
+}
+#contacto #social-media a:hover h2 {
+  color: white;
+}
+#contacto #social-media a i {
+  position: relative;
+  z-index: 2;
+  font-size: 2.5rem;
+  color: #6733E2;
+  transition: all 300ms;
+}
+#contacto #social-media a h1 {
+  position: relative;
+  z-index: 2;
+  font-size: 1.5rem;
+  color: #6733E2;
+  margin-top: 1rem;
+  transition: all 300ms;
+}
+#contacto #social-media a h2 {
+  position: relative;
+  z-index: 2;
+  font-size: 1rem;
+  color: grey;
+  transition: all 300ms;
+}
+#contacto #social-media a .circle {
+  position: absolute;
+  z-index: 1;
+  border-radius: 100%;
+  background-color: #6733E2;
+  height: 10rem;
+  width: 10rem;
+  transition: all 300ms;
+}
+#contacto #social-media a:first-child:hover {
+  transform: translate(5px, -5px);
+  box-shadow: -10px 10px 20px -10px rgba(0, 0, 0, 0.5);
+}
+#contacto #social-media a:first-child:hover .circle {
+  height: 25rem;
+  width: 25rem;
+  top: -5rem;
+  left: -6rem;
+}
+#contacto #social-media a:first-child .circle {
+  top: 13rem;
+  left: -8rem;
+}
+#contacto #social-media a:nth-child(2):hover, #contacto #social-media a:nth-child(3):hover {
+  transform: translate(0px, -5px);
+  box-shadow: 0px 10px 20px -5px rgba(0, 0, 0, 0.5);
+}
+#contacto #social-media a:nth-child(2):hover .circle, #contacto #social-media a:nth-child(3):hover .circle {
+  height: 25rem;
+  width: 25rem;
+  top: -5rem;
+  left: -6rem;
+}
+#contacto #social-media a:nth-child(2) .circle, #contacto #social-media a:nth-child(3) .circle {
+  top: 13rem;
+  left: 2.5rem;
+}
+#contacto #social-media a:last-child:hover {
+  transform: translate(-5px, -5px);
+  box-shadow: 10px 10px 20px -10px rgba(0, 0, 0, 0.5);
+}
+#contacto #social-media a:last-child:hover .circle {
+  height: 25rem;
+  width: 25rem;
+  top: -5rem;
+  left: -6rem;
+}
+#contacto #social-media a:last-child .circle {
+  top: 13rem;
+  left: 15rem;
+}
+#contacto #citas {
+  min-height: 90vh;
+  background-color: #6733E2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+@media screen and (max-width: 350px) {
+  #contacto #citas {
+    padding: 0%;
+  }
+}
+#contacto #citas > div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 3rem 0;
+}
+#contacto #citas > div > section:first-child {
+  height: 100% !important;
+}
+#contacto #citas > div > section:first-child h1 {
+  color: white;
+  font-weight: bold;
+  font-size: 3.5rem;
+}
+#contacto #citas > div > section:first-child p {
+  color: white;
+  font-size: 1.2rem;
+  margin-top: 2rem;
+  line-height: 2rem;
+}
+#contacto #citas > div > section:first-child a {
+  padding: 1rem 2rem;
+  border-radius: 50px;
+  background-color: #6733E2;
+  border: 2px #6733E2 solid;
+  transition: all 300ms;
+  display: inline-block;
+  background-color: white;
+  color: #6733E2;
+  font-weight: bold;
+  font-size: 1.1rem;
+  margin-top: 1.5rem;
+  border: 2px white solid;
+}
+@media screen and (max-width: 400px) {
+  #contacto #citas > div > section:first-child a {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+  }
+}
+#contacto #citas > div > section:first-child a:hover {
+  background-color: transparent;
+  border: 2px #6733E2 solid;
+}
+#contacto #citas > div > section:first-child a:hover {
+  border: 2px white solid;
+  background-color: transparent;
+  color: white;
+}
+@media screen and (max-width: 350px) {
+  #contacto #citas > div > section:last-of-type {
+    padding: 0%;
+  }
+}
+#contacto #formulario {
+  min-height: 90vh;
+  padding: 6rem;
+  display: flex;
+  flex-wrap: wrap;
+}
+@media screen and (max-width: 900px) {
+  #contacto #formulario {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 3rem;
+  }
+}
+#contacto #formulario > section:first-child {
+  width: 50%;
+}
+#contacto #formulario > section:first-child > h5 {
+  display: inline-block;
+  background: linear-gradient(to right, #fc6a97, #aa8cef);
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+  cursor: pointer;
+}
+#contacto #formulario > section:first-child > h1 {
+  font-size: 3rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+  text-align: center;
+}
+@media screen and (max-width: 768px) {
+  #contacto #formulario > section:first-child > h1 {
+    font-size: 2.5rem;
+  }
+}
+@media screen and (max-width: 530px) {
+  #contacto #formulario > section:first-child > h1 {
+    font-size: 2rem;
+  }
+}
+@media screen and (max-width: 425px) {
+  #contacto #formulario > section:first-child > h1 {
+    font-size: 1.5rem;
+  }
+}
+#contacto #formulario > section:first-child b {
+  background: linear-gradient(to right, #fc6a97, #aa8cef);
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+  cursor: pointer;
+  font-size: 1.1rem;
+}
+#contacto #formulario > section:first-child b a {
+  color: transparent;
+}
+@media screen and (max-width: 900px) {
+  #contacto #formulario > section:first-child {
+    width: 100%;
+  }
+}
+#contacto #formulario > section:first-child h5 {
+  margin: 0%;
+}
+#contacto #formulario > section:first-child h1 {
+  margin: 0%;
+  text-align: left;
+}
+#contacto #formulario > section:first-child p {
+  font-size: 1.2rem;
+  margin: 0%;
+}
+#contacto #formulario > section:first-child form {
+  width: 80%;
+  margin-top: 2rem;
+}
+@media screen and (max-width: 992px) {
+  #contacto #formulario > section:first-child form {
+    width: 100%;
+  }
+}
+#contacto #formulario > section:first-child form #btnCorreo {
+  display: inline-block;
+  padding: 1rem 2rem;
+  border-radius: 50px;
+  background-color: #6733E2;
+  border: 2px #6733E2 solid;
+  transition: all 300ms;
+  color: white;
+  margin-top: 2rem;
+  font-weight: bold;
+}
+@media screen and (max-width: 400px) {
+  #contacto #formulario > section:first-child form #btnCorreo {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+  }
+}
+#contacto #formulario > section:first-child form #btnCorreo:hover {
+  background-color: transparent;
+  border: 2px #6733E2 solid;
+}
+#contacto #formulario > section:first-child form #btnCorreo:hover {
+  color: #6733E2;
+}
+#contacto #formulario > section:first-child form #btnMailto {
+  visibility: hidden;
+}
+#contacto #formulario > section:last-child {
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#contacto #formulario > section:last-child img {
+  height: 40rem;
+}
+@media screen and (max-width: 1200px) {
+  #contacto #formulario > section:last-child img {
+    height: 30rem;
+  }
+}
+@media screen and (max-width: 992px) {
+  #contacto #formulario > section:last-child img {
+    height: 25rem;
+  }
+}
+@media screen and (max-width: 900px) {
+  #contacto #formulario > section:last-child img {
+    width: 100%;
+    margin-top: 4rem;
+    width: 22rem;
+  }
+}
+@media screen and (max-width: 900px) {
+  #contacto #formulario > section:last-child img {
+    height: 20rem;
+    width: 15rem;
+  }
+}
+
+footer {
+  display: inline-block;
+  background-color: #333333;
+  min-height: 50vh;
+  margin: 0%;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 2rem;
+}
+footer section {
+  height: 240px;
+  width: 25%;
+}
+@media screen and (max-width: 992px) {
+  footer section {
+    height: 100%;
+    width: 40%;
+  }
+}
+footer section ul {
+  list-style-type: none;
+  margin: 0%;
+  padding: 0%;
+}
+footer > section:first-child {
+  margin-right: 10rem;
+}
+@media screen and (max-width: 992px) {
+  footer > section:first-child {
+    padding-left: 5rem !important;
+  }
+}
+footer > section:first-child img {
+  display: inline-block;
+  height: 4rem;
+  margin-bottom: 4rem;
+}
+footer > section:first-child p {
+  color: grey;
+  text-align: justify;
+  font-size: 1.1rem;
+  font-weight: bold;
+  line-height: 2rem;
+  width: 100%;
+}
+footer > section:nth-child(2) h1 {
+  color: white;
+}
+footer > section:nth-child(2) ul {
+  padding-top: 1rem;
+}
+footer > section:nth-child(2) ul li {
+  margin-bottom: 0.45rem;
+}
+footer > section:nth-child(2) ul li a {
+  color: grey;
+  transition: all 200ms;
+}
+footer > section:nth-child(2) ul li a:hover {
+  color: #6733E2;
+}
+footer > section:nth-child(2) ul li:last-child {
+  margin: 0%;
+}
+footer > section:last-child h1 {
+  color: white;
+}
+footer > section:last-child > ul {
+  padding-top: 1rem;
+}
+footer > section:last-child > ul ul {
+  display: flex;
+}
+footer > section:last-child > ul ul a {
+  color: grey;
+  margin-right: 1rem;
+  font-size: 1.5rem;
+  transition: all 200ms;
+}
+footer > section:last-child > ul ul a:hover {
+  color: #6733E2;
+}
+footer > section:last-child > ul li {
+  margin-bottom: 0.5rem;
+}
+footer > section:last-child > ul li a {
+  color: grey;
+  transition: all 200ms;
+}
+footer > section:last-child > ul li a:hover {
+  color: #6733E2;
+}
+footer > section:last-child > ul li:last-child {
+  margin: 0%;
+}
+/*# sourceMappingURL=app.css.map */
