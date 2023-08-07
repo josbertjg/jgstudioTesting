@@ -1492,7 +1492,7 @@ body .container.body .right_col {
 }
 
 body {
-  color: rgb(247, 247, 247);
+  color: #333333;
   background: #333333;
   font-family: "Helvetica Neue", Roboto, Arial, "Droid Sans", sans-serif;
   font-size: 13px;
@@ -1732,7 +1732,7 @@ a:hover, a:focus {
 }
 
 .nav-md ul.nav.child_menu li:before {
-  background: #333333 !important;
+  background: grey !important;
   bottom: auto;
   content: "";
   height: 8px;
@@ -2813,7 +2813,11 @@ span.right {
   padding: 5px 0 0 0;
   position: fixed;
   width: 230px;
+  z-index: 1;
   background: #6733E2;
+}
+.sidebar-footer .btn-footer .glyphicon {
+  color: #d1d1d1 !important;
 }
 
 .sidebar-footer a {
@@ -2827,7 +2831,7 @@ span.right {
 }
 
 .sidebar-footer a:hover {
-  background: #4d4d4d;
+  background: #6733E2;
 }
 
 /** top tiles  */
@@ -5867,4 +5871,8 @@ ul.notifications {
 }
 
 /** /Dropzone.js **/
+/* CUSTOM STYLES  */
+#menu_toggle {
+  font-size: 1.5rem;
+}
 /*# sourceMappingURL=custom-gentella.css.map */

@@ -68,17 +68,17 @@ nav{
         }
         img{
             margin-left: 2rem;
-            height: 9vh;
+            height: 6vh;
             transition: all 200ms;
             fill: v.$morado;
             @media screen and (max-width:1200px) {
-                height: 7vh;
+                height: 5vh;
             }
             @media screen and (max-width:992px) {
-                height: 9vh;
+                height: 6vh;
             }
             @media screen and (max-width:768px) {
-                height: 6vh;
+                height: 4vh;
             }
         }
     }
@@ -170,15 +170,16 @@ nav{
             justify-content: center;
         }
         img{
-            height: 9vh!important;
+            height: 6vh!important;
             @media screen and (max-width:1200px) {
                 margin-left: 5px;
             }
             @media screen and (max-width:482px) {
-                height: 3rem !important;
+                height: 5vh !important;
             }
             @media screen and (max-width:440px) {
-                height: 4rem !important;
+                margin-top: 1rem;
+                height: 5vh !important;
             }
         }
     }

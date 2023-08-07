@@ -1,7 +1,7 @@
 <nav class="navbar fixed-top navbar-expand-lg w-100">
     <div class="d-flex justify-content-sm-between w-100">
         <a class="navbar-brand" href="../index.html#inicio">
-          <img src="build/img/logo-white.png" alt="neopixels logo">
+          <img src="build/img/logo-white.png" alt="JG Studio logo">
         </a>
         <div class="bgnav"></div>
         <div class="container-fluid d-flex align-items-center">
@@ -89,7 +89,7 @@
             <article class="col-xl-4 col-md-6 col-12 me-xl-4 me-0 mt-xl-0 mt-5">
                 <i class="fa-solid fa-headphones"></i>
                 <h2>Asesorías</h2>
-                <p>En Neopixels queremos que siempre te vaya bien, por ende, estudiamos tu marca y nos tomamos el tiempo para asesorarte y guiarte en este mundo de la tecnología.</p>
+                <p>En JG Studio queremos que siempre te vaya bien, por ende, estudiamos tu marca y nos tomamos el tiempo para asesorarte y guiarte en este mundo de la tecnología.</p>
                 <a href="#">Saber Más</a>
             </article>
         </div>
@@ -97,11 +97,11 @@
     <section id="portafolio" class="">
         <h5>Algunos de nuestros proyectos</h5>
         <h1>Proyectos más recientes</h1>
-        <p>En Neopixels dejamos que nuestros proyectos y números hablen por nosotros, demostrando la <b>Calidad</b> y <b>Profesionalismo</b> de nuestros servicios.</p>
+        <p>En JG Studio dejamos que nuestros proyectos y números hablen por nosotros, demostrando la <b>Calidad</b> y <b>Profesionalismo</b> de nuestros servicios.</p>
         <div class="">
             <article class="mt-4">
                 <div class="bg-portafolio"></div>
-                <img src="build/img/rr78.png" alt="rr78 neopixels">
+                <img src="build/img/rr78.png" alt="rr78 JG Studio">
                 <div class="contenido">
                     <h5>Diseño Web</h5>
                     <h1>Repuestos R&R78</h1>
@@ -110,7 +110,7 @@
             </article>
             <article class="mt-4">
                 <div class="bg-portafolio"></div>
-                <img src="build/img/serviciototal.png" alt="servicio total neopixels">
+                <img src="build/img/serviciototal.png" alt="servicio total JG Studio">
                 <div class="contenido">
                     <h5>Diseño Web</h5>
                     <h1>Servicio Total</h1>
@@ -119,7 +119,7 @@
             </article>
             <article class="mt-4">
                 <div class="bg-portafolio"></div>
-                <img src="build/img/oncars.png" alt="oncars neopixels">
+                <img src="build/img/oncars.png" alt="oncars JG Studio">
                 <div class="contenido">
                     <h5>Diseño Web</h5>
                     <h1>Oncar's</h1>
@@ -128,7 +128,7 @@
             </article>
             <article class="mt-4">
                 <div class="bg-portafolio"></div>
-                <img src="build/img/rr78rs.png" alt="rr78 neopixels">
+                <img src="build/img/rr78rs.png" alt="rr78 JG Studio">
                 <div class="contenido">
                     <h5>RRSS</h5>
                     <h1>Repuestos RR78</h1>
@@ -143,7 +143,7 @@
             <div>
                 <h5>¡Es un gusto que nos conozcas!</h5>
                 <h1>Un poco de Nosotros</h1>
-                <img src="build/img/about.png" alt="sobre neopixels">
+                <img src="build/img/about.png" alt="sobre JG Studio">
             </div>
             <div class="">
                 <article class="me-4">
@@ -173,7 +173,7 @@
         <div>
             <h5>¡Manos a la obra!</h5>
             <h1>Contáctanos</h1>
-            <p>En Neopixels estaremos siempre <b>Complacidos</b> de atenderte, contáctanos a través del método de tu preferencia, y sé testigo de nuestros <b>Excelentes Servicios</b> y de la <b>Calidad</b> de nuestro trabajo.</p>
+            <p>En JG Studio estaremos siempre <b>Complacidos</b> de atenderte, contáctanos a través del método de tu preferencia, y sé testigo de nuestros <b>Excelentes Servicios</b> y de la <b>Calidad</b> de nuestro trabajo.</p>
         </div>
         <div id="social-media" class="container row">
             <a href="https://api.whatsapp.com/send?phone=584267799128&text=%C2%A1Hola!,%20Me%20gustar%C3%ADa%20saber%20mas%20sobre..." target="_blank" class="me-sm-4 me-0 col-3">
@@ -183,22 +183,22 @@
                 <h2>+58 426-7799128</h2>
                 <div class="circle"></div>
             </a>
-            <a href="https://www.instagram.com/neopixelsve/" target="_blank" class="me-lg-4 me-0 col-3">
+            <a href="https://www.instagram.com/JG Studiove/" target="_blank" class="me-lg-4 me-0 col-3">
                 <i class="fa-brands fa-instagram"></i>
                 <h1>Instagram</h1>
-                <h2>@neopixelsve</h2>
+                <h2>@JG Studiove</h2>
                 <div class="circle"></div>
             </a>
-            <a href="https://www.facebook.com/NeoPixelsVE/" target="_blank" class="me-xl-4 me-lg-0 me-sm-4 me-0 col-3">
+            <a href="https://www.facebook.com/JG StudioVE/" target="_blank" class="me-xl-4 me-lg-0 me-sm-4 me-0 col-3">
                 <i class="fa-brands fa-facebook-f"></i>
                 <h1>Facebook</h1>
-                <h2>NeoPixels</h2>
+                <h2>JG Studio</h2>
                 <div class="circle"></div>
             </a>
             <a href="#formulario" class="col-3">
                 <i class="fa-regular fa-envelope"></i>
                 <h1>Email</h1>
-                <h2>neopixelsve@gmail.com</h2>
+                <h2>JG Studiove@gmail.com</h2>
                 <div class="circle"></div>
             </a>
         </div>
@@ -211,7 +211,7 @@
                 </section>
                 <section class="col-md-5 col-sm-7 col-12 mt-md-0 mt-5">
                     <!-- Principio del widget integrado de Calendly -->
-                    <div class="calendly-inline-widget" data-url="https://calendly.com/neopixels/30min?hide_event_type_details=1" style="min-width:320px;height:630px;"></div>
+                    <div class="calendly-inline-widget" data-url="https://calendly.com/jgstudiomktg/30min?hide_event_type_details=1&hide_gdpr_banner=1" style="min-width:320px;height:700px;"></div>
                     <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
                     <!-- Final del widget integrado de Calendly -->
                 </section>
@@ -231,15 +231,15 @@
                 </form>
             </section>
             <section>
-                <img src="build/img/correo.png" alt="correo-neopixels">
+                <img src="build/img/correo.png" alt="correo-JG Studio">
             </section>
         </div>
     </section>
 </main>
 <footer class="">
     <section class="col-lg-3 col-12">
-        <img src="build/img/logo-white.png" alt="logo neopixels">
-        <p>Creado, diseñado y desarrollado por Josbert Guedez Co-Fundador de Neopixels, Copyright © 2022, todos los derechos reservados para Neopixels.</p>
+        <img src="build/img/logo-white.png" alt="logo JG Studio">
+        <p>Creado, diseñado y desarrollado por Josbert Guedez Co-Fundador de JG Studio, Copyright © 2022, todos los derechos reservados para JG Studio.</p>
     </section>
     <section class="col-lg-3 col-6">
         <h1>Secciones</h1>
@@ -259,8 +259,8 @@
             <li>
                 <ul>
                     <li><a href="https://api.whatsapp.com/send?phone=584267799128&text=%C2%A1Hola!,%20Me%20gustar%C3%ADa%20saber%20mas%20sobre..." target="_blank"><i class="fa-brands fa-whatsapp"></i></a></li>
-                    <li><a href="https://www.instagram.com/neopixelsve/" target="_blank"><i class="fa-brands fa-instagram"></i></a></li>
-                    <li><a href="https://www.facebook.com/NeoPixelsVE/" target="_blank"><i class="fa-brands fa-facebook-f"></i></a></li>
+                    <li><a href="https://www.instagram.com/JG Studiove/" target="_blank"><i class="fa-brands fa-instagram"></i></a></li>
+                    <li><a href="https://www.facebook.com/JG StudioVE/" target="_blank"><i class="fa-brands fa-facebook-f"></i></a></li>
                     <li><a href="#formulario"><i class="fa-regular fa-envelope"></i></a></li>
                 </ul>
             </li>

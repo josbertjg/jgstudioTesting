@@ -372,23 +372,23 @@ nav .bgnav {
 }
 nav .navbar-brand img {
   margin-left: 2rem;
-  height: 9vh;
+  height: 6vh;
   transition: all 200ms;
   fill: #6733E2;
 }
 @media screen and (max-width: 1200px) {
   nav .navbar-brand img {
-    height: 7vh;
+    height: 5vh;
   }
 }
 @media screen and (max-width: 992px) {
   nav .navbar-brand img {
-    height: 9vh;
+    height: 6vh;
   }
 }
 @media screen and (max-width: 768px) {
   nav .navbar-brand img {
-    height: 6vh;
+    height: 4vh;
   }
 }
 nav .offcanvas-title img {
@@ -481,7 +481,7 @@ nav #btnPlanes a:hover {
   }
 }
 .menuStyled .navbar-brand img {
-  height: 9vh !important;
+  height: 6vh !important;
 }
 @media screen and (max-width: 1200px) {
   .menuStyled .navbar-brand img {
@@ -490,12 +490,13 @@ nav #btnPlanes a:hover {
 }
 @media screen and (max-width: 482px) {
   .menuStyled .navbar-brand img {
-    height: 3rem !important;
+    height: 5vh !important;
   }
 }
 @media screen and (max-width: 440px) {
   .menuStyled .navbar-brand img {
-    height: 4rem !important;
+    margin-top: 1rem;
+    height: 5vh !important;
   }
 }
 .menuStyled a {

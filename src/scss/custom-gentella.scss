@@ -644,7 +644,7 @@ body .container.body .right_col {
   // background: #D9DEE4;
 }
 body {
-  color: v.$gris;
+  color: v.$negro;
   background: v.$negro;
   font-family: "Helvetica Neue", Roboto, Arial, "Droid Sans", sans-serif;
   font-size: 13px;
@@ -844,7 +844,7 @@ a:hover, a:focus {
   padding-left: 36px;
 }
 .nav-md ul.nav.child_menu li:before {
-  background: v.$negro !important;
+  background: grey !important;
   bottom: auto;
   content: "";
   height: 8px;
@@ -1850,7 +1850,11 @@ span.right {
   padding: 5px 0 0 0;
   position: fixed;
   width: 230px;
-  background: v.$morado
+  z-index: 1;
+  background: v.$morado;
+  .btn-footer .glyphicon{
+    color: darken(v.$gris,15) !important;
+  }
 }
 .sidebar-footer a {
   padding: 7px 0 3px;
@@ -1862,7 +1866,7 @@ span.right {
   background: darken(v.$morado,5);
 }
 .sidebar-footer a:hover {
-  background: lighten(v.$negro,10);
+  background: v.$morado;
 }
 
 /** top tiles  */
@@ -4755,3 +4759,10 @@ ul.notifications {
   border: 1px solid #e5e5e5;
 }
 /** /Dropzone.js **/
+
+/* CUSTOM STYLES  */
+
+// NAV BAR
+#menu_toggle{
+  font-size: 1.5rem;
+}

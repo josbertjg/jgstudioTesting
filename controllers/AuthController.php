@@ -8,18 +8,11 @@ use MVC\Router;
 
 class AuthController {
     public static function inicio(Router $router) {
-        // Render a la vista 
         $router->render('inicio/index'
-        // , 
-        // [
-        //     'titulo' => 'Iniciar Sesión',
-        //     'alertas' => $alertas
-        // ]
     );
     }
 
     public static function login(Router $router) {
-
         $alertas = [];
 
         if($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -46,11 +39,12 @@ class AuthController {
                         $_SESSION['correo'] = $usuario->correo;
                         $_SESSION['id_rol'] = $usuario->id_rol;
 
+
                         // Redireccion
-                        if($usuario->id_rol == 1) {
+                        if($usuario->id_rol == 1 || $usuario->id_rol == 2) {
                             header('Location: /admin/dashboard');
                         } else {
-                            header('Location: /finalizar-registro');
+                            header('Location: /dashboard');
                         }
                         
                     } else {
@@ -89,50 +83,59 @@ class AuthController {
        
     }
 
-    public static function registro(Router $router) {
+    public static function signin(Router $router) {
+
+
+        // if(!is_admin()) {
+        //     header('Location: /login');
+        // }
+
         $alertas = [];
         $usuario = new Usuario;
 
         if($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             $usuario->sincronizar($_POST);
-            
+
+            // debuguear($usuario);
             $alertas = $usuario->validar_cuenta();
 
             if(empty($alertas)) {
-                $existeUsuario = Usuario::where('email', $usuario->email);
+                $existeUsuario = Usuario::where('correo', $usuario->correo);
 
                 if($existeUsuario) {
                     Usuario::setAlerta('error', 'El Usuario ya esta registrado');
                     $alertas = Usuario::getAlertas();
                 } else {
                     // Hashear el password
-                    $usuario->hashPassword();
+                    // $usuario->hashPassword();
 
                     // Eliminar password2
-                    unset($usuario->password2);
+                    // unset($usuario->password2);
 
                     // Generar el Token
-                    $usuario->crearToken();
-
+                    // $usuario->crearToken();
                     // Crear un nuevo usuario
                     $resultado =  $usuario->guardar();
+                    
+                    // debuguear($resultado);
 
                     // Enviar email
-                    $email = new Email($usuario->email, $usuario->nombre, $usuario->token);
-                    $email->enviarConfirmacion();
+                    // $email = new Email($usuario->email, $usuario->nombre, $usuario->token);
+                    // $email->enviarConfirmacion();
                     
 
+
                     if($resultado) {
-                        header('Location: /mensaje');
+                        header('Location: /login');
                     }
                 }
             }
         }
 
         // Render a la vista
-        $router->render('auth/registro', [
-            'titulo' => 'Crea tu cuenta en DevWebcamp',
+        $router->render('auth/signin', [
+            'titulo' => 'Crea tu cuenta en JG Studio',
             'usuario' => $usuario, 
             'alertas' => $alertas
         ]);

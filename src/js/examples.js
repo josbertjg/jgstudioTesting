@@ -31,7 +31,7 @@ $('body').popover({
     }
 });
 
-
+let x =0;
 function gd(year, month, day) {
     return new Date(year, month - 1, day).getTime();
 }

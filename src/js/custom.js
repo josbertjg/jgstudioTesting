@@ -191,6 +191,7 @@ $('table input').on('ifUnchecked', function () {
     countChecked();
 });
 
+
 var checkState = '';
 
 $('.bulk_action input').on('ifChecked', function () {

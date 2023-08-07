@@ -7,12 +7,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Gentelella Alela! | </title>
+  <title>JG Studio | Expertos en Marketing Digital</title>
 
   <!-- Bootstrap -->
   <link href="/build/external_imports/css/bootstrap.min.css" rel="stylesheet">
-  <!-- Font Awesome -->
-  <link href="/build/external_imports/css/font-awesome.min.css" rel="stylesheet">
   <!-- NProgress -->
   <link href="/build/external_imports/css/nprogress.css" rel="stylesheet">
 
@@ -28,7 +26,7 @@
     <div class="">
       <div class="page-title">
         <div class="title_left">
-          <h3>Plain Page</h3>
+          <h3>Admin Dashboard</h3>
         </div>
 
         <div class="title_right">
@@ -58,7 +56,7 @@
                   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                       <a class="dropdown-item" href="#">Settings 1</a>
                       <a class="dropdown-item" href="#">Settings 2</a>
-                    </div>
+                  </div>
                 </li>
                 <li><a class="close-link"><i class="fa fa-close"></i></a>
                 </li>
@@ -79,7 +77,7 @@
   <!-- footer content -->
   <footer>
     <div class="pull-right">
-      Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
+      JG Studio - Panel Administrador
     </div>
     <div class="clearfix"></div>
   </footer>
@@ -94,8 +92,10 @@
     <script src="/build/external_imports/js/fastclick.js"></script>
     <!-- NProgress -->
     <script src="/build/external_imports/js/nprogress.js"></script>
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/814f6eaa13.js" crossorigin="anonymous"></script>
     
     <!-- Custom Theme Scripts -->
-    <script src="/build/js/custom.min.js"></script>
+    <script src="/build/js/gentella/custom.min.js"></script>
 </body>
 </html>

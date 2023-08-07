@@ -26,7 +26,7 @@ class Usuario extends ActiveRecord {
         $this->telefono = $args['telefono'] ?? '';
         $this->id_rol = $args['id_rol'] ?? 0;
         $this->fecha_creacion = $args['fecha_creacion'] ?? '';
-        $this->id_estado = $args['id_estado'] ?? 0;
+        $this->id_estado = $args['id_estado'] ?? 1;
     }
 
     // Validar el Login de Usuarios
@@ -52,17 +52,14 @@ class Usuario extends ActiveRecord {
         if(!$this->apellido) {
             self::$alertas['error'][] = 'El Apellido es Obligatorio';
         }
-        if(!$this->email) {
+        if(!$this->correo) {
             self::$alertas['error'][] = 'El Email es Obligatorio';
         }
-        if(!$this->password) {
+        if(!$this->clave) {
             self::$alertas['error'][] = 'El Password no puede ir vacio';
         }
-        if(strlen($this->password) < 6) {
+        if(strlen($this->clave) < 6) {
             self::$alertas['error'][] = 'El password debe contener al menos 6 caracteres';
-        }
-        if($this->password !== $this->password2) {
-            self::$alertas['error'][] = 'Los password son diferentes';
         }
         return self::$alertas;
     }

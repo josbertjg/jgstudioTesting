@@ -4,22 +4,24 @@ require_once __DIR__ . '/../includes/app.php';
 
 use MVC\Router;
 use Controllers\AuthController;
+use Controllers\AdminDashboardController;
+use Controllers\ClientDashboardController;
 
 $router = new Router();
 
 // Inicio
 $router->get('/', [AuthController::class, 'inicio']);
-
-$router->get('/admin/dashboard', [AuthController::class, 'xy']);
-$router->post('/admin/dashboard', [AuthController::class, 'xy']);
-// $router->post('/', [AuthController::class, 'login']);
 // Login
 $router->get('/login', [AuthController::class, 'login']);
 $router->post('/login', [AuthController::class, 'login']);
-// $router->post('/logout', [AuthController::class, 'logout']);
-
-// Crear Cuenta
-// $router->get('/registro', [AuthController::class, 'registro']);
-// $router->post('/registro', [AuthController::class, 'registro']);
+// Registro de cliente
+$router->get('/signin', [AuthController::class, 'signin']);
+$router->post('/signin', [AuthController::class, 'signin']);
+// Dashboard del admin/empleado
+$router->get('/admin/dashboard', [AdminDashboardController::class, 'adminDashboard']);
+$router->post('/admin/dashboard', [AdminDashboardController::class, 'adminDashboard']);
+// Dashboard del cliente
+$router->get('/dashboard', [ClientDashboardController::class, 'clientDashboard']);
+$router->post('/dashboard', [ClientDashboardController::class, 'clientDashboard']);
 
 $router->comprobarRutas();
