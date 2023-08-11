@@ -18,7 +18,7 @@ class Usuario extends ActiveRecord {
         $this->pais = $args['pais'] ?? '';
         $this->numero_celular = $args['numero_celular'] ?? '';
         $this->numero_fijo = $args['numero_fijo'] ?? '';
-        $this->estado = $args['estado'] ?? '';
+        $this->estado = $args['estado'] ?? 1;
         $this->fecha_modif = $args['fecha_modif'] ?? '';
         $this->tipo_documento = $args['tipo_documento'] ?? 0;
         $this->correo = $args['correo'] ?? '';
@@ -41,7 +41,6 @@ class Usuario extends ActiveRecord {
             self::$alertas['error'][] = 'El Password no puede ir vacio';
         }
         return self::$alertas;
-
     }
 
     // Validación para cuentas nuevas
@@ -60,6 +59,38 @@ class Usuario extends ActiveRecord {
         }
         if(strlen($this->clave) < 6) {
             self::$alertas['error'][] = 'El password debe contener al menos 6 caracteres';
+        }
+        return self::$alertas;
+    }
+
+    // Validación para registro de usuarios por parte del admin
+    public function validar_insercion() {
+        if(!$this->nombre) {
+            self::$alertas['error'][] = 'El Nombre es Obligatorio';
+        }
+        if(!$this->apellido) {
+            self::$alertas['error'][] = 'El Apellido es Obligatorio';
+        }
+        if(!$this->correo) {
+            self::$alertas['error'][] = 'El Email es Obligatorio';
+        }
+        if(!$this->clave) {
+            self::$alertas['error'][] = 'El Password no puede ir vacio';
+        }
+        if(strlen($this->clave) < 6) {
+            self::$alertas['error'][] = 'El password debe contener al menos 6 caracteres';
+        }
+        if(!$this->numero_documento) {
+            self::$alertas['error'][] = 'El Número de documento no puede estar vacío';
+        }
+        if(strlen($this->numero_documento) < 6) {
+            self::$alertas['error'][] = 'El número de documento no puede contener menos de 6 dígitos';
+        }
+        if(!$this->direccion) {
+            self::$alertas['error'][] = 'La dirección no puede estar vacía';
+        }
+        if(!$this->pais) {
+            self::$alertas['error'][] = 'El país no puede estar vacío';
         }
         return self::$alertas;
     }

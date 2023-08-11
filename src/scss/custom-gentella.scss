@@ -4005,16 +4005,16 @@ header {
 
 /** NProgress **/
 #nprogress .bar {
-  background: #1ABB9C;
+  background: v.$morado;
 }
 
 #nprogress .peg {
-  box-shadow: 0 0 10px #1ABB9C, 0 0 5px #1ABB9C;
+  box-shadow: 0 0 10px v.$morado, 0 0 5px v.$morado;
 }
 
 #nprogress .spinner-icon {
-  border-top-color: #1ABB9C;
-  border-left-color: #1ABB9C;
+  border-top-color: v.$morado;
+  border-left-color: v.$morado;
 }
 /** /NProgress **/
 
@@ -4765,4 +4765,32 @@ ul.notifications {
 // NAV BAR
 #menu_toggle{
   font-size: 1.5rem;
+}
+.title_left{
+  h3{
+    @media screen and (max-width: 550px) {
+      font-size: 1rem;
+    }
+  }
+}
+.panel_toolbox{
+  list-style-type: none !important;
+}
+
+// Admin Dashboard
+.dashboard_admin{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100% !important;
+  height: 60vh !important;
+  img{
+    width: 70%;
+  }
+}
+
+// Logos
+.logo-simple-sidebar{
+  height: 3rem;
+  margin-left: .35rem;
 }

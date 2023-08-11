@@ -20,6 +20,9 @@ $router->post('/signin', [AuthController::class, 'signin']);
 // Dashboard del admin/empleado
 $router->get('/admin/dashboard', [AdminDashboardController::class, 'adminDashboard']);
 $router->post('/admin/dashboard', [AdminDashboardController::class, 'adminDashboard']);
+// CRUD de Usuarios
+$router->get('/admin/dashboard/users', [AdminDashboardController::class, 'users']);
+$router->post('/admin/dashboard/users', [AdminDashboardController::class, 'users']);
 // Dashboard del cliente
 $router->get('/dashboard', [ClientDashboardController::class, 'clientDashboard']);
 $router->post('/dashboard', [ClientDashboardController::class, 'clientDashboard']);

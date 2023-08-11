@@ -8,6 +8,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>JG Studio | Expertos en Marketing Digital</title>
+  <!-- LOGO -->
+  <link rel="shortcut icon" href="/build/img/logo.ico" type="image/x-icon">
 
   <!-- Bootstrap -->
   <link href="/build/external_imports/css/bootstrap.min.css" rel="stylesheet">

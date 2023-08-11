@@ -41,13 +41,15 @@ class Router
         foreach ($datos as $key => $value) {
             $$key = $value; 
         }
-
+        
         ob_start(); 
-
+        
         include_once __DIR__ . "/views/$view.php";
-
+        
         $contenido = ob_get_clean(); // Limpia el Buffer
-
+        // debuguear($datos);
+        $routeName = '';
+        if(isset($datos['routeName'])) $routeName = $datos['routeName'];
         
         // Utilizar el layout de acuerdo a la URL
         $url_actual = $_SERVER['PATH_INFO'] ?? '/';
