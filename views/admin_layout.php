@@ -41,6 +41,8 @@
                 break;
                 case 'usuarios' : $iconName='user';
                 break;
+                case 'perfil' || 'detalle del usuario' : $iconName = 'id-card-clip';
+                break;
               } 
               ?>
               <i class="fa-solid fa-<?php echo $iconName ?>"></i>
@@ -76,8 +78,11 @@
     <script src="/build/external_imports/js/nprogress.js"></script>
     <!-- Font Awesome -->
     <script src="https://kit.fontawesome.com/814f6eaa13.js" crossorigin="anonymous"></script>
-    
     <!-- Custom Theme Scripts -->
     <script src="/build/js/gentella/custom.min.js"></script>
+    <!-- Validaciones -->
+    <script src="/build/js/validaciones.js"></script>
+    <!-- Custom Javascript -->
+    <script src="/build/js/main.min.js"></script>
 </body>
 </html>

@@ -4,6 +4,14 @@
     <h3>General</h3>
     <ul class="nav side-menu">
       <li><a href="/admin/dashboard/users"><i class="fa-solid fa-user"></i> Usuarios</a></li>
+      <li><a href="/admin/dashboard/services"><i class="fa-solid fa-bell-concierge"></i> Servicios</a></li>
+      <li><a href="/admin/dashboard/cotizaciones"><i class="fa-solid fa-wallet"></i> Cotizaciones</a></li>
+      <li><a><i class="fa-regular fa-edit"></i> Reportes <span class="fa fa-chevron-down"></span></a>
+        <ul class="nav child_menu">
+          <li><a href="/admin/dashboard/estadisticas">Estadísticas</a></li>
+          <li><a href="/admin/dashboard/reportes">Reportes Generales</a></li>
+        </ul>
+      </li>
       <!-- <li><a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
         <ul class="nav child_menu">
           <li><a href="index.html">Dashboard</a></li>

@@ -25,12 +25,16 @@ function is_admin() : bool {
     if(!isset($_SESSION)) {
         session_start();
     }
-    return isset($_SESSION['nombre']) && !empty($_SESSION) && isset($_SESSION['id_rol']) && ($_SESSION['id_rol'] == 2);
+    return is_auth() && ($_SESSION['id_rol'] == 2);
 }
 
 function is_admin_empleado() : bool {
     if(!isset($_SESSION)) {
         session_start();
     }
-    return isset($_SESSION['nombre']) && !empty($_SESSION) && isset($_SESSION['id_rol']) && ($_SESSION['id_rol'] == 1 || $_SESSION['id_rol'] == 2);
+    return is_auth() && ($_SESSION['id_rol'] == 1 || $_SESSION['id_rol'] == 2);
+}
+
+function currentUser_id() : int {
+    return $_SESSION['id'];
 }

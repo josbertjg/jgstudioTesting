@@ -3,7 +3,8 @@
     <div class="menu_section">
       <h3>General</h3>
       <ul class="nav side-menu">
-        <li><a href="javascript:void(0)"><i class="fa fa-laptop"></i>Un link inutil</a></li>
+        <li><a href="/dashboard"><i class="fa-solid fa-store"></i> Adquirir un Servicio</a></li>
+        <li><a href="/dashboard/myServices"><i class="fa-solid fa-bell-concierge"></i> Mis Servicios</a></li>
         <!-- <li><a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
           <ul class="nav child_menu">
             <li><a href="index.html">Dashboard</a></li>

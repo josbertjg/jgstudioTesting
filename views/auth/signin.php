@@ -1,10 +1,7 @@
 <div class="container my-5">
-  <?php 
-  echo $titulo;
-  for ($i = 0; $i < count($alertas); $i++) {
-    echo $alertas['error'][$i];
-  }
-  ?>
+    <?php 
+      include "../views/templates/alertas.php";
+    ?>
 
   <form method="POST" class="form">
     <label for="" >Nombre</label>

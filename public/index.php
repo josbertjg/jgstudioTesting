@@ -23,6 +23,9 @@ $router->post('/admin/dashboard', [AdminDashboardController::class, 'adminDashbo
 // CRUD de Usuarios
 $router->get('/admin/dashboard/users', [AdminDashboardController::class, 'users']);
 $router->post('/admin/dashboard/users', [AdminDashboardController::class, 'users']);
+// Detalle del Usuario
+$router->get('/admin/dashboard/users/userDetail', [AdminDashboardController::class, 'userDetail']);
+$router->post('/admin/dashboard/users/userDetail', [AdminDashboardController::class, 'UserDetail']);
 // Dashboard del cliente
 $router->get('/dashboard', [ClientDashboardController::class, 'clientDashboard']);
 $router->post('/dashboard', [ClientDashboardController::class, 'clientDashboard']);

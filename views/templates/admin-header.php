@@ -18,7 +18,7 @@
           </div>
           <div class="profile_info">
             <span>Welcome,</span>
-            <h2><?php echo strtoupper($_SESSION['nombre']) ?></h2>
+            <h2><?php echo ucfirst($_SESSION['nombre']) ?></h2>
           </div>
           <div class="clearfix"></div>
         </div>
@@ -63,8 +63,7 @@
             <ul class=" navbar-right">
               <li class="nav-item dropdown open" style="padding-left: 15px;">
                 <a href="javascript:;" class="user-profile dropdown-toggle" aria-haspopup="true" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false">
-                  <img src="<?php echo $_SESSION['avatar'] ?? '/build/img/defaultUser.svg' ?>" alt="">John Doe
-                </a>
+                  <img src="<?php echo $_SESSION['avatar'] ?? '/build/img/defaultUser.svg' ?>" alt=""><?php echo ucfirst($_SESSION['nombre']) ?></a>
                 <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
                   <a class="dropdown-item"  href="javascript:;"> Profile</a>
                     <a class="dropdown-item"  href="javascript:;">
@@ -78,7 +77,7 @@
 
               <li role="presentation" class="nav-item dropdown open">
                 <a href="javascript:;" class="dropdown-toggle info-number" id="navbarDropdown1" data-toggle="dropdown" aria-expanded="false">
-                <i class="fa-solid fa-cart-shopping"></i>
+                <i class="fa-regular fa-envelope"></i>
                   <span class="badge bg-red">6</span>
                 </a>
                 <ul class="dropdown-menu list-unstyled msg_list" role="menu" aria-labelledby="navbarDropdown1">

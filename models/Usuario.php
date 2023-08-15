@@ -54,6 +54,9 @@ class Usuario extends ActiveRecord {
         if(!$this->correo) {
             self::$alertas['error'][] = 'El Email es Obligatorio';
         }
+        if(!filter_var($this->correo, FILTER_VALIDATE_EMAIL)) {
+            self::$alertas['error'][] = 'Email no válido';
+        }
         if(!$this->clave) {
             self::$alertas['error'][] = 'El Password no puede ir vacio';
         }
@@ -73,6 +76,41 @@ class Usuario extends ActiveRecord {
         }
         if(!$this->correo) {
             self::$alertas['error'][] = 'El Email es Obligatorio';
+        }
+        if(!filter_var($this->correo, FILTER_VALIDATE_EMAIL)) {
+            self::$alertas['error'][] = 'Email no válido';
+        }
+        if(!$this->clave) {
+            self::$alertas['error'][] = 'El Password no puede ir vacio';
+        }
+        if(strlen($this->clave) < 6) {
+            self::$alertas['error'][] = 'El password debe contener al menos 6 caracteres';
+        }
+        if(!$this->numero_documento) {
+            self::$alertas['error'][] = 'El Número de documento no puede estar vacío';
+        }
+        if(strlen($this->numero_documento) < 6) {
+            self::$alertas['error'][] = 'El número de documento no puede contener menos de 6 dígitos';
+        }
+        if(!$this->direccion) {
+            self::$alertas['error'][] = 'La dirección no puede estar vacía';
+        }
+        if(!$this->pais) {
+            self::$alertas['error'][] = 'El país no puede estar vacío';
+        }
+        return self::$alertas;
+    }
+
+    // Validación para la edicion de usuarios
+    public function validar_edicion() {
+        if(!$this->nombre) {
+            self::$alertas['error'][] = 'El Nombre es Obligatorio';
+        }
+        if(!$this->apellido) {
+            self::$alertas['error'][] = 'El Apellido es Obligatorio';
+        }
+        if(isset($this->correo) && !filter_var($this->correo, FILTER_VALIDATE_EMAIL)) {
+            self::$alertas['error'][] = 'Email no válido';
         }
         if(!$this->clave) {
             self::$alertas['error'][] = 'El Password no puede ir vacio';

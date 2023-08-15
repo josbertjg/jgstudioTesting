@@ -25,11 +25,11 @@
         <div class="row">
           <div class="col-sm-6 col-12">
             <label for="" >Nombre</label>
-            <input type="text" name="nombre" class="form-control">
+            <input type="text" name="nombre" class="form-control soloLetras">
           </div>
           <div class="col-sm-6 col-12">
             <label for="">Apellido</label>
-            <input type="text" name="apellido" class="form-control">
+            <input type="text" name="apellido" class="form-control soloLetras">
           </div>
           <div class="col-sm-6 col-12">
             <label for="">Correo</label>
@@ -41,7 +41,7 @@
           </div>
           <div class="col-sm-6 col-12">
             <label for="">Nro Documento</label>
-            <input type="text" name="numero_documento" class="form-control">
+            <input type="text" name="numero_documento" class="form-control soloNumeros">
           </div>
           <div class="col-sm-6 col-12">
             <label for="">Dirección</label>
@@ -53,11 +53,11 @@
           </div>
           <div class="col-sm-6 col-12">
             <label for="">Nro Celular</label>
-            <input type="text" name="numero_celular" class="form-control">
+            <input type="text" name="numero_celular" class="form-control soloNumeros">
           </div>
           <div class="col-sm-6 col-12">
             <label for="">Nro Fijo</label>
-            <input type="text" name="numero_fijo" class="form-control">
+            <input type="text" name="numero_fijo" class="form-control soloNumeros">
           </div>
           <div class="col-sm-6 col-12">
             <label for="">Rol del Usuario</label>
@@ -129,11 +129,10 @@
                       } 
                     ?>
                   </td>
-                  <td class="a-right a-right "><?php echo ($users[$i]->estado) ? 'Activo' : 'Inactivo' ?></td>
+                  <td class="a-right a-right "><?php echo ($users[$i]->id_estado == 1) ? 'Activo' : 'Inactivo' ?></td>
                   <td class=" last">
-                    <a href="#"><i class="fa-solid fa-eye"></i></a>
-                    <a href="#"><i class="fa-solid fa-user-pen"></i></a>
-                    <a href="#"><i class="fa-solid fa-trash"></i></a>
+                    <a href="/admin/dashboard/users/userDetail?id=<?php echo $users[$i]->id ?>"><i class="fa-solid fa-eye btn btn-primary"></i></a>
+                    <a href="#"><i class="fa-solid fa-trash btn btn-danger"></i></a>
                   </td>
                 </tr>
               <?php
