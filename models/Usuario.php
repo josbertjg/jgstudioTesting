@@ -4,7 +4,7 @@ namespace Model;
 
 class Usuario extends ActiveRecord {
     protected static $tabla = 'usuario';
-    protected static $columnasDB = ['id', 'nombre', 'apellido', 'alias', 'avatar', 'numero_documento', 'direccion', 'pais','numero_celular', 'numero_fijo','estado', 'fecha_modif','tipo_documento', 'correo','clave', 'telefono','id_rol', 'fecha_creacion','id_estado'];
+    protected static $columnasDB = ['id', 'nombre', 'apellido', 'alias', 'avatar', 'direccion', 'telefono_celular', 'telefono_fijo','correo', 'clave','numero_documento', 'id_tipo_documento','id_pais', 'id_estado','id_ciudad', 'id_rol','estado', 'fecha_modif','fecha_creacion'];
     
     public function __construct($args = [])
     {
@@ -13,20 +13,20 @@ class Usuario extends ActiveRecord {
         $this->apellido = $args['apellido'] ?? '';
         $this->alias = $args['alias'] ?? '';
         $this->avatar = $args['avatar'] ?? '';
-        $this->numero_documento = $args['numero_documento'] ?? '';
         $this->direccion = $args['direccion'] ?? '';
-        $this->pais = $args['pais'] ?? '';
-        $this->numero_celular = $args['numero_celular'] ?? '';
-        $this->numero_fijo = $args['numero_fijo'] ?? '';
-        $this->estado = $args['estado'] ?? 1;
-        $this->fecha_modif = $args['fecha_modif'] ?? '';
-        $this->tipo_documento = $args['tipo_documento'] ?? 0;
+        $this->telefono_celular = $args['telefono_celular'] ?? '';
+        $this->telefono_fijo = $args['telefono_fijo'] ?? '';
         $this->correo = $args['correo'] ?? '';
         $this->clave = $args['clave'] ?? '';
-        $this->telefono = $args['telefono'] ?? '';
-        $this->id_rol = $args['id_rol'] ?? 0;
-        $this->fecha_creacion = $args['fecha_creacion'] ?? '';
+        $this->numero_documento = $args['numero_documento'] ?? 1;
+        $this->id_tipo_documento = $args['id_tipo_documento'] ?? 1;
+        $this->id_pais = $args['id_pais'] ?? 1;
         $this->id_estado = $args['id_estado'] ?? 1;
+        $this->id_ciudad = $args['id_ciudad'] ?? 1;
+        $this->id_rol = $args['id_rol'] ?? 5;
+        $this->estado = $args['estado'] ?? 1;
+        $this->fecha_modif = $args['fecha_modif'] ?? '';
+        $this->fecha_creacion = $args['fecha_creacion'] ?? '';
     }
 
     // Validar el Login de Usuarios
@@ -95,7 +95,7 @@ class Usuario extends ActiveRecord {
         if(!$this->direccion) {
             self::$alertas['error'][] = 'La dirección no puede estar vacía';
         }
-        if(!$this->pais) {
+        if(!$this->id_pais) {
             self::$alertas['error'][] = 'El país no puede estar vacío';
         }
         return self::$alertas;
@@ -127,7 +127,7 @@ class Usuario extends ActiveRecord {
         if(!$this->direccion) {
             self::$alertas['error'][] = 'La dirección no puede estar vacía';
         }
-        if(!$this->pais) {
+        if(!$this->id_pais) {
             self::$alertas['error'][] = 'El país no puede estar vacío';
         }
         return self::$alertas;

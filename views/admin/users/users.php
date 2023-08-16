@@ -49,7 +49,9 @@
           </div>
           <div class="col-sm-6 col-12">
             <label for="">País</label>
-            <input type="text" name="pais" class="form-control">
+            <select name="id_pais" class="form-control" disabled>
+              <option value="1" selected>Afganistan</option>
+            </select>
           </div>
           <div class="col-sm-6 col-12">
             <label for="">Nro Celular</label>
@@ -62,8 +64,10 @@
           <div class="col-sm-6 col-12">
             <label for="">Rol del Usuario</label>
             <select name="id_rol" class="form-control">
-              <option value="0">Cliente</option>
-              <option value="1" selected>Empleado</option>
+              <option value="2" selected>Programador</option>
+              <option value="3">Publicista</option>
+              <option value="4">Diseñador</option>
+              <option value="5">Cliente</option>
             </select>
           </div>
           <input type="submit" value="Añadir Usuario" class="btn btn-primary col-12 mt-3">
@@ -123,13 +127,15 @@
                   <td class=" ">
                     <?php 
                       switch($users[$i]->id_rol){ 
-                        case 1: echo 'Empleado'; break;
-                        case 2: echo 'Super Administrador'; break;
+                        case 1: echo 'Super Administrador'; break;
+                        case 2: echo 'Programador'; break;
+                        case 3: echo 'Publicista'; break;
+                        case 4: echo 'Diseñador'; break;
                         default: echo 'Cliente';
                       } 
                     ?>
                   </td>
-                  <td class="a-right a-right "><?php echo ($users[$i]->id_estado == 1) ? 'Activo' : 'Inactivo' ?></td>
+                  <td class="a-right a-right "><?php echo ($users[$i]->estado == 1) ? 'Activo' : 'Inactivo' ?></td>
                   <td class=" last">
                     <a href="/admin/dashboard/users/userDetail?id=<?php echo $users[$i]->id ?>"><i class="fa-solid fa-eye btn btn-primary"></i></a>
                     <a href="#"><i class="fa-solid fa-trash btn btn-danger"></i></a>

@@ -25,14 +25,35 @@ function is_admin() : bool {
     if(!isset($_SESSION)) {
         session_start();
     }
-    return is_auth() && ($_SESSION['id_rol'] == 2);
+    return is_auth() && ($_SESSION['id_rol'] == 1);
 }
 
 function is_admin_empleado() : bool {
     if(!isset($_SESSION)) {
         session_start();
     }
-    return is_auth() && ($_SESSION['id_rol'] == 1 || $_SESSION['id_rol'] == 2);
+    return is_auth() && ($_SESSION['id_rol'] == 1 || $_SESSION['id_rol'] == 2 || $_SESSION['id_rol'] == 3 || $_SESSION['id_rol'] == 4);
+}
+
+function is_programador() : bool {
+    if(!isset($_SESSION)) {
+        session_start();
+    }
+    return is_auth() && ($_SESSION['id_rol'] == 2);
+}
+
+function is_publicista() : bool {
+    if(!isset($_SESSION)) {
+        session_start();
+    }
+    return is_auth() && ($_SESSION['id_rol'] == 3);
+}
+
+function is_diseñador() : bool {
+    if(!isset($_SESSION)) {
+        session_start();
+    }
+    return is_auth() && ($_SESSION['id_rol'] == 4);
 }
 
 function currentUser_id() : int {

@@ -65,37 +65,35 @@
           </div>
           <div class="col-sm-6 col-12">
             <label for="">País</label>
-            <input type="text" name="pais" class="form-control editable" value="<?php echo $user->pais ?>">
+            <input type="text" name="id_pais" class="form-control editable" value="<?php echo $user->id_pais ?>">
           </div>
           <div class="col-sm-6 col-12">
             <label for="">Estado</label>
-            <input type="text" name="estado" class="form-control editable" value="<?php echo $user->estado ?>">
+            <input type="text" name="id_estado" class="form-control editable" value="<?php echo $user->id_estado ?>">
           </div>
           <div class="col-sm-6 col-12">
             <label for="">Nro Celular</label>
-            <input type="text" name="numero_celular" class="form-control soloNumeros editable" value="<?php echo $user->numero_celular ?>">
+            <input type="text" name="telefono_celular" class="form-control soloNumeros editable" value="<?php echo $user->telefono_celular ?>">
           </div>
           <div class="col-sm-6 col-12">
             <label for="">Nro Fijo</label>
-            <input type="text" name="numero_fijo" class="form-control soloNumeros editable" value="<?php echo $user->numero_fijo ?>">
-          </div>
-          <div class="col-sm-6 col-12">
-            <label for="">Telefono</label>
-            <input type="text" name="telefono" class="form-control soloNumeros editable" value="<?php echo $user->telefono ?>">
+            <input type="text" name="telefono_fijo" class="form-control soloNumeros editable" value="<?php echo $user->telefono_fijo ?>">
           </div>
           <div class="col-sm-6 col-12">
             <label for="">Rol del Usuario</label>
             <select name="id_rol" class="form-control editable">
-              <option value="0" <?php echo $user->id_rol == 0 ? 'selected' : '' ?>>Cliente</option>
-              <option value="1" <?php echo $user->id_rol == 1 ? 'selected' : '' ?>>Empleado</option>
-              <option value="1" <?php echo $user->id_rol == 2 ? 'selected' : '' ?> disabled>Super Administrador</option>
+              <option value="0" <?php echo $user->id_rol == 5 ? 'selected' : '' ?>>Cliente</option>
+              <option value="1" <?php echo $user->id_rol == 2 ? 'selected' : '' ?>>Programador</option>
+              <option value="1" <?php echo $user->id_rol == 3 ? 'selected' : '' ?>>Publicista</option>
+              <option value="1" <?php echo $user->id_rol == 4 ? 'selected' : '' ?>>Diseñador</option>
+              <option value="1" <?php echo $user->id_rol == 1 ? 'selected' : '' ?> disabled>Super Administrador</option>
             </select>
           </div>
           <div class="col-sm-6 col-12">
             <label for="">Estado del Usuario</label>
-            <select name="id_estado" class="form-control" disabled>
-              <option value="1" <?php echo $user->id_estado == 1 ? 'selected' : '' ?>>Activo</option>
-              <option value="2" <?php echo $user->id_estado == 2 ? 'selected' : '' ?>>Inactivo</option>
+            <select name="estado" class="form-control" disabled>
+              <option value="1" <?php echo $user->estado == 1 ? 'selected' : '' ?>>Activo</option>
+              <option value="2" <?php echo $user->estado == 0 ? 'selected' : '' ?>>Inactivo</option>
             </select>
           </div>
           <div class="col-sm-6 col-12">
