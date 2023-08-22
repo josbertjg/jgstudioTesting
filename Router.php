@@ -20,7 +20,7 @@ class Router
     public function comprobarRutas()
     {
 
-        $url_actual = $_SERVER['PATH_INFO'] ?? '/';
+        $url_actual = strtok($_SERVER['REQUEST_URI'], '?') ?? '/';
         $method = $_SERVER['REQUEST_METHOD'];
 
         if ($method === 'GET') {
@@ -52,7 +52,7 @@ class Router
         if(isset($datos['routeName'])) $routeName = $datos['routeName'];
         
         // Utilizar el layout de acuerdo a la URL
-        $url_actual = $_SERVER['PATH_INFO'] ?? '/';
+        $url_actual = strtok($_SERVER['REQUEST_URI'], '?') ?? '/';
         if(strlen($url_actual)==1 || str_contains($url_actual,'login') || str_contains($url_actual,'signin')){
             include_once __DIR__ . '/views/layout_inicio.php';
         } else if(str_contains($url_actual,'admin')){
