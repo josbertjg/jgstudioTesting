@@ -25,15 +25,15 @@ $router->get('/admin/dashboard/users', [AdminDashboardController::class, 'users'
 $router->post('/admin/dashboard/users', [AdminDashboardController::class, 'users']);
 // Detalle del Usuario
 $router->get('/admin/dashboard/users/userDetail', [AdminDashboardController::class, 'userDetail']);
-$router->post('/admin/dashboard/users/userDetail', [AdminDashboardController::class, 'UserDetail']);
+$router->post('/admin/dashboard/users/userDetail', [AdminDashboardController::class, 'userDetail']);
 // Dashboard del cliente
 $router->get('/dashboard', [ClientDashboardController::class, 'clientDashboard']);
 $router->post('/dashboard', [ClientDashboardController::class, 'clientDashboard']);
 // CRUD de Servicios
-$router->get('/admin/dashboard/services', [AdminDashboardController::class, 'service']);
-$router->post('/admin/dashboard/services', [AdminDashboardController::class, 'service']);
+$router->get('/admin/dashboard/productos', [AdminDashboardController::class, 'productos']);
+$router->post('/admin/dashboard/productos', [AdminDashboardController::class, 'productos']);
 // Detalle del servicio
-$router->get('/admin/dashboard/services/serviceDetail', [AdminDashboardController::class, 'serviceDetail']);
-$router->post('/admin/dashboard/services/serviceDetail', [AdminDashboardController::class, 'serviceDetail']);
+$router->get('/admin/dashboard/productos/productoDetail', [AdminDashboardController::class, 'productoDetail']);
+$router->post('/admin/dashboard/productos/productoDetail', [AdminDashboardController::class, 'productoDetail']);
 
 $router->comprobarRutas();

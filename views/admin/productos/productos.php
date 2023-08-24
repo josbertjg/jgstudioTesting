@@ -1,7 +1,7 @@
 <div class="col-12">
   <div class="x_panel">
     <div class="x_title">
-      <h2>Agregar servicio</h2>
+      <h2>Agregar producto</h2>
       <ul class="navbar-right panel_toolbox">
         <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
         <!-- <li class="dropdown">
@@ -45,7 +45,7 @@
               <option value="4">Otro</option>
             </select>
           </div>
-          <input type="submit" value="Añadir servicio" class="btn btn-primary col-12 mt-3">
+          <input type="submit" value="Añadir producto" class="btn btn-primary col-12 mt-3">
         </div>
       </form>
     </div>
@@ -55,7 +55,7 @@
 <div class="col-12">
   <div class="x_panel">
     <div class="x_title">
-      <h2>Listado de servicios</h2>
+      <h2>Listado de productos</h2>
       <ul class="navbar-right panel_toolbox">
         <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
         <!-- <li class="dropdown">
@@ -91,15 +91,15 @@
         <tbody>
           <?php
             // debuguear($users)
-            for($i = 0;$i<count($servicio);$i++){
+            for($i = 0;$i<count($productos);$i++){
               ?>
                 <tr class="<?php echo ($i % 2 == 0) ? 'even' : 'odd' ?> pointer">
-                  <td class=" "><?php echo $servicio[$i]->nombre; ?></td>
-                  <td class=" "><?php echo $servicio[$i]->descripcion; ?></td>
-                  <td class=" "><?php echo $servicio[$i]->precio_unitario; ?></td>
+                  <td class=" "><?php echo $productos[$i]->nombre; ?></td>
+                  <td class=" "><?php echo $productos[$i]->descripcion; ?></td>
+                  <td class=" "><?php echo $productos[$i]->precio_unitario; ?></td>
                   <td class=" ">
                     <?php 
-                      switch($servicio[$i]->id_categoria){ 
+                      switch($productos[$i]->id_categoria){ 
                         case 1: echo 'Desarrollo'; break;
                         case 2: echo 'Diseño'; break;
                         case 3: echo 'Redes Sociales'; break;
@@ -108,9 +108,9 @@
                       } 
                     ?>
                   </td>
-                  <td class="a-right a-right "><?php echo ($servicio[$i]->estado == 1) ? 'Activo' : 'Inactivo' ?></td>
+                  <td class="a-right a-right "><?php echo ($productos[$i]->estado == 1) ? 'Activo' : 'Inactivo' ?></td>
                   <td class=" last">
-                    <a href="/admin/dashboard/servicios/servicioDetail?id=<?php echo $servicio[$i]->id ?>"><i class="fa-solid fa-eye btn btn-primary"></i></a>
+                    <a href="/admin/dashboard/productos/productoDetail?id=<?php echo $productos[$i]->id ?>"><i class="fa-solid fa-eye btn btn-primary"></i></a>
                     <a href="#"><i class="fa-solid fa-trash btn btn-danger"></i></a>
                   </td>
                 </tr>

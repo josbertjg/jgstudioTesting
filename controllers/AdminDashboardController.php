@@ -3,7 +3,7 @@
 namespace Controllers;
 
 use Model\Usuario;
-use Model\Servicio;
+use Model\Producto;
 use MVC\Router;
 
 class AdminDashboardController {
@@ -141,51 +141,51 @@ class AdminDashboardController {
   }
 
     // Vista del CRUD para usuarios
-    public static function service(Router $router) {
+    public static function productos(Router $router) {
 
       if(!is_admin_empleado()) {
         header('Location: /');
       };
   
       $alertas = [];
-      $servicio = new Servicio;
+      $producto = new Producto;
   
       if($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $servicio->sincronizar($_POST);
+        $producto->sincronizar($_POST);
   
         // debuguear($usuario);
-        $alertas = $servicio->validar_insercion();
+        $alertas = $producto->validar_insercion();
   
         if(empty($alertas)) {
-          $existeServicio = Servicio::where('nombre', $servicio->nombre);
+          $existeproducto = Producto::where('nombre', $producto->nombre);
   
-          if($existeServicio) {
-            Servicio::setAlerta('error', 'Ya existe un usuario registrado con este correo');
-            $alertas = Servicio::getAlertas();
+          if($existeproducto) {
+            Producto::setAlerta('error', 'Ya existe un usuario registrado con este correo');
+            $alertas = Producto::getAlertas();
           } else {
-            $resultado =  $servicio->guardar();
+            $resultado =  $producto->guardar();
           
             if($resultado) {
-              Servicio::setAlerta('success', 'Usuario ingresado correctamente');
-              $alertas = Servicio::getAlertas();
+              Producto::setAlerta('success', 'Usuario ingresado correctamente');
+              $alertas = Producto::getAlertas();
             }
           }
         }
       }
   
       // Render a la vista 
-      $router->render('admin/services/services', 
+      $router->render('admin/productos/productos', 
         [
-          'titulo' => 'Registrar servicio',
-          'routeName' => 'Servicios',
+          'titulo' => 'Registrar producto',
+          'routeName' => 'productos',
           'alertas' => $alertas,
-          'servicio' => Servicio::all()
+          'productos' => Producto::all()
         ]
       );
     }
   
     // Vista para el detalle del usuario
-    public static function serviceDetail(Router $router) {
+    public static function productoDetail(Router $router) {
   
       if(!is_admin_empleado()) is_auth() ? header('location: /dashboard') : header('location: /');
   
@@ -198,39 +198,39 @@ class AdminDashboardController {
       };
       
       $alertas = [];
-      $servicio = new Servicio;
+      $producto = new Producto;
   
       if($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $servicio->sincronizar($_POST);
+        $producto->sincronizar($_POST);
   
         //$alertas = $service->validar_edicion();
   
         if(empty($alertas)) {
   
-          $existeServicio = Servicio::where('nombre', $servicio->nombre);
+          $existeproducto = Producto::where('nombre', $producto->nombre);
   
-          if($existeServicio->id != $servicio->id) {
-            Servicio::setAlerta('error', 'Ya existe un usuario registrado con este correo');
-            $alertas = Servicio::getAlertas();
+          if($existeproducto->id != $producto->id) {
+            Producto::setAlerta('error', 'Ya existe un usuario registrado con este correo');
+            $alertas = Producto::getAlertas();
           }else{
             // Guardar los cambios
-            $resultado =  $servicio->guardar();
+            $resultado =  $producto->guardar();
   
             if($resultado) {
-              Servicio::setAlerta('success', 'Cambios guardados correctamente');
-              $alertas = Servicio::getAlertas();
+              Producto::setAlerta('success', 'Cambios guardados correctamente');
+              $alertas = Producto::getAlertas();
             }
           }
         }
       }
   
-      $servicio = Servicio::find($id);
+      $producto = Producto::find($id);
   
       // Render a la vista 
-      $router->render('admin/services/serviceDetail', 
+      $router->render('admin/productos/productoDetail', 
         [
-          'routeName' => currentUser_id() == $id ? 'Perfil' : 'Detalle del servicio',
-          'servicio' => $servicio,
+          'routeName' => currentUser_id() == $id ? 'Perfil' : 'Detalle del producto',
+          'producto' => $producto,
           'alertas' => $alertas
         ]
       );
