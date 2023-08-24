@@ -30,10 +30,10 @@ $router->post('/admin/dashboard/users/userDetail', [AdminDashboardController::cl
 $router->get('/dashboard', [ClientDashboardController::class, 'clientDashboard']);
 $router->post('/dashboard', [ClientDashboardController::class, 'clientDashboard']);
 // CRUD de Servicios
-$router->get('/admin/dashboard/services', [ServiceController::class, 'service']);
-$router->post('/admin/dashboard/services', [ServiceController::class, 'service']);
+$router->get('/admin/dashboard/services', [AdminDashboardController::class, 'service']);
+$router->post('/admin/dashboard/services', [AdminDashboardController::class, 'service']);
 // Detalle del servicio
-$router->get('/admin/dashboard/services/serviceDetail', [ServiceController::class, 'serviceDetail']);
-$router->post('/admin/dashboard/services/serviceDetail', [ServiceController::class, 'serviceDetail']);
+$router->get('/admin/dashboard/services/serviceDetail', [AdminDashboardController::class, 'serviceDetail']);
+$router->post('/admin/dashboard/services/serviceDetail', [AdminDashboardController::class, 'serviceDetail']);
 
 $router->comprobarRutas();

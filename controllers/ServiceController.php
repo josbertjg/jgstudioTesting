@@ -2,7 +2,7 @@
 
 namespace Controllers;
 
-use Model\Service;
+use Model\Servicio;
 use MVC\Router;
 
 class ServiceController {
