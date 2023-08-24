@@ -1,8 +1,25 @@
+<header id="inicio">
+    <h1><?php echo $titulo ?></h1>
+    <p><?php echo $descripcion ?></p>
+    <div>
+        <?php 
+            if($hasLogin){
+        ?>
+            <a href="/login">Login</a>
+        <?php
+            } if($hasSignin){
+        ?>
+            <a href="/signin">Registrate</a>
+        <?php 
+            } if($hasContact){
+        ?>
+            <a href="/#contacto">Contáctanos</a>
+        <?php } ?>
+    </div>
+</header>
 <div class="container my-5">
-    <?php 
-      include "../views/templates/alertas.php";
-    ?>
 
+  <input type="hidden" class="jg-alert" value='<?php echo json_encode($alertas) ?>'>
   <form method="POST" class="form">
     <label for="" >Correo</label>
     <input type="email" name="correo" class="form-control">
