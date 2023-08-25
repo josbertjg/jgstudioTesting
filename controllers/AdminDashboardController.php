@@ -36,6 +36,7 @@ class AdminDashboardController {
     $usuario = new Usuario;
 
     if($_SERVER['REQUEST_METHOD'] === 'POST') {
+      // debuguear($_POST);
       $usuario->sincronizar($_POST);
 
       // debuguear($usuario);

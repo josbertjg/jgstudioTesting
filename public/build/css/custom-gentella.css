@@ -5901,4 +5901,45 @@ ul.notifications {
   height: 3rem;
   margin-left: 0.35rem;
 }
+
+.jg-accordion-service-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.jg-accordion-service {
+  flex: 1 !important;
+  width: 100%;
+  max-width: 450px;
+}
+.jg-accordion-service .accordion-item .accordion-header {
+  margin: 0% !important;
+}
+.jg-accordion-service .accordion-item .accordion-header img {
+  width: 100%;
+  max-width: 450px;
+  transition: all 400ms;
+}
+.jg-accordion-service .accordion-item .accordion-header img:hover {
+  transform: scale(1.1);
+}
+.jg-accordion-service .accordion-item .accordion-header .accordion-button {
+  margin: 0% !important;
+  flex-direction: column;
+}
+.jg-accordion-service .accordion-item .accordion-header .accordion-button .jg-service-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+.jg-accordion-service .accordion-item .accordion-header .accordion-button::after {
+  display: none !important;
+}
+.jg-accordion-service .accordion-item .accordion-header .collapsed::after {
+  display: none !important;
+}
+
+.jg-accordion-service:last-child {
+  margin-right: 0% !important;
+}
 /*# sourceMappingURL=custom-gentella.css.map */

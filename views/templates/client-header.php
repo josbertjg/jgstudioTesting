@@ -81,59 +81,32 @@
                   <span class="badge bg-red">6</span>
                 </a>
                 <ul class="dropdown-menu list-unstyled msg_list" role="menu" aria-labelledby="navbarDropdown1">
-                  <li class="nav-item">
-                    <a class="dropdown-item">
-                      <span class="image"><img src="<?php echo $_SESSION['avatar'] ?? '/build/img/defaultUser.svg' ?>" alt="Profile Image" /></span>
-                      <span>
-                        <span>John Smith</span>
-                        <span class="time">3 mins ago</span>
-                      </span>
-                      <span class="message">
-                        Film festivals used to be do-or-die moments for movie makers. They were where...
-                      </span>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="dropdown-item">
-                      <span class="image"><img src="<?php echo $_SESSION['avatar'] ?? '/build/img/defaultUser.svg' ?>" alt="Profile Image" /></span>
-                      <span>
-                        <span>John Smith</span>
-                        <span class="time">3 mins ago</span>
-                      </span>
-                      <span class="message">
-                        Film festivals used to be do-or-die moments for movie makers. They were where...
-                      </span>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="dropdown-item">
-                      <span class="image"><img src="<?php echo $_SESSION['avatar'] ?? '/build/img/defaultUser.svg' ?>" alt="Profile Image" /></span>
-                      <span>
-                        <span>John Smith</span>
-                        <span class="time">3 mins ago</span>
-                      </span>
-                      <span class="message">
-                        Film festivals used to be do-or-die moments for movie makers. They were where...
-                      </span>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="dropdown-item">
-                      <span class="image"><img src="<?php echo $_SESSION['avatar'] ?? '/build/img/defaultUser.svg' ?>" alt="Profile Image" /></span>
-                      <span>
-                        <span>John Smith</span>
-                        <span class="time">3 mins ago</span>
-                      </span>
-                      <span class="message">
-                        Film festivals used to be do-or-die moments for movie makers. They were where...
-                      </span>
-                    </a>
-                  </li>
+                  <?php
+                    $carrito = json_decode($_COOKIE['carrito']);
+                    foreach($carrito as $producto):
+                  ?>
+                    <li class="nav-item">
+                      <a class="dropdown-item">
+                        <span class="image"><img src="<?php echo $_SESSION['avatar'] ?? '/build/img/diseño.png' ?>" alt="Profile Image" /></span>
+                        <span>
+                          <span><?php echo $producto->categoria->nombre ?></span>
+                          <span class="time"><?php echo $producto->item_id ?></span>
+                        </span>
+                        <span class="message">
+                          <?php 
+                            foreach($producto->productos as $prod){
+                              echo ' | '.$prod->cantidad_producto .' '. $prod->nombre_producto;
+                            }
+                          ?>
+                        </span>
+                      </a>
+                    </li>
+                  <?php endforeach; ?>
                   <li class="nav-item">
                     <div class="text-center">
                       <a class="dropdown-item">
-                        <strong>See All Alerts</strong>
-                        <i class="fa fa-angle-right"></i>
+                        <strong>Ver Carrito</strong>
+                        <i class="fa-solid fa-cart-shopping"></i>
                       </a>
                     </div>
                   </li>

@@ -4,7 +4,7 @@ namespace Model;
 
 class Producto extends ActiveRecord {
     protected static $tabla = 'producto';
-    protected static $columnasDB = ['id','nombre','descripcion','id_categoria','precio_unitario','estado','fecha_creacion','fecha_modificacion'];
+    protected static $columnasDB = ['id','nombre','descripcion','id_categoria','precio_unitario','estado','fecha_creacion','fecha_modificacion','cantidad_maxima'];
     
     public function __construct($args = [])
     {
@@ -16,6 +16,7 @@ class Producto extends ActiveRecord {
         $this->estado = $args['estado'] ?? '';
         $this->fecha_creacion = $args['fecha_creacion'] ?? '';
         $this->fecha_modificacion = $args['fecha_modificacion'] ?? '';
+        $this->cantidad_maxima = $args['cantidad_maxima'] ?? 0;
     }
 
     // Validación para servicios/productos nuevos

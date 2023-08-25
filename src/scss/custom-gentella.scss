@@ -4794,3 +4794,45 @@ ul.notifications {
   height: 3rem;
   margin-left: .35rem;
 }
+
+//Client Services
+.jg-accordion-service-container{
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.jg-accordion-service{
+  flex: 1 !important;
+  width: 100%;
+  max-width: 450px;
+  .accordion-item{
+    .accordion-header{
+      margin: 0% !important;
+      img{
+        width: 100%;
+        max-width: 450px;
+        transition: all 400ms;
+        &:hover{
+          transform: scale(1.1);
+        }
+      }
+      .accordion-button{
+        margin: 0% !important;
+        flex-direction: column;
+        .jg-service-title{
+          font-size: 1.2rem;
+          font-weight: bold;
+        }
+        &::after{
+          display: none !important;
+        }
+      }
+      .collapsed::after{
+        display: none !important;
+      }
+    }
+  }
+}
+.jg-accordion-service:last-child{
+  margin-right: 0% !important;
+}

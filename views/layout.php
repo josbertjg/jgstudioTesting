@@ -13,6 +13,8 @@
 
   <!-- Bootstrap -->
   <link href="/build/external_imports/css/bootstrap.min.css" rel="stylesheet">
+  <!-- BOOTSTRAP CSS (CDN) -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
   <!-- NProgress -->
   <link href="/build/external_imports/css/nprogress.css" rel="stylesheet">
 
@@ -25,63 +27,10 @@
   ?>
   <!-- page content -->
   <div class="right_col" role="main">
-    <div class="">
-      <!-- <div class="page-title">
-        <div class="title_left">
-          <h3>Panel del Cliente</h3>
-        </div>
-
-        <div class="title_right">
-          <div class="form-group pull-right">
-            <h2>
-              <?php 
-              //   $iconName='';
-              //   switch(strtolower($routeName)){
-              //   case 'dashboard': $iconName='bars';
-              //   break;
-              //   case 'usuarios' : $iconName='user';
-              //   break;
-              //   case 'perfil' || 'detalle del usuario' : $iconName = 'id-card-clip';
-              //   break;
-              // } 
-              ?>
-              <i class="fa-solid fa-<?php //echo $iconName ?>"></i>
-              <?php //echo $routeName; ?>
-            </h2>
-          </div>
-        </div>
-      </div> -->
-
-      <div class="clearfix"></div>
-
-      <div class="row">
-        <div class="col-md-12 col-sm-12  ">
-          <div class="x_panel">
-            <div class="x_title">
-              <h2>Plain Page</h2>
-              <ul class="nav navbar-right panel_toolbox">
-                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                </li>
-                <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                      <a class="dropdown-item" href="#">Settings 1</a>
-                      <a class="dropdown-item" href="#">Settings 2</a>
-                    </div>
-                </li>
-                <li><a class="close-link"><i class="fa fa-close"></i></a>
-                </li>
-              </ul>
-              <div class="clearfix"></div>
-            </div>
-            <div class="x_content">
-              <?php 
-                echo $contenido; 
-              ?>
-            </div>
-          </div>
-        </div>
-      </div>
+    <div class="row">
+      <?php 
+        echo $contenido; 
+      ?>
     </div>
   </div>
   <!-- /page content -->
@@ -99,14 +48,17 @@
     <script src="/build/external_imports/js/jquery.min.js"></script>
     <!-- Bootstrap -->
    <script src="/build/external_imports/js/bootstrap.bundle.min.js"></script>
+   <!-- BOOTSTRAP JAVASCRIPT (CDN) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
     <!-- FastClick -->
     <script src="/build/external_imports/js/fastclick.js"></script>
     <!-- NProgress -->
     <script src="/build/external_imports/js/nprogress.js"></script>
     <!-- Font Awesome -->
     <script src="https://kit.fontawesome.com/814f6eaa13.js" crossorigin="anonymous"></script>
-    
     <!-- Custom Theme Scripts -->
     <script src="/build/js/gentella/custom.min.js"></script>
+    <!-- Custom Javascript -->
+    <script src="/build/js/main.min.js"></script>
 </body>
 </html>
