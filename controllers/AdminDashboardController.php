@@ -3,6 +3,7 @@
 namespace Controllers;
 
 use Model\Usuario;
+use Model\Producto;
 use MVC\Router;
 
 class AdminDashboardController {
@@ -35,6 +36,7 @@ class AdminDashboardController {
     $usuario = new Usuario;
 
     if($_SERVER['REQUEST_METHOD'] === 'POST') {
+      // debuguear($_POST);
       $usuario->sincronizar($_POST);
 
       // debuguear($usuario);
@@ -139,4 +141,99 @@ class AdminDashboardController {
     );
   }
 
+    // Vista del CRUD para usuarios
+    public static function productos(Router $router) {
+
+      if(!is_admin_empleado()) {
+        header('Location: /');
+      };
+  
+      $alertas = [];
+      $producto = new Producto;
+  
+      if($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $producto->sincronizar($_POST);
+  
+        // debuguear($usuario);
+        $alertas = $producto->validar_insercion();
+  
+        if(empty($alertas)) {
+          $existeproducto = Producto::where('nombre', $producto->nombre);
+  
+          if($existeproducto) {
+            Producto::setAlerta('error', 'Ya existe un usuario registrado con este correo');
+            $alertas = Producto::getAlertas();
+          } else {
+            $resultado =  $producto->guardar();
+          
+            if($resultado) {
+              Producto::setAlerta('success', 'Usuario ingresado correctamente');
+              $alertas = Producto::getAlertas();
+            }
+          }
+        }
+      }
+  
+      // Render a la vista 
+      $router->render('admin/productos/productos', 
+        [
+          'titulo' => 'Registrar producto',
+          'routeName' => 'productos',
+          'alertas' => $alertas,
+          'productos' => Producto::all()
+        ]
+      );
+    }
+  
+    // Vista para el detalle del usuario
+    public static function productoDetail(Router $router) {
+  
+      if(!is_admin_empleado()) is_auth() ? header('location: /dashboard') : header('location: /');
+  
+      $id = $_GET['id'];
+      
+      if(!is_admin()) {
+        if(currentUser_id() != $id){
+          header('Location: /admin/dashboard');
+        }
+      };
+      
+      $alertas = [];
+      $producto = new Producto;
+  
+      if($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $producto->sincronizar($_POST);
+  
+        //$alertas = $service->validar_edicion();
+  
+        if(empty($alertas)) {
+  
+          $existeproducto = Producto::where('nombre', $producto->nombre);
+  
+          if($existeproducto->id != $producto->id) {
+            Producto::setAlerta('error', 'Ya existe un usuario registrado con este correo');
+            $alertas = Producto::getAlertas();
+          }else{
+            // Guardar los cambios
+            $resultado =  $producto->guardar();
+  
+            if($resultado) {
+              Producto::setAlerta('success', 'Cambios guardados correctamente');
+              $alertas = Producto::getAlertas();
+            }
+          }
+        }
+      }
+  
+      $producto = Producto::find($id);
+  
+      // Render a la vista 
+      $router->render('admin/productos/productoDetail', 
+        [
+          'routeName' => currentUser_id() == $id ? 'Perfil' : 'Detalle del producto',
+          'producto' => $producto,
+          'alertas' => $alertas
+        ]
+      );
+    }
 }

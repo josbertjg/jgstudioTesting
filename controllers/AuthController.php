@@ -8,8 +8,13 @@ use MVC\Router;
 
 class AuthController {
     public static function inicio(Router $router) {
-        $router->render('inicio/index'
-    );
+        $router->render('inicio/index', [
+            'titulo' => 'Web & Marketing',
+            'descripcion' => 'Estudiamos tu nicho y desarrollamos una estrategia de Marketing Digital para crear <b>Posicionamiento</b> a tu imagen y marca, impulsando a la vez tus <b>Ventas</b> y transformando a tus visitantes en tus mejores <b>Clientes.</b>',
+            'hasLogin' => true,
+            'hasContact' => true,
+            'hasSignin' => false
+        ]);
     }
 
     public static function login(Router $router) {
@@ -59,19 +64,12 @@ class AuthController {
         // Render a la vista 
         $router->render('auth/login', [
             'titulo' => 'Iniciar Sesión',
-            'alertas' => $alertas
+            'alertas' => $alertas,
+            'descripcion' => 'Inicia sesion para conocer todos nuestros <b>Precios</b> y <b>Paquetes</b>, además de que tambien podrás comprar los <b>Productos</b> y <b>Servicios</b> que necesites.',
+            'hasLogin' => false,
+            'hasContact' => true,
+            'hasSignin' => true
         ]);
-    }
-
-    public static function xy(Router $router) {
-        // Render a la vista 
-        $router->render('admin/dashboard'
-        // , 
-        // [
-        //     'titulo' => 'Iniciar Sesión',
-        //     'alertas' => $alertas
-        // ]
-    );
     }
 
     public static function logout() {
@@ -84,11 +82,6 @@ class AuthController {
     }
 
     public static function signin(Router $router) {
-
-
-        // if(!is_admin()) {
-        //     header('Location: /login');
-        // }
 
         $alertas = [];
         $usuario = new Usuario;
@@ -135,9 +128,13 @@ class AuthController {
 
         // Render a la vista
         $router->render('auth/signin', [
-            'titulo' => 'Crea tu cuenta en JG Studio',
+            'titulo' => 'Registrate',
             'usuario' => $usuario, 
-            'alertas' => $alertas
+            'alertas' => $alertas,
+            'descripcion' => 'Registrate y empieza a disfrutar de los <b>Beneficios</b> de nuestros servicios, no pierdas el <b>Tiempo</b> y has que tu imagen sea visible, <b>Profesional</b> y agradable en internet.',
+            'hasLogin' => true,
+            'hasContact' => true,
+            'hasSignin' => false
         ]);
     }
 

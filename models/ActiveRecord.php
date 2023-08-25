@@ -131,6 +131,13 @@ class ActiveRecord {
         return array_shift( $resultado ) ;
     }
 
+    // Busqueda Where que devuelve todos los registros
+    public static function findAll($columna, $valor) {
+        $query = "SELECT * FROM " . static::$tabla . " WHERE ${columna} = '${valor}'";
+        $resultado = self::consultarSQL($query);
+        return $resultado;
+    }
+
     // crea un nuevo registro
     public function crear() {
         // Sanitizar los datos
