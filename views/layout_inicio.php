@@ -110,5 +110,5 @@
 <!-- SWEET ALERT -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <!-- Custom Javascript -->
-<script src="/build/js/main.min.js"></script>
+<script src="/build/js/main.min.js?25"></script>
 </html>

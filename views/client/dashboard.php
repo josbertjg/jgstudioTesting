@@ -1,21 +1,20 @@
 <div class="jg-accordion-service-container flex-column flex-md-row align-items-md-start align-items-center">
   <?php 
-    // echo json_encode($servicios);
-    for($i = 0; $i<count($servicios);$i++){
-      if(count($servicios[$i]->productos)>0){
+    foreach($servicios as $servicio){
+      if(count($servicio->productos)>0){
   ?>
-    <div class="accordion jg-accordion-service me-md-3 me-none my-3 my-md-none" id="servicio<?php echo $servicios[$i]->categoria->id ?>">
+    <div class="accordion jg-accordion-service me-md-3 me-none my-3 my-md-none" id="servicio<?php echo $servicio->categoria->id ?>">
       <div class="accordion-item">
         <h2 class="accordion-header">
-          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<?php echo $servicios[$i]->categoria->id ?>" aria-expanded="true" aria-controls="collapse<?php echo $servicios[$i]->categoria->id ?>">
-            <span class="jg-service-title"><?php echo $servicios[$i]->categoria->nombre ?></span>
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<?php echo $servicio->categoria->id ?>" aria-expanded="true" aria-controls="collapse<?php echo $servicio->categoria->id ?>">
+            <span class="jg-service-title"><?php echo $servicio->categoria->nombre ?></span>
             <img src="/build/img/rrss.png" alt="">
           </button>
         </h2>
-        <div id="collapse<?php echo $servicios[$i]->categoria->id ?>" class="accordion-collapse collapse" data-bs-parent="#servicio<?php echo $servicios[$i]->categoria->id ?>">
+        <div id="collapse<?php echo $servicio->categoria->id ?>" class="accordion-collapse collapse" data-bs-parent="#servicio<?php echo $servicio->categoria->id ?>">
           <div class="accordion-body">
             <form method="POST">
-              <?php foreach($servicios[$i]->productos as $producto){ ?>
+              <?php foreach($servicio->productos as $producto){ ?>
                 <label for=""><?php echo $producto->nombre ?> <b>$<?php echo $producto->precio_unitario ?></b></label>
                 <p><?php echo $producto->descripcion ?></p>
                 <input 
@@ -24,12 +23,13 @@
                   name="producto-<?php echo $producto->id ?>" 
                   value='<?php 
                     $objeto = (object)[];
-                    $objeto->id_categoria = $servicios[$i]->categoria->id;
-                    $objeto->nombre_categoria = $servicios[$i]->categoria->nombre;
+                    $objeto->id_categoria = $servicio->categoria->id;
+                    $objeto->nombre_categoria = $servicio->categoria->nombre;
                     $objeto->id_producto = $producto->id;
                     $objeto->nombre_producto = $producto->nombre;
                     $objeto->cantidad_producto = 0;
                     $objeto->item_id = uniqid();
+                    // print_r($objeto);
                     echo json_encode($objeto)
                   ?>'
                 >
@@ -40,8 +40,8 @@
                     cantidad_maxima="<?php echo $producto->cantidad_maxima ?>" 
                     precio="<?php echo $producto->precio_unitario ?>" 
                     producto_id="<?php echo $producto->id ?>"  
-                    categoria_id="<?php echo $servicios[$i]->categoria->id ?>"
-                    class="form-control producto producto-categoria-<?php echo $servicios[$i]->categoria->id ?>" 
+                    categoria_id="<?php echo $servicio->categoria->id ?>"
+                    class="form-control producto producto-categoria-<?php echo $servicio->categoria->id ?>" 
                     type="number" 
                     value="0"
                   >
@@ -49,14 +49,14 @@
                 <?php }else{ ?>
                 <div class="form-check form-switch">
                   <input 
-                    class="form-check-input producto producto-categoria-<?php echo $servicios[$i]->categoria->id ?>" 
+                    class="form-check-input producto producto-categoria-<?php echo $servicio->categoria->id ?>" 
                     type="checkbox" 
                     role="switch" 
                     id="checkbox-producto-<?php echo $producto->id ?>" 
                     cantidad_maxima="<?php echo $producto->cantidad_maxima ?>" 
                     precio="<?php echo $producto->precio_unitario ?>" 
                     producto_id="<?php echo $producto->id ?>"
-                    categoria_id="<?php echo $servicios[$i]->categoria->id ?>"
+                    categoria_id="<?php echo $servicio->categoria->id ?>"
                   >
                   <label class="form-check-label" for="checkbox-producto-<?php echo $producto->id ?>">Añadir <?php echo $producto->nombre ?>?</label>
                 </div>
@@ -65,9 +65,9 @@
                 } ?>
                 <div class="jg-service-total">
                   <span>Total: </span>
-                  <span> $ <span class="total total-<?php echo $servicios[$i]->categoria->id ?>">0.00</span></span>
+                  <span> $ <span class="total total-<?php echo $servicio->categoria->id ?>">0.00</span></span>
                 </div>
-              <input type="submit" class="btn btn-warning btn-block add-carrito-<?php echo $servicios[$i]->categoria->id ?>" value="Añadir al Carrito" disabled="true">
+              <input type="submit" class="btn btn-warning btn-block add-carrito-<?php echo $servicio->categoria->id ?>" value="Añadir al Carrito" disabled="true">
             </form>
           </div>
         </div>

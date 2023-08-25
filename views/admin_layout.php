@@ -17,7 +17,7 @@
   <link href="/build/external_imports/css/nprogress.css" rel="stylesheet">
 
   <!-- Custom Theme Style -->
-  <link rel="stylesheet" href="/build/css/custom-gentella.css">
+  <link rel="stylesheet" href="/build/css/custom-gentella.css?25">
 </head>
 <body class="nav-md">
   <?php 
@@ -83,6 +83,6 @@
     <!-- Validaciones -->
     <script src="/build/js/validaciones.js"></script>
     <!-- Custom Javascript -->
-    <script src="/build/js/main.min.js"></script>
+    <script src="/build/js/main.min.js?25"></script>
 </body>
 </html>
