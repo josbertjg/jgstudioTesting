@@ -10,7 +10,7 @@ class AdminDashboardController {
 
   //Vista del dashboard para admins y empleados
   public static function adminDashboard(Router $router) {
-   
+
     if(!is_admin_empleado()) {
       header('Location: /');
     };
@@ -27,7 +27,7 @@ class AdminDashboardController {
 
   // Vista del CRUD para usuarios
   public static function users(Router $router) {
-   
+
     if(!is_admin_empleado()) {
       header('Location: /');
     };
@@ -49,18 +49,10 @@ class AdminDashboardController {
           Usuario::setAlerta('error', 'Ya existe un usuario registrado con este correo');
           $alertas = Usuario::getAlertas();
         } else {
-          // Hashear el password
-          // $usuario->hashPassword();
 
-          // Eliminar password2
-          // unset($usuario->password2);
-
-          // Generar el Token
-          // $usuario->crearToken();
-          // Crear un nuevo usuario
           $resultado =  $usuario->guardar();
           
-          // debuguear($resultado);
+          //debuguear($resultado);
 
           // Enviar email
           // $email = new Email($usuario->email, $usuario->nombre, $usuario->token);
@@ -141,7 +133,7 @@ class AdminDashboardController {
     );
   }
 
-    // Vista del CRUD para usuarios
+    // Vista del CRUD para productos
     public static function productos(Router $router) {
 
       if(!is_admin_empleado()) {
@@ -151,27 +143,36 @@ class AdminDashboardController {
       $alertas = [];
       $producto = new Producto;
   
-      if($_SERVER['REQUEST_METHOD'] === 'POST') {
+      if($_SERVER['REQUEST_METHOD'] === 'POST' ) {
         $producto->sincronizar($_POST);
   
-        // debuguear($usuario);
-        $alertas = $producto->validar_insercion();
+        if($producto){
+          $alertas = $producto->validar_insercion();
   
-        if(empty($alertas)) {
-          $existeproducto = Producto::where('nombre', $producto->nombre);
-  
-          if($existeproducto) {
-            Producto::setAlerta('error', 'Ya existe un usuario registrado con este correo');
-            $alertas = Producto::getAlertas();
-          } else {
-            $resultado =  $producto->guardar();
-          
-            if($resultado) {
-              Producto::setAlerta('success', 'Usuario ingresado correctamente');
+          if(empty($alertas)) {
+
+            $condiciones = array(
+              "nombre" => $producto->nombre,
+              "descripcion" => $producto->descripcion
+            );
+
+            $existeproducto = Producto::dinamicWhere($condiciones);
+    
+            //debuguear($existeproducto);
+
+            if($existeproducto) {
+              Producto::setAlerta('error', 'Ya existe un producto registrado con este correo');
               $alertas = Producto::getAlertas();
+            } else {
+              $resultado =  $producto->guardar();
+              // debuguear($resultado);
+              if($resultado) {
+                Producto::setAlerta('success', 'Producto ingresado correctamente');
+                $alertas = Producto::getAlertas();
+              }
             }
           }
-        }
+        }        
       }
   
       // Render a la vista 
@@ -185,7 +186,7 @@ class AdminDashboardController {
       );
     }
   
-    // Vista para el detalle del usuario
+    // Vista para el detalle del productos
     public static function productoDetail(Router $router) {
   
       if(!is_admin_empleado()) is_auth() ? header('location: /dashboard') : header('location: /');

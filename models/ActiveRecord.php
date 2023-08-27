@@ -150,13 +150,15 @@ class ActiveRecord {
         $query .= join("', '", array_values($atributos));
         $query .= " ') ";
 
-        // debuguear($query); // Descomentar si no te funciona algo
+        //debuguear($query); // Descomentar si no te funciona algo
 
         // Resultado de la consulta
         $resultado = self::$db->query($query);
+
+        //debuguear($resultado); // Descomentar para ver el resultado obtenido 
         return [
-           'resultado' =>  $resultado,
-           'id' => self::$db->insert_id
+            'resultado' =>  $resultado,
+            'id' => self::$db->insert_id
         ];
     }
 
@@ -187,5 +189,25 @@ class ActiveRecord {
         $query = "DELETE FROM "  . static::$tabla . " WHERE id = " . self::$db->escape_string($this->id) . " LIMIT 1";
         $resultado = self::$db->query($query);
         return $resultado;
+    }
+
+    // Busqueda Where con columnas dinámicas 
+    public static function dinamicWhere($condiciones) {
+        $query = "SELECT * FROM " . static::$tabla . " WHERE ";
+    
+        $first = true;
+        foreach ($condiciones as $columna => $valor) {
+            if (!$first) {
+                $query .= " AND ";
+            }
+            $query .= "${columna} = '${valor}'";
+    
+            $first = false;
+        }
+    
+        //debuguear($query);
+
+        $resultado = self::consultarSQL($query);
+        return array_shift($resultado);
     }
 }

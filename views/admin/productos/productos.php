@@ -90,7 +90,7 @@
 
         <tbody>
           <?php
-            // debuguear($users)
+            // debuguear($productos)
             for($i = 0;$i<count($productos);$i++){
               ?>
                 <tr class="<?php echo ($i % 2 == 0) ? 'even' : 'odd' ?> pointer">
