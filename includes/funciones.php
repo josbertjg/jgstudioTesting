@@ -56,6 +56,14 @@ function is_diseñador() : bool {
     return is_auth() && ($_SESSION['id_rol'] == 4);
 }
 
+function is_cliente() : bool {
+    if(!isset($_SESSION)) {
+        session_start();
+    }
+    return is_auth() && ($_SESSION['id_rol'] == 5);
+}
+
 function currentUser_id() : int {
     return $_SESSION['id'];
 }
+

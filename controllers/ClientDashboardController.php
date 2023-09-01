@@ -84,5 +84,54 @@ class ClientDashboardController {
       ]
     );
   }
+  
+  // Vista para el detalle del cliente
+public static function clientProfile(Router $router) {
+  // Si el usuario no es un cliente, se le redirige a la página de inicio o de registro
+  if(!is_cliente()) {
+    header('location: /');
+  }
+    $id = currentUser_id() ;
+    $client = new Usuario;
+    $client = Usuario::find($id);
+    $alertas = [];
+
+    if($_SERVER['REQUEST_METHOD'] === 'POST') {
+      $client->sincronizar($_POST);
+
+      $alertas = $client->validar_edicion();
+
+      if(empty($alertas)) {
+
+        $existeUsuario = Usuario::where('correo', $client->correo);
+
+        if($existeUsuario->id != $client->id) {
+          Usuario::setAlerta('error', 'Ya existe un usuario registrado con este correo');
+          $alertas = Usuario::getAlertas();
+        }else{
+          // Guardar los cambios
+          $resultado =  $client->guardar();
+          
+          // Enviar email
+          // $email = new Email($usuario->email, $usuario->nombre, $usuario->token);
+          // $email->enviarConfirmacion();
+  
+          if($resultado) {
+            Usuario::setAlerta('success', 'Cambios guardados correctamente');
+            $alertas = Usuario::getAlertas();
+          }
+        }
+      }
+    }
+    // Render a la vista 
+  $router->render('client/profile', 
+    [
+      'routeName' => 'Perfil',
+      'client' => $client,
+      'alertas' => $alertas
+      
+    ]
+  );
+}
 
 }

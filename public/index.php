@@ -14,6 +14,10 @@ $router->get('/', [AuthController::class, 'inicio']);
 // Login
 $router->get('/login', [AuthController::class, 'login']);
 $router->post('/login', [AuthController::class, 'login']);
+// Logout
+$router->get('/logout', [AuthController::class, 'logout']);
+$router->post('/logout', [AuthController::class, 'logout']);
+
 // Registro de cliente
 $router->get('/signin', [AuthController::class, 'signin']);
 $router->post('/signin', [AuthController::class, 'signin']);
@@ -26,6 +30,9 @@ $router->post('/admin/dashboard/users', [AdminDashboardController::class, 'users
 // Detalle del Usuario
 $router->get('/admin/dashboard/users/userDetail', [AdminDashboardController::class, 'userDetail']);
 $router->post('/admin/dashboard/users/userDetail', [AdminDashboardController::class, 'userDetail']);
+// Detalle del Usuario cliente
+$router->get('/client/profile', [ClientDashboardController::class, 'clientProfile']);
+$router->post('/client/profile', [ClientDashboardController::class, 'clientProfile']);
 // Dashboard del cliente
 $router->get('/dashboard', [ClientDashboardController::class, 'clientDashboard']);
 $router->post('/dashboard', [ClientDashboardController::class, 'clientDashboard']);
