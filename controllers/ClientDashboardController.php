@@ -72,6 +72,7 @@ class ClientDashboardController {
           //mandar una alerta de que debe añadir al menos un producto de la categoria seleccionada
         }
         setcookie('carrito',json_encode($carrito));
+        header('location: /dashboard');
       }
     }
 

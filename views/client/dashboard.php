@@ -16,8 +16,12 @@
           <div class="accordion-body">
             <form method="POST">
               <?php foreach($servicios[$i]->productos as $producto){ ?>
-                <label for=""><?php echo $producto->nombre ?> <b>$<?php echo $producto->precio_unitario ?></b></label>
-                <p><?php echo $producto->descripcion ?></p>
+                <label class="product-title">
+                  <i class="fa-solid fa-check"></i>
+                  <?php echo $producto->nombre ?> 
+                  <b>$<?php echo $producto->precio_unitario ?></b>
+                </label>
+                <p class="product-description"><?php echo $producto->descripcion ?></p>
                 <input 
                   type="hidden" 
                   class="producto-<?php echo $producto->id ?>" 
@@ -34,20 +38,20 @@
                   ?>'
                 >
                 <?php if($producto->cantidad_maxima>1){ ?>
-                <div>
-                  <label for="">Cantidad</label>
+                <div class="product-input d-flex align-items-center">
+                  <label class="product-input-title">Cantidad:</label>
                   <input 
                     cantidad_maxima="<?php echo $producto->cantidad_maxima ?>" 
                     precio="<?php echo $producto->precio_unitario ?>" 
                     producto_id="<?php echo $producto->id ?>"  
                     categoria_id="<?php echo $servicios[$i]->categoria->id ?>"
-                    class="form-control producto producto-categoria-<?php echo $servicios[$i]->categoria->id ?>" 
+                    class="form-control producto producto-categoria-<?php echo $servicios[$i]->categoria->id ?> product-input-text" 
                     type="number" 
                     value="0"
                   >
                 </div>
                 <?php }else{ ?>
-                <div class="form-check form-switch">
+                <div class="form-check form-switch product-input">
                   <input 
                     class="form-check-input producto producto-categoria-<?php echo $servicios[$i]->categoria->id ?>" 
                     type="checkbox" 
@@ -58,11 +62,11 @@
                     producto_id="<?php echo $producto->id ?>"
                     categoria_id="<?php echo $servicios[$i]->categoria->id ?>"
                   >
-                  <label class="form-check-label" for="checkbox-producto-<?php echo $producto->id ?>">Añadir <?php echo $producto->nombre ?>?</label>
+                  <label class="form-check-label product-input-title" for="checkbox-producto-<?php echo $producto->id ?>">Añadir <?php echo $producto->nombre ?>?</label>
                 </div>
-
-              <?php } 
+                <?php } 
                 } ?>
+                <hr class="mb-1">
                 <div class="jg-service-total">
                   <span>Total: </span>
                   <span> $ <span class="total total-<?php echo $servicios[$i]->categoria->id ?>">0.00</span></span>

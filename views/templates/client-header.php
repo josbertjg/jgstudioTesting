@@ -78,12 +78,19 @@
               <li role="presentation" class="nav-item dropdown open">
                 <a href="javascript:;" class="dropdown-toggle info-number" id="navbarDropdown1" data-toggle="dropdown" aria-expanded="false">
                   <i class="fa-solid fa-cart-shopping"></i>
-                  <span class="badge bg-red">6</span>
+                  <?php 
+                    if(isset($_COOKIE['carrito'])) $carrito = json_decode($_COOKIE['carrito']);
+                    else $carrito = [];
+
+                    if(count($carrito)>0):
+                  ?>
+                  <span class="badge bg-red"><?php echo count($carrito) ?></span>
+                  <?php endif; ?>
                 </a>
                 <ul class="dropdown-menu list-unstyled msg_list" role="menu" aria-labelledby="navbarDropdown1">
                   <?php
-                    $carrito = json_decode($_COOKIE['carrito']);
-                    foreach($carrito as $producto):
+                    if(count($carrito)>0){
+                      foreach($carrito as $producto):
                   ?>
                     <li class="nav-item">
                       <a class="dropdown-item">
@@ -98,10 +105,14 @@
                               echo ' | '.$prod->cantidad_producto .' '. $prod->nombre_producto;
                             }
                           ?>
+                          |
                         </span>
                       </a>
                     </li>
-                  <?php endforeach; ?>
+                  <?php 
+                      endforeach; 
+                     }else echo "<h2 style='text-align: center'>Tu carrito esta vacío</h2>";
+                  ?>
                   <li class="nav-item">
                     <div class="text-center">
                       <a class="dropdown-item">

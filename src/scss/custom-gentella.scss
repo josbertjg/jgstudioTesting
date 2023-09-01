@@ -4836,3 +4836,43 @@ ul.notifications {
 .jg-accordion-service:last-child{
   margin-right: 0% !important;
 }
+.product-title{
+  font-size: 1rem;
+  font-weight: bold;
+  margin-bottom: 0%;
+  margin-top: 1.5rem;
+  color: black;
+  b{
+    color: darken(v.$morado,10);
+    // font-size: .8rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+  }
+}
+.product-title:first-child{
+  margin-top: 0rem;
+}
+.product-description{
+  font-size: .8rem;
+  color: grey;
+  margin-bottom: 0%;
+}
+.product-input-title{
+  font-size: .8rem;
+  margin-right: 1rem;
+  margin-bottom: 0%;
+  font-weight: bold;
+}
+.product-input-text{
+  width: 40% !important;
+}
+.jg-service-total{
+  display: flex;
+  justify-content: end;
+  font-weight: bold;
+  font-size: 1rem;
+  font-style: italic;
+  & span:last-child{
+    color: v.$morado;
+  }
+}
