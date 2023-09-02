@@ -79,8 +79,7 @@
                 <a href="javascript:;" class="dropdown-toggle info-number" id="navbarDropdown1" data-toggle="dropdown" aria-expanded="false">
                   <i class="fa-solid fa-cart-shopping"></i>
                   <?php 
-                    if(isset($_COOKIE['carrito'])) $carrito = json_decode($_COOKIE['carrito']);
-                    else $carrito = [];
+                    $carrito = getCarrito();
 
                     if(count($carrito)>0):
                   ?>
@@ -93,7 +92,7 @@
                       foreach($carrito as $producto):
                   ?>
                     <li class="nav-item">
-                      <a class="dropdown-item">
+                      <a class="dropdown-item" href="/dashboard/miCarrito">
                         <span class="image"><img src="<?php echo $_SESSION['avatar'] ?? '/build/img/diseño.png' ?>" alt="Profile Image" /></span>
                         <span>
                           <span><?php echo $producto->categoria->nombre ?></span>
@@ -115,7 +114,7 @@
                   ?>
                   <li class="nav-item">
                     <div class="text-center">
-                      <a class="dropdown-item">
+                      <a class="dropdown-item" href="/dashboard/miCarrito">
                         <strong>Ver Carrito</strong>
                         <i class="fa-solid fa-cart-shopping"></i>
                       </a>

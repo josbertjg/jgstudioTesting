@@ -66,6 +66,37 @@ class Usuario extends ActiveRecord {
         return self::$alertas;
     }
 
+    //Validando que el usuario pueda comprar o no
+    public function userCanBuy(): bool {
+
+        if(!$this->direccion) {
+            return false;
+        }
+        if(!$this->telefono_celular) {
+            return false;
+        }
+        if(!$this->telefono_fijo) {
+            return false;
+        }
+        if(!$this->numero_documento) {
+            return false;
+        }
+        if(!$this->id_tipo_documento) {
+            return false;
+        }
+        if(!$this->id_pais) {
+            return false;
+        }
+        if(!$this->id_estado) {
+            return false;
+        }
+        if(!$this->id_ciudad) {
+            return false;
+        }
+
+        return true;
+    }
+
     // Validación para registro de usuarios por parte del admin
     public function validar_insercion() {
         if(!$this->nombre) {
@@ -127,9 +158,22 @@ class Usuario extends ActiveRecord {
         if(!$this->direccion) {
             self::$alertas['error'][] = 'La dirección no puede estar vacía';
         }
+        if(!$this->telefono_celular) {
+            self::$alertas['error'][] = 'El telefono celular no puede estar vacío';
+        }
+        if(!$this->telefono_fijo) {
+            self::$alertas['error'][] = 'El telefono fijo no puede estar vacío';
+        }
         if(!$this->id_pais) {
             self::$alertas['error'][] = 'El país no puede estar vacío';
         }
+        if(!$this->id_estado) {
+            self::$alertas['error'][] = 'El estado no puede estar vacío';
+        }
+        if(!$this->id_ciudad) {
+            self::$alertas['error'][] = 'La ciudad no puede estar vacía';
+        }
+
         return self::$alertas;
     }
 

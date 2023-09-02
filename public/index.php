@@ -30,12 +30,15 @@ $router->post('/admin/dashboard/users', [AdminDashboardController::class, 'users
 // Detalle del Usuario
 $router->get('/admin/dashboard/users/userDetail', [AdminDashboardController::class, 'userDetail']);
 $router->post('/admin/dashboard/users/userDetail', [AdminDashboardController::class, 'userDetail']);
-// Detalle del Usuario cliente
-$router->get('/client/profile', [ClientDashboardController::class, 'clientProfile']);
-$router->post('/client/profile', [ClientDashboardController::class, 'clientProfile']);
 // Dashboard del cliente
 $router->get('/dashboard', [ClientDashboardController::class, 'clientDashboard']);
 $router->post('/dashboard', [ClientDashboardController::class, 'clientDashboard']);
+// Detalle del Usuario cliente
+$router->get('/client/profile', [ClientDashboardController::class, 'clientProfile']);
+$router->post('/client/profile', [ClientDashboardController::class, 'clientProfile']);
+// Carrito
+$router->get('/dashboard/miCarrito', [ClientDashboardController::class, 'miCarrito']);
+$router->post('/dashboard/miCarrito', [ClientDashboardController::class, 'miCarrito']);
 // CRUD de Servicios
 $router->get('/admin/dashboard/productos', [AdminDashboardController::class, 'productos']);
 $router->post('/admin/dashboard/productos', [AdminDashboardController::class, 'productos']);
