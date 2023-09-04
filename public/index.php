@@ -40,10 +40,16 @@ $router->post('/client/profile', [ClientDashboardController::class, 'clientProfi
 $router->get('/dashboard/miCarrito', [ClientDashboardController::class, 'miCarrito']);
 $router->post('/dashboard/miCarrito', [ClientDashboardController::class, 'miCarrito']);
 // CRUD de Servicios
-$router->get('/admin/dashboard/productos', [AdminDashboardController::class, 'productos']);
-$router->post('/admin/dashboard/productos', [AdminDashboardController::class, 'productos']);
+$router->get('/admin/productos', [AdminDashboardController::class, 'productos']);
+$router->post('/admin/productos', [AdminDashboardController::class, 'productos']);
 // Detalle del servicio
-$router->get('/admin/dashboard/productos/productoDetail', [AdminDashboardController::class, 'productoDetail']);
-$router->post('/admin/dashboard/productos/productoDetail', [AdminDashboardController::class, 'productoDetail']);
+$router->get('/admin/productos/productoDetail', [AdminDashboardController::class, 'productoDetail']);
+$router->post('/admin/productos/productoDetail', [AdminDashboardController::class, 'productoDetail']);
+// Lista donfiguración
+$router->get('/admin/configuracion', [AdminDashboardController::class, 'configuracionView']);
+// Categorias
+$router->get('/admin/category', [AdminDashboardController::class, 'category']);
+$router->post('/admin/category', [AdminDashboardController::class, 'category']);
+
 
 $router->comprobarRutas();

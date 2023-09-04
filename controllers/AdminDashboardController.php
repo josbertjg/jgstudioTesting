@@ -3,8 +3,10 @@
 namespace Controllers;
 
 use Model\Usuario;
+use Model\Categoria;
 use Model\Producto;
 use MVC\Router;
+use Intervention\Image\ImageManagerStatic as Image;
 
 class AdminDashboardController {
 
@@ -95,6 +97,7 @@ class AdminDashboardController {
 
     if($_SERVER['REQUEST_METHOD'] === 'POST') {
       $usuario->sincronizar($_POST);
+      //debuguear($usuario);
 
       $alertas = $usuario->validar_edicion();
 
@@ -102,7 +105,9 @@ class AdminDashboardController {
 
         $existeUsuario = Usuario::where('correo', $usuario->correo);
 
-        if($existeUsuario->id != $usuario->id) {
+        //debuguear($existeUsuario);
+
+        if($existeUsuario != null && $existeUsuario->id != $usuario->id) {
           Usuario::setAlerta('error', 'Ya existe un usuario registrado con este correo');
           $alertas = Usuario::getAlertas();
         }else{
@@ -116,6 +121,9 @@ class AdminDashboardController {
           if($resultado) {
             Usuario::setAlerta('success', 'Cambios guardados correctamente');
             $alertas = Usuario::getAlertas();
+          }else{
+              Usuario::setAlerta('error', 'Error al crear o actualizar el usuario');
+              $alertas = Usuario::getAlertas();
           }
         }
       }
@@ -234,6 +242,128 @@ class AdminDashboardController {
           'routeName' => currentUser_id() == $id ? 'Perfil' : 'Detalle del producto',
           'producto' => $producto,
           'alertas' => $alertas
+        ]
+      );
+    }
+
+    public static function configuracionView(Router $router){
+
+      if(!is_admin_empleado()) is_auth() ? header('location: /dashboard') : header('location: /');
+  
+      $id = $_GET['id'];
+      
+      if(!is_admin()) {
+        if(currentUser_id() != $id){
+          header('Location: /admin/dashboard');
+        }
+      };
+      
+      $router->render('admin/settings/indexSettings',[]);
+
+    }
+    
+    public static function category(Router $router){
+
+      if(!is_admin_empleado()) {
+        header('Location: /');
+      };
+
+      $alertas = [];
+      $category = new Categoria;
+
+      if($_SERVER['REQUEST_METHOD'] === 'POST' ) {
+
+        $category->sincronizar($_POST);
+        $file = $_FILES['file'];
+        $filename = $file['name'];
+
+        //debuguear($file);
+
+        if($category){
+          $alertas = $category->validar_insercion();
+  
+          if(empty($alertas)) {
+
+            $condiciones = array(
+              "nombre" => $category->nombre,
+            );
+
+            $existeproducto = Categoria::dinamicWhere($condiciones);
+    
+            //debuguear($existeproducto);
+
+            if($existeproducto) {
+              Categoria::setAlerta('error', 'Ya existe una cateoria registrada con el mismo nombre');
+              $alertas = Categoria::getAlertas();
+            } else {
+
+              //debuguear(empty($file));
+
+              if(!empty($file)) {
+
+                $targetPath = '../public/img/categories/';
+                //debuguear($targetPath);
+
+                if(!is_dir($targetPath)) {
+                  mkdir($targetPath, 0755, true);
+                }
+
+                $fileNameAux = $filename;
+                $targetFile = $targetPath . basename($_FILES['file']['name']);
+                $imageFileType = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
+
+                //debuguear($targetFile);
+
+                $check = getimagesize($_FILES['file']['tmp_name']);
+
+                if ($check !== false) {
+                  if (file_exists($targetFile)) {
+                      $filename = pathinfo($targetFile, PATHINFO_FILENAME);
+                      $extension = pathinfo($targetFile, PATHINFO_EXTENSION);
+                      $counter = 1;
+                      while (file_exists($targetFile)) {
+                          $newFilename = $filename . '_' . $counter . '.' . $extension;
+                          $fileNameAux = $newFilename;
+                          $targetFile = $targetPath . $newFilename;
+                          $counter++;
+                      }
+                  }
+
+                  if (move_uploaded_file($_FILES['file']['tmp_name'], $targetFile)) {
+                      $alertas['success'][] = 'La imagen se ha subido correctamente.';
+
+                      $category->imagen = $fileNameAux;
+
+                      $resultado =  $category->guardar();
+                      //debuguear($category);
+
+                      if($resultado) {
+                        Categoria::setAlerta('success', 'Categoria registrada correctamente');
+                        $alertas = Categoria::getAlertas();
+                      }
+
+                      echo 'La imagen se ha subido correctamente.';
+                  } else {
+                      $alertas['error'][] = 'Hubo un error al subir la imagen.';
+                      echo 'Hubo un error al subir la imagen.';
+                  }
+                } else {
+                    $alertas['error'][] = 'El archivo seleccionado no es una imagen válida.';
+                    echo 'El archivo seleccionado no es una imagen válida.';
+                }
+              }
+            }
+          }
+        }        
+      }
+
+      // Render a la vista 
+      $router->render('admin/category/category', 
+        [
+          'titulo' => 'Registrar categorias',
+          'routeName' => 'category',
+          'alertas' => $alertas,
+          'category' => Categoria::all()
         ]
       );
     }

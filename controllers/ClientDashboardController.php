@@ -82,17 +82,20 @@ class ClientDashboardController {
   
   // Vista para el detalle del cliente
   public static function clientProfile(Router $router) {
+
     // Si el usuario no es un cliente, se le redirige a la página de inicio o de registro
     if(!is_cliente()) {
       header('location: /');
     }
       $id = currentUser_id() ;
       $client = new Usuario;
-      $client = Usuario::find($id);
+      //$client = Usuario::find($id);
       $alertas = [];
 
       if($_SERVER['REQUEST_METHOD'] === 'POST') {
         $client->sincronizar($_POST);
+
+        //debuguear($client);
 
         $alertas = $client->validar_edicion();
 

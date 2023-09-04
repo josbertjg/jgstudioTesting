@@ -116,7 +116,7 @@
 
         <tbody>
           <?php
-            // debuguear($users)
+            //debuguear($users);
             for($i = 0;$i<count($users);$i++){
               ?>
                 <tr class="<?php echo ($i % 2 == 0) ? 'even' : 'odd' ?> pointer">

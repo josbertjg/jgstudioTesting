@@ -25,8 +25,8 @@ class Usuario extends ActiveRecord {
         $this->id_ciudad = $args['id_ciudad'] ?? 1;
         $this->id_rol = $args['id_rol'] ?? 5;
         $this->estado = $args['estado'] ?? 1;
-        $this->fecha_modif = $args['fecha_modif'] ?? '';
-        $this->fecha_creacion = $args['fecha_creacion'] ?? '';
+        $this->fecha_modif = $args['fecha_modif'] ?? date('Y-m-d H:i:s');
+        $this->fecha_creacion = $args['fecha_creacion'] ?? date('Y-m-d H:i:s');
     }
 
     // Validar el Login de Usuarios
