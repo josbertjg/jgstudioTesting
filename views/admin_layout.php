@@ -79,7 +79,7 @@
     <!-- Font Awesome -->
     <script src="https://kit.fontawesome.com/814f6eaa13.js" crossorigin="anonymous"></script>
     <!-- Custom Theme Scripts -->
-    <script src="/build/js/gentella/custom.min.js/05"></script>
+    <script src="/build/js/gentella/custom.min.js"></script>
     <!-- Validaciones -->
     <script src="/build/js/validaciones.js"></script>
     <!-- Custom Javascript -->
