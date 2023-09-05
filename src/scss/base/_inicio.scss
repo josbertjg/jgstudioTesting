@@ -3,7 +3,7 @@
 //MENU
 @include m.menu;
 //HEADER
-@include m.header("../img/banner.png");
+@include m.header();
 //SERVICIOS
 #servicios{
     min-height: 90vh;
@@ -639,6 +639,100 @@
                 }
             }
         }
+    }
+}
+// Custom JG STUDIO
+
+// Generales
+
+// LOGIN
+.login-form-container{
+    height: 100vh !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 3rem;
+
+    & > div{
+        @include m.encabezados;
+        width: 50%;
+        margin-right: 3rem;
+        h1{
+            text-align: left;
+            margin: 0%;
+        }
+        p{
+            font-size: 1.2rem;
+            text-align: left;
+            @media screen and (max-width: 500px) {
+                width: 90%;
+            }
+        }
+        form{
+            width: 100%;
+            .btn-submit{
+                background-color: v.$morado;
+                border: 2px solid v.$morado;
+                border-radius: 50px;
+                padding: 1rem 2rem;
+                font-size: 1rem;
+                font-weight: bold;
+                color: white;
+                transition: all 200ms;
+                &:hover{
+                    background-color: lighten(v.$morado, 5);
+                    border: 2px solid lighten(v.$morado, 5);
+                }
+            }
+        }
+    }
+    img{
+        width: 450px;
+    }
+}
+// LOGIN
+.signin-form-container{
+    height: 100vh !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 3rem;
+
+    & > div{
+        @include m.encabezados;
+        width: 50%;
+        margin-right: 3rem;
+        h1{
+            text-align: left;
+            margin: 0%;
+        }
+        p{
+            font-size: 1.2rem;
+            text-align: left;
+            @media screen and (max-width: 500px) {
+                width: 90%;
+            }
+        }
+        form{
+            width: 100%;
+            .btn-submit{
+                background-color: v.$morado;
+                border: 2px solid v.$morado;
+                border-radius: 50px;
+                padding: 1rem 2rem;
+                font-size: 1rem;
+                font-weight: bold;
+                color: white;
+                transition: all 200ms;
+                &:hover{
+                    background-color: lighten(v.$morado, 5);
+                    border: 2px solid lighten(v.$morado, 5);
+                }
+            }
+        }
+    }
+    img{
+        width: 450px;
     }
 }
 //FOOTER
