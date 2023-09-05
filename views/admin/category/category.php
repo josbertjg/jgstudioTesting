@@ -82,11 +82,11 @@
                   <td class=" "><?php echo $category[$i]->nombre; ?></td>
                   <td class=" ">
                     <picture>
-                            <source srcset="<?php echo __DIR__ . '/../../../public/img/categories/' . $category[$i]->imagen; ?>" type="image/webp">
-                            <source srcset="<?php echo __DIR__ . '/../../../public/img/categories/' . $category[$i]->imagen; ?>" type="image/png">
+                            <source srcset="<?php echo '/img/categories/' . $category[$i]->imagen; ?>" type="image/webp">
+                            <source srcset="<?php echo '/img/categories/' . $category[$i]->imagen; ?>" type="image/png">
                             <img class="" loading="lazy" width="100" height="100"
-                            src="/../../../public/img/categories/pikachuPNG_1.png"
-                            alt="<?php echo $category[$i]->nombre; ?>">
+                            src="<?php echo '/img/categories/'. $category[$i]->imagen; ?>"
+                            alt="<?php echo $category[$i]->imagen; ?>">
                     </picture>
                   </td>
                   <td class="a-right a-right "><?php echo ($category[$i]->estado == 1) ? 'Activo' : 'Inactivo' ?></td>

@@ -12,7 +12,10 @@
           <li><a href="/admin/dashboard/reportes">Reportes Generales</a></li>
         </ul>
       </li>
-      <li><a href="/admin/configuracion"><i class="fa-solid fa-bell-concierge"></i> Configuración</a></li>
+      <li><a href="/admin/configuracion"><i class="fa fa-tasks"></i> Proyectos</a></li>
+      <li><a href="/admin/configuracion"><i class="fa fa-money"></i> Pagos</a></li>
+
+      <li><a href="/admin/configuracion"><i class="glyphicon glyphicon-cog"></i> Configuración</a></li>
       <!-- <li><a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
         <ul class="nav child_menu">
           <li><a href="index.html">Dashboard</a></li>
