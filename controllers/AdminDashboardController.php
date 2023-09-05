@@ -3,14 +3,16 @@
 namespace Controllers;
 
 use Model\Usuario;
+use Model\Categoria;
 use Model\Producto;
 use MVC\Router;
+use Intervention\Image\ImageManagerStatic as Image;
 
 class AdminDashboardController {
 
   //Vista del dashboard para admins y empleados
   public static function adminDashboard(Router $router) {
-   
+
     if(!is_admin_empleado()) {
       header('Location: /');
     };
@@ -27,7 +29,7 @@ class AdminDashboardController {
 
   // Vista del CRUD para usuarios
   public static function users(Router $router) {
-   
+
     if(!is_admin_empleado()) {
       header('Location: /');
     };
@@ -49,18 +51,10 @@ class AdminDashboardController {
           Usuario::setAlerta('error', 'Ya existe un usuario registrado con este correo');
           $alertas = Usuario::getAlertas();
         } else {
-          // Hashear el password
-          // $usuario->hashPassword();
 
-          // Eliminar password2
-          // unset($usuario->password2);
-
-          // Generar el Token
-          // $usuario->crearToken();
-          // Crear un nuevo usuario
           $resultado =  $usuario->guardar();
           
-          // debuguear($resultado);
+          //debuguear($resultado);
 
           // Enviar email
           // $email = new Email($usuario->email, $usuario->nombre, $usuario->token);
@@ -103,6 +97,7 @@ class AdminDashboardController {
 
     if($_SERVER['REQUEST_METHOD'] === 'POST') {
       $usuario->sincronizar($_POST);
+      //debuguear($usuario);
 
       $alertas = $usuario->validar_edicion();
 
@@ -110,7 +105,9 @@ class AdminDashboardController {
 
         $existeUsuario = Usuario::where('correo', $usuario->correo);
 
-        if($existeUsuario->id != $usuario->id) {
+        //debuguear($existeUsuario);
+
+        if($existeUsuario != null && $existeUsuario->id != $usuario->id) {
           Usuario::setAlerta('error', 'Ya existe un usuario registrado con este correo');
           $alertas = Usuario::getAlertas();
         }else{
@@ -124,6 +121,9 @@ class AdminDashboardController {
           if($resultado) {
             Usuario::setAlerta('success', 'Cambios guardados correctamente');
             $alertas = Usuario::getAlertas();
+          }else{
+              Usuario::setAlerta('error', 'Error al crear o actualizar el usuario');
+              $alertas = Usuario::getAlertas();
           }
         }
       }
@@ -141,7 +141,7 @@ class AdminDashboardController {
     );
   }
 
-    // Vista del CRUD para usuarios
+    // Vista del CRUD para productos
     public static function productos(Router $router) {
 
       if(!is_admin_empleado()) {
@@ -151,27 +151,36 @@ class AdminDashboardController {
       $alertas = [];
       $producto = new Producto;
   
-      if($_SERVER['REQUEST_METHOD'] === 'POST') {
+      if($_SERVER['REQUEST_METHOD'] === 'POST' ) {
         $producto->sincronizar($_POST);
   
-        // debuguear($usuario);
-        $alertas = $producto->validar_insercion();
+        if($producto){
+          $alertas = $producto->validar_insercion();
   
-        if(empty($alertas)) {
-          $existeproducto = Producto::where('nombre', $producto->nombre);
-  
-          if($existeproducto) {
-            Producto::setAlerta('error', 'Ya existe un usuario registrado con este correo');
-            $alertas = Producto::getAlertas();
-          } else {
-            $resultado =  $producto->guardar();
-          
-            if($resultado) {
-              Producto::setAlerta('success', 'Usuario ingresado correctamente');
+          if(empty($alertas)) {
+
+            $condiciones = array(
+              "nombre" => $producto->nombre,
+              "descripcion" => $producto->descripcion
+            );
+
+            $existeproducto = Producto::dinamicWhere($condiciones);
+    
+            //debuguear($existeproducto);
+
+            if($existeproducto) {
+              Producto::setAlerta('error', 'Ya existe un producto registrado con este correo');
               $alertas = Producto::getAlertas();
+            } else {
+              $resultado =  $producto->guardar();
+              // debuguear($resultado);
+              if($resultado) {
+                Producto::setAlerta('success', 'Producto ingresado correctamente');
+                $alertas = Producto::getAlertas();
+              }
             }
           }
-        }
+        }        
       }
   
       // Render a la vista 
@@ -185,7 +194,7 @@ class AdminDashboardController {
       );
     }
   
-    // Vista para el detalle del usuario
+    // Vista para el detalle del productos
     public static function productoDetail(Router $router) {
   
       if(!is_admin_empleado()) is_auth() ? header('location: /dashboard') : header('location: /');
@@ -233,6 +242,128 @@ class AdminDashboardController {
           'routeName' => currentUser_id() == $id ? 'Perfil' : 'Detalle del producto',
           'producto' => $producto,
           'alertas' => $alertas
+        ]
+      );
+    }
+
+    public static function configuracionView(Router $router){
+
+      if(!is_admin_empleado()) is_auth() ? header('location: /dashboard') : header('location: /');
+  
+      $id = $_GET['id'];
+      
+      if(!is_admin()) {
+        if(currentUser_id() != $id){
+          header('Location: /admin/dashboard');
+        }
+      };
+      
+      $router->render('admin/settings/indexSettings',[]);
+
+    }
+    
+    public static function category(Router $router){
+
+      if(!is_admin_empleado()) {
+        header('Location: /');
+      };
+
+      $alertas = [];
+      $category = new Categoria;
+
+      if($_SERVER['REQUEST_METHOD'] === 'POST' ) {
+
+        $category->sincronizar($_POST);
+        $file = $_FILES['file'];
+        $filename = $file['name'];
+
+        //debuguear($file);
+
+        if($category){
+          $alertas = $category->validar_insercion();
+  
+          if(empty($alertas)) {
+
+            $condiciones = array(
+              "nombre" => $category->nombre,
+            );
+
+            $existeproducto = Categoria::dinamicWhere($condiciones);
+    
+            //debuguear($existeproducto);
+
+            if($existeproducto) {
+              Categoria::setAlerta('error', 'Ya existe una cateoria registrada con el mismo nombre');
+              $alertas = Categoria::getAlertas();
+            } else {
+
+              //debuguear(empty($file));
+
+              if(!empty($file)) {
+
+                $targetPath = '../public/img/categories/';
+                //debuguear($targetPath);
+
+                if(!is_dir($targetPath)) {
+                  mkdir($targetPath, 0755, true);
+                }
+
+                $fileNameAux = $filename;
+                $targetFile = $targetPath . basename($_FILES['file']['name']);
+                $imageFileType = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
+
+                //debuguear($targetFile);
+
+                $check = getimagesize($_FILES['file']['tmp_name']);
+
+                if ($check !== false) {
+                  if (file_exists($targetFile)) {
+                      $filename = pathinfo($targetFile, PATHINFO_FILENAME);
+                      $extension = pathinfo($targetFile, PATHINFO_EXTENSION);
+                      $counter = 1;
+                      while (file_exists($targetFile)) {
+                          $newFilename = $filename . '_' . $counter . '.' . $extension;
+                          $fileNameAux = $newFilename;
+                          $targetFile = $targetPath . $newFilename;
+                          $counter++;
+                      }
+                  }
+
+                  if (move_uploaded_file($_FILES['file']['tmp_name'], $targetFile)) {
+                      $alertas['success'][] = 'La imagen se ha subido correctamente.';
+
+                      $category->imagen = $fileNameAux;
+
+                      $resultado =  $category->guardar();
+                      //debuguear($category);
+
+                      if($resultado) {
+                        Categoria::setAlerta('success', 'Categoria registrada correctamente');
+                        $alertas = Categoria::getAlertas();
+                      }
+
+                      echo 'La imagen se ha subido correctamente.';
+                  } else {
+                      $alertas['error'][] = 'Hubo un error al subir la imagen.';
+                      echo 'Hubo un error al subir la imagen.';
+                  }
+                } else {
+                    $alertas['error'][] = 'El archivo seleccionado no es una imagen válida.';
+                    echo 'El archivo seleccionado no es una imagen válida.';
+                }
+              }
+            }
+          }
+        }        
+      }
+
+      // Render a la vista 
+      $router->render('admin/category/category', 
+        [
+          'titulo' => 'Registrar categorias',
+          'routeName' => 'category',
+          'alertas' => $alertas,
+          'category' => Categoria::all()
         ]
       );
     }

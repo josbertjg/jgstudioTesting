@@ -25,8 +25,8 @@ class Usuario extends ActiveRecord {
         $this->id_ciudad = $args['id_ciudad'] ?? 1;
         $this->id_rol = $args['id_rol'] ?? 5;
         $this->estado = $args['estado'] ?? 1;
-        $this->fecha_modif = $args['fecha_modif'] ?? '';
-        $this->fecha_creacion = $args['fecha_creacion'] ?? '';
+        $this->fecha_modif = $args['fecha_modif'] ?? date('Y-m-d H:i:s');
+        $this->fecha_creacion = $args['fecha_creacion'] ?? date('Y-m-d H:i:s');
     }
 
     // Validar el Login de Usuarios
@@ -64,6 +64,37 @@ class Usuario extends ActiveRecord {
             self::$alertas['error'][] = 'El password debe contener al menos 6 caracteres';
         }
         return self::$alertas;
+    }
+
+    //Validando que el usuario pueda comprar o no
+    public function userCanBuy(): bool {
+
+        if(!$this->direccion) {
+            return false;
+        }
+        if(!$this->telefono_celular) {
+            return false;
+        }
+        if(!$this->telefono_fijo) {
+            return false;
+        }
+        if(!$this->numero_documento) {
+            return false;
+        }
+        if(!$this->id_tipo_documento) {
+            return false;
+        }
+        if(!$this->id_pais) {
+            return false;
+        }
+        if(!$this->id_estado) {
+            return false;
+        }
+        if(!$this->id_ciudad) {
+            return false;
+        }
+
+        return true;
     }
 
     // Validación para registro de usuarios por parte del admin
@@ -127,9 +158,22 @@ class Usuario extends ActiveRecord {
         if(!$this->direccion) {
             self::$alertas['error'][] = 'La dirección no puede estar vacía';
         }
+        if(!$this->telefono_celular) {
+            self::$alertas['error'][] = 'El telefono celular no puede estar vacío';
+        }
+        if(!$this->telefono_fijo) {
+            self::$alertas['error'][] = 'El telefono fijo no puede estar vacío';
+        }
         if(!$this->id_pais) {
             self::$alertas['error'][] = 'El país no puede estar vacío';
         }
+        if(!$this->id_estado) {
+            self::$alertas['error'][] = 'El estado no puede estar vacío';
+        }
+        if(!$this->id_ciudad) {
+            self::$alertas['error'][] = 'La ciudad no puede estar vacía';
+        }
+
         return self::$alertas;
     }
 

@@ -44,7 +44,7 @@ class AuthController {
                         $_SESSION['correo'] = $usuario->correo;
                         $_SESSION['id_rol'] = $usuario->id_rol;
 
-
+                        // cosa a utilizar para usar el boton de redireccion
                         // Redireccion
                         if($usuario->id_rol == 1 || $usuario->id_rol == 2) {
                             header('Location: /admin/dashboard');
@@ -72,14 +72,13 @@ class AuthController {
         ]);
     }
 
-    public static function logout() {
-        if($_SERVER['REQUEST_METHOD'] === 'POST') {
-            session_start();
-            $_SESSION = [];
-            header('Location: /');
-        }
-       
+    public static function logout() {        
+        session_start();
+        $_SESSION = [];
+        header('Location: /');
     }
+       
+    
 
     public static function signin(Router $router) {
 

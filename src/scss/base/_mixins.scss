@@ -203,22 +203,59 @@ nav{
 }
 }
 //HEADER
-@mixin header($fondo){
+@mixin header(){
     header{
-        background: {
-            image: url($fondo),linear-gradient(to bottom,v.$negro,v.$negro);
-            position: center;
-            repeat: no-repeat;
-            size: cover;
-            attachment:fixed;
-            blend-mode:soft-light;
+        .inicio{
+            background: {
+                image: url("../img/banner.png"),linear-gradient(to bottom,v.$negro,v.$negro);
+                position: center;
+                repeat: no-repeat;
+                size: cover;
+                attachment:fixed;
+                blend-mode:soft-light;
+            }
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            margin-top: 0%;
         }
-        height: 100vh;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        color: white;
+        .login{
+            background: {
+                image: url("../img/login.jfif"),linear-gradient(to bottom,v.$negro,v.$negro);
+                position: center;
+                repeat: no-repeat;
+                size: cover;
+                attachment:fixed;
+                blend-mode:soft-light;
+            }
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            margin-top: 0%;
+        }
+        .signin{
+            background: {
+                image: url("../img/registrarse.webp"),linear-gradient(to bottom,v.$negro,v.$negro);
+                position: center;
+                repeat: no-repeat;
+                size: cover;
+                attachment:fixed;
+                blend-mode:soft-light;
+            }
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            margin-top: 0%;
+        }
 
         h1{
             font-size: 4rem;

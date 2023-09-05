@@ -82,10 +82,10 @@
           <div class="col-sm-6 col-12">
             <label for="">Rol del Usuario</label>
             <select name="id_rol" class="form-control editable">
-              <option value="0" <?php echo $user->id_rol == 5 ? 'selected' : '' ?>>Cliente</option>
-              <option value="1" <?php echo $user->id_rol == 2 ? 'selected' : '' ?>>Programador</option>
-              <option value="1" <?php echo $user->id_rol == 3 ? 'selected' : '' ?>>Publicista</option>
-              <option value="1" <?php echo $user->id_rol == 4 ? 'selected' : '' ?>>Diseñador</option>
+              <option value="5" <?php echo $user->id_rol == 5 ? 'selected' : '' ?>>Cliente</option>
+              <option value="2" <?php echo $user->id_rol == 2 ? 'selected' : '' ?>>Programador</option>
+              <option value="3" <?php echo $user->id_rol == 3 ? 'selected' : '' ?>>Publicista</option>
+              <option value="4" <?php echo $user->id_rol == 4 ? 'selected' : '' ?>>Diseñador</option>
               <option value="1" <?php echo $user->id_rol == 1 ? 'selected' : '' ?> disabled>Super Administrador</option>
             </select>
           </div>
@@ -93,7 +93,7 @@
             <label for="">Estado del Usuario</label>
             <select name="estado" class="form-control" disabled>
               <option value="1" <?php echo $user->estado == 1 ? 'selected' : '' ?>>Activo</option>
-              <option value="2" <?php echo $user->estado == 0 ? 'selected' : '' ?>>Inactivo</option>
+              <option value="0" <?php echo $user->estado == 0 ? 'selected' : '' ?>>Inactivo</option>
             </select>
           </div>
           <div class="col-sm-6 col-12">

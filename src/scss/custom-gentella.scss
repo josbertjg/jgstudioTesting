@@ -4762,6 +4762,14 @@ ul.notifications {
 
 /* CUSTOM STYLES  */
 
+// Globales
+.hidden{
+  display: none;
+}
+.pointer{
+  cursor: pointer;
+}
+
 // NAV BAR
 #menu_toggle{
   font-size: 1.5rem;
@@ -4835,4 +4843,215 @@ ul.notifications {
 }
 .jg-accordion-service:last-child{
   margin-right: 0% !important;
+}
+.product-title{
+  font-size: 1rem;
+  font-weight: bold;
+  margin-bottom: 0%;
+  margin-top: 1.5rem;
+  color: black;
+  b{
+    color: darken(v.$morado,10);
+    // font-size: .8rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+  }
+}
+.product-title:first-child{
+  margin-top: 0rem;
+}
+.product-description{
+  font-size: .8rem;
+  color: grey;
+  margin-bottom: 0%;
+}
+.product-input-title{
+  font-size: .8rem;
+  margin-right: 1rem;
+  margin-bottom: 0%;
+  font-weight: bold;
+}
+.product-input-text{
+  width: 40% !important;
+}
+.jg-service-total{
+  display: flex;
+  justify-content: end;
+  font-weight: bold;
+  font-size: 1rem;
+  font-style: italic;
+  & span:last-child{
+    color: v.$morado;
+  }
+}
+// Carrito
+// Productos
+.carrito-productos{
+  max-height: 70vh;
+  overflow-y: auto;
+}
+.carrito-item-container{
+  display: flex;
+  align-items: center;
+  background-color: rgb(240, 240, 240);
+  border-radius: 10px;
+  padding: 1rem;
+  transition: all 200ms;
+  margin-bottom: 1rem;
+  &:hover{
+    background-color: rgb(245, 245, 245);
+    cursor: pointer;
+  }
+  img{
+    width: 120px;
+    max-width: 120px;
+    min-width: 120px;
+    height: 120px;
+    max-height: 120px;
+    min-height: 120px;
+  }
+  .carrito-item-information{
+    min-height: 120px;
+    width: 100% !important;
+    .carrito-item-title{
+      display: flex;
+      justify-content: space-between;
+      font-size: 1.2rem;
+      font-weight: bold;
+      margin-bottom: 0%;
+      cursor: pointer;
+      b{
+        font-style: italic;
+        color: v.$morado;
+        font-size: 1rem;
+        cursor: pointer;
+      }
+    }
+    .carrito-product-title{
+      font-size: .9rem;
+      font-weight: bold;
+      margin-bottom: 0%;
+      cursor: pointer;
+      b{
+        color: v.$morado;
+        cursor: pointer;
+      }
+    }
+    .carrito-product-description{
+      font-size: .75rem;
+      line-height: 12px;
+      color: grey;
+      margin-bottom: 0%;
+    }
+    .carrito-product-cantidad{
+      font-weight: bold;
+      font-size: .75rem;
+      b{
+        font-size: .7rem;
+        color: v.$morado;
+      }
+    }
+    .carrito-divider{
+      font-size: 1rem;
+      font-weight: bold;
+    }
+    .carrito-product-total{
+      font-weight: bold;
+      font-size: .75rem;
+      b{
+        color: v.$morado;
+        font-size: .7rem;
+      }
+    }
+    .btn-delete-item-carrito{
+      background-color: v.$rosado;
+      padding: .2rem .5rem;
+      border-radius: 5px;
+      border: 2px solid v.$rosado;
+      transition: all 200ms;
+      font-size: 14px;
+      &:hover{
+        background-color: transparent;
+        color: v.$rosado;
+      }
+    }
+  }
+}
+// Carrito Informacion
+.carrito-informacion{
+  box-shadow: v.$shadow;
+  padding: 1rem;
+  border-radius: 10px;
+  .carrito-informacion-item{
+    display: flex;
+    justify-content: space-between;
+    font-size: .9rem;
+    i{
+      color: green;
+    }
+    b{
+      font-weight: bold;
+      color: v.$morado;
+    }
+  }
+  .btn-phantom-morado{
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+    padding: .5rem 1rem;
+    border-radius: 5px;
+    background-color: v.$morado;
+    transition: all 200ms;
+    color: white !important;
+    margin-right: 1rem;
+    font-size: 1.2rem;
+    border: 2px solid v.$morado;
+    &:hover{
+      cursor: pointer;
+      background-color: transparent;
+      color: v.$morado !important;
+    }
+  }
+  .btn-add-more{
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+    padding: .5rem 1rem;
+    border-radius: 5px;
+    background-color: v.$amarillo;
+    transition: all 200ms;
+    color: v.$negro;
+    font-size: 1rem;
+    &:hover{
+      cursor: pointer;
+      background-color: lighten(v.$amarillo,5);
+    }
+  }
+}
+// Carrito realizar pago
+.pagar-tabs{
+  display: flex;
+  justify-content: center;
+  background-color: transparent;
+  border: none;
+  .nav-link{
+    background-color: v.$negro;
+    border: 2px solid v.$negro;
+    padding: 1rem 1.5rem !important;
+    margin: 0%;
+    color: white;
+    font-weight: bold;
+    font-size: 1rem;
+    width: 10rem !important;
+    border-radius: 2px;
+  }
+  .active{
+    background-color: v.$morado !important;
+    border: 2px solid v.$morado !important;
+    color: white !important;
+    &:hover{
+      background-color: transparent !important;
+      color: v.$morado !important;
+    }
+  }
 }

@@ -56,6 +56,42 @@ function is_diseñador() : bool {
     return is_auth() && ($_SESSION['id_rol'] == 4);
 }
 
+function is_cliente() : bool {
+    if(!isset($_SESSION)) {
+        session_start();
+    }
+    return is_auth() && ($_SESSION['id_rol'] == 5);
+}
+
 function currentUser_id() : int {
     return $_SESSION['id'];
+}
+
+function getCarrito(): array {
+    if(empty($_SESSION['carrito'])){
+        $_SESSION['carrito'] = [];
+        $carrito = [];
+    }else{
+        $carrito = json_decode($_SESSION['carrito']);
+    }
+    return array_values($carrito);
+}
+
+function setCarrito($carrito) {
+    $_SESSION['carrito'] = json_encode($carrito);
+    header('location: '.$_SERVER['PATH_INFO']);
+}
+
+function deleteItemCarrito($id) {
+    $carrito = getCarrito();
+    if(count($carrito)>0){
+        for($i = 0;$i<count($carrito);$i++){
+            if($carrito[$i]->item_id == $id){
+                unset($carrito[$i]);
+                $carrito = array_values($carrito);
+                setCarrito($carrito);
+                break;
+            }
+        }
+    }
 }

@@ -13,13 +13,13 @@ class Producto extends ActiveRecord {
         $this->descripcion = $args['descripcion'] ?? '';
         $this->id_categoria = $args['id_categoria'] ?? '';
         $this->precio_unitario = $args['precio_unitario'] ?? '';
-        $this->estado = $args['estado'] ?? '';
-        $this->fecha_creacion = $args['fecha_creacion'] ?? '';
-        $this->fecha_modificacion = $args['fecha_modificacion'] ?? '';
+        $this->estado = $args['estado'] ?? 1;
+        $this->fecha_creacion = $args['fecha_creacion'] ?? date('Y-m-d H:i:s');
+        $this->fecha_modificacion = $args['fecha_modificacion'] ?? date('Y-m-d H:i:s');
         $this->cantidad_maxima = $args['cantidad_maxima'] ?? 0;
     }
 
-    // Validación para servicios/productos nuevos
+    // Validación para productos nuevos
     public function validar_servicio() {
         if(!$this->nombre) {
             self::$alertas['error'][] = 'El Nombre del servicio es obligatorio';
@@ -39,7 +39,7 @@ class Producto extends ActiveRecord {
         return self::$alertas;
     }
 
-    // Validación para la edicion de servicios
+    // Validación para la edicion de productos
     public function validar_edicion() {
         if(!$this->nombre) {
             self::$alertas['error'][] = 'El Nombre del servicio es obligatorio';
@@ -57,5 +57,22 @@ class Producto extends ActiveRecord {
             self::$alertas['error'][] = 'El password debe contener al menos 6 caracteres';
         }
     }
+
+    // Validación para registro de productos por parte del admin
+    public function validar_insercion() {
+        if(!$this->nombre) {
+            self::$alertas['error'][] = 'El Nombre es Obligatorio';
+        }
+        if(!$this->descripcion) {
+            self::$alertas['error'][] = 'La descripcion es Obligatorio';
+        }
+        if(!$this->id_categoria) {
+            self::$alertas['error'][] = 'La categoria es Obligatorio';
+        }
+        if(!$this->precio_unitario) {
+            self::$alertas['error'][] = 'El precio unitario es obligatorio';
+        }
+        return self::$alertas;
+    }    
 
 }

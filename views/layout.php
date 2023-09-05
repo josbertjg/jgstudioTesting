@@ -58,6 +58,8 @@
     <script src="https://kit.fontawesome.com/814f6eaa13.js" crossorigin="anonymous"></script>
     <!-- Custom Theme Scripts -->
     <script src="/build/js/gentella/custom.min.js"></script>
+    <!-- Validaciones -->
+    <script src="/build/js/validaciones.js"></script>
     <!-- Custom Javascript -->
     <script src="/build/js/main.min.js?25"></script>
 </body>

@@ -83,10 +83,11 @@ class ActiveRecord {
 
     // Sincroniza BD con Objetos en memoria
     public function sincronizar($args=[]) { 
+
         foreach($args as $key => $value) {
-          if(property_exists($this, $key) && !is_null($value)) {
-            $this->$key = $value;
-          }
+            if(property_exists($this, $key) && !is_null($value)) {
+                $this->$key = $value;
+            }
         }
     }
 
@@ -127,7 +128,10 @@ class ActiveRecord {
     // Busqueda Where con Columna 
     public static function where($columna, $valor) {
         $query = "SELECT * FROM " . static::$tabla . " WHERE ${columna} = '${valor}'";
+        
         $resultado = self::consultarSQL($query);
+        //debuguear($resultado);
+
         return array_shift( $resultado ) ;
     }
 
@@ -146,17 +150,19 @@ class ActiveRecord {
         // Insertar en la base de datos
         $query = " INSERT INTO " . static::$tabla . " ( ";
         $query .= join(', ', array_keys($atributos));
-        $query .= " ) VALUES (' "; 
+        $query .= " ) VALUES ('"; 
         $query .= join("', '", array_values($atributos));
-        $query .= " ') ";
+        $query .= "') ";
 
-        // debuguear($query); // Descomentar si no te funciona algo
+        //debuguear($query); // Descomentar si no te funciona algo
 
         // Resultado de la consulta
         $resultado = self::$db->query($query);
+
+        //debuguear($resultado); // Descomentar para ver el resultado obtenido 
         return [
-           'resultado' =>  $resultado,
-           'id' => self::$db->insert_id
+            'resultado' =>  $resultado,
+            'id' => self::$db->insert_id
         ];
     }
 
@@ -177,8 +183,11 @@ class ActiveRecord {
         $query .= " WHERE id = '" . self::$db->escape_string($this->id) . "' ";
         $query .= " LIMIT 1 "; 
 
+        //debuguear($query);
+
         // Actualizar BD
         $resultado = self::$db->query($query);
+        //debuguear($resultado);
         return $resultado;
     }
 
@@ -187,5 +196,25 @@ class ActiveRecord {
         $query = "DELETE FROM "  . static::$tabla . " WHERE id = " . self::$db->escape_string($this->id) . " LIMIT 1";
         $resultado = self::$db->query($query);
         return $resultado;
+    }
+
+    // Busqueda Where con columnas dinámicas 
+    public static function dinamicWhere($condiciones) {
+        $query = "SELECT * FROM " . static::$tabla . " WHERE ";
+    
+        $first = true;
+        foreach ($condiciones as $columna => $valor) {
+            if (!$first) {
+                $query .= " AND ";
+            }
+            $query .= "${columna} = '${valor}'";
+    
+            $first = false;
+        }
+    
+        //debuguear($query);
+
+        $resultado = self::consultarSQL($query);
+        return array_shift($resultado);
     }
 }
