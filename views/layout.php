@@ -19,7 +19,7 @@
   <link href="/build/external_imports/css/nprogress.css" rel="stylesheet">
 
   <!-- Custom Theme Style -->
-  <link rel="stylesheet" href="/build/css/custom-gentella.css?25">
+  <link rel="stylesheet" href="/build/css/custom-gentella.css?05">
 </head>
 <body class="nav-md">
   <?php 
@@ -57,10 +57,10 @@
     <!-- Font Awesome -->
     <script src="https://kit.fontawesome.com/814f6eaa13.js" crossorigin="anonymous"></script>
     <!-- Custom Theme Scripts -->
-    <script src="/build/js/gentella/custom.min.js"></script>
+    <script src="/build/js/gentella/custom.min.js/05"></script>
     <!-- Validaciones -->
     <script src="/build/js/validaciones.js"></script>
     <!-- Custom Javascript -->
-    <script src="/build/js/main.min.js?25"></script>
+    <script src="/build/js/main.min.js?05"></script>
 </body>
 </html>
