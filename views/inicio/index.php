@@ -1,20 +1,22 @@
 <header id="inicio">
-    <h1><?php echo $titulo ?></h1>
-    <p><?php echo $descripcion ?></p>
-    <div>
-        <?php 
-            if($hasLogin){
-        ?>
-            <a href="/login">Login</a>
-        <?php
-            } if($hasSignin){
-        ?>
-            <a href="/signin">Registrate</a>
-        <?php 
-            } if($hasContact){
-        ?>
-            <a href="/#contacto">Contáctanos</a>
-        <?php } ?>
+    <div class="inicio">
+        <h1><?php echo $titulo ?></h1>
+        <p><?php echo $descripcion ?></p>
+        <div>
+            <?php 
+                if($hasLogin){
+            ?>
+                <a href="/login">Login</a>
+            <?php
+                } if($hasSignin){
+            ?>
+                <a href="/signin">Registrate</a>
+            <?php 
+                } if($hasContact){
+            ?>
+                <a href="/#contacto">Contáctanos</a>
+            <?php } ?>
+        </div>
     </div>
 </header>
 <main>
