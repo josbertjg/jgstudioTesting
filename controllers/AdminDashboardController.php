@@ -6,7 +6,7 @@ use Model\Usuario;
 use Model\Categoria;
 use Model\Producto;
 use MVC\Router;
-use Intervention\Image\ImageManagerStatic as Image;
+use Model\UploadImage;
 
 class AdminDashboardController {
 
@@ -270,6 +270,7 @@ class AdminDashboardController {
 
       $alertas = [];
       $category = new Categoria;
+      $modelImage = 'Category';
 
       if($_SERVER['REQUEST_METHOD'] === 'POST' ) {
 
@@ -277,7 +278,7 @@ class AdminDashboardController {
         $file = $_FILES['file'];
         $filename = $file['name'];
 
-        //debuguear($file);
+        //debuguear($pathToSave);
 
         if($category){
           $alertas = $category->validar_insercion();
@@ -297,61 +298,73 @@ class AdminDashboardController {
               $alertas = Categoria::getAlertas();
             } else {
 
+              $pathToSave = uploadImage($_FILES,$modelImage);
+
+              $category->imagen = $pathToSave; //. $filename;
+
+              $resultado =  $category->guardar();
+              //debuguear($category);
+
+              if($resultado) {
+                Categoria::setAlerta('success', 'Categoria registrada correctamente');
+                $alertas = Categoria::getAlertas();
+              }
+
               //debuguear(empty($file));
 
-              if(!empty($file)) {
+              // if(!empty($file)) {
 
-                $targetPath = '../public/img/categories/';
-                //debuguear($targetPath);
+              //   $targetPath = '../public/img/categories/';
+              //   //debuguear($targetPath);
 
-                if(!is_dir($targetPath)) {
-                  mkdir($targetPath, 0755, true);
-                }
+              //   if(!is_dir($targetPath)) {
+              //     mkdir($targetPath, 0755, true);
+              //   }
 
-                $fileNameAux = $filename;
-                $targetFile = $targetPath . basename($_FILES['file']['name']);
-                $imageFileType = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
+              //   $fileNameAux = $filename;
+              //   $targetFile = $targetPath . basename($_FILES['file']['name']);
+              //   $imageFileType = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
 
-                //debuguear($targetFile);
+              //   //debuguear($targetFile);
 
-                $check = getimagesize($_FILES['file']['tmp_name']);
+              //   $check = getimagesize($_FILES['file']['tmp_name']);
 
-                if ($check !== false) {
-                  if (file_exists($targetFile)) {
-                      $filename = pathinfo($targetFile, PATHINFO_FILENAME);
-                      $extension = pathinfo($targetFile, PATHINFO_EXTENSION);
-                      $counter = 1;
-                      while (file_exists($targetFile)) {
-                          $newFilename = $filename . '_' . $counter . '.' . $extension;
-                          $fileNameAux = $newFilename;
-                          $targetFile = $targetPath . $newFilename;
-                          $counter++;
-                      }
-                  }
+              //   if ($check !== false) {
+              //     if (file_exists($targetFile)) {
+              //         $filename = pathinfo($targetFile, PATHINFO_FILENAME);
+              //         $extension = pathinfo($targetFile, PATHINFO_EXTENSION);
+              //         $counter = 1;
+              //         while (file_exists($targetFile)) {
+              //             $newFilename = $filename . '_' . $counter . '.' . $extension;
+              //             $fileNameAux = $newFilename;
+              //             $targetFile = $targetPath . $newFilename;
+              //             $counter++;
+              //         }
+              //     }
 
-                  if (move_uploaded_file($_FILES['file']['tmp_name'], $targetFile)) {
-                      $alertas['success'][] = 'La imagen se ha subido correctamente.';
+              //     if (move_uploaded_file($_FILES['file']['tmp_name'], $targetFile)) {
+              //         $alertas['success'][] = 'La imagen se ha subido correctamente.';
 
-                      $category->imagen = $fileNameAux;
+              //         $category->imagen = $fileNameAux;
 
-                      $resultado =  $category->guardar();
-                      //debuguear($category);
+              //         $resultado =  $category->guardar();
+              //         //debuguear($category);
 
-                      if($resultado) {
-                        Categoria::setAlerta('success', 'Categoria registrada correctamente');
-                        $alertas = Categoria::getAlertas();
-                      }
+              //         if($resultado) {
+              //           Categoria::setAlerta('success', 'Categoria registrada correctamente');
+              //           $alertas = Categoria::getAlertas();
+              //         }
 
-                      echo 'La imagen se ha subido correctamente.';
-                  } else {
-                      $alertas['error'][] = 'Hubo un error al subir la imagen.';
-                      echo 'Hubo un error al subir la imagen.';
-                  }
-                } else {
-                    $alertas['error'][] = 'El archivo seleccionado no es una imagen válida.';
-                    echo 'El archivo seleccionado no es una imagen válida.';
-                }
-              }
+              //         echo 'La imagen se ha subido correctamente.';
+              //     } else {
+              //         $alertas['error'][] = 'Hubo un error al subir la imagen.';
+              //         echo 'Hubo un error al subir la imagen.';
+              //     }
+              //   } else {
+              //       $alertas['error'][] = 'El archivo seleccionado no es una imagen válida.';
+              //       echo 'El archivo seleccionado no es una imagen válida.';
+              //   }
+              // }
             }
           }
         }        

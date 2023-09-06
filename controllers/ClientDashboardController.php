@@ -190,7 +190,7 @@ class ClientDashboardController {
             if(empty($alertas)){
               
               $resultado =  $cliente->guardar();
-   
+
               if($resultado) {
                 Usuario::setAlerta('success', 'Tus datos se han guardado correctamente.');
                 $alertas = Usuario::getAlertas();

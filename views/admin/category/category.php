@@ -81,11 +81,18 @@
                 <tr class="<?php echo ($i % 2 == 0) ? 'even' : 'odd' ?> pointer">
                   <td class=" "><?php echo $category[$i]->nombre; ?></td>
                   <td class=" ">
-                    <picture>
+                    <!-- <picture>
                             <source srcset="<?php echo '/img/categories/' . $category[$i]->imagen; ?>" type="image/webp">
                             <source srcset="<?php echo '/img/categories/' . $category[$i]->imagen; ?>" type="image/png">
                             <img class="" loading="lazy" width="100" height="100"
                             src="<?php echo '/img/categories/'. $category[$i]->imagen; ?>"
+                            alt="<?php echo $category[$i]->imagen; ?>">
+                    </picture> -->
+                    <picture>
+                            <source srcset="<?php echo $category[$i]->imagen; ?>" type="image/webp">
+                            <source srcset="<?php echo $category[$i]->imagen; ?>" type="image/png">
+                            <img class="" loading="lazy" width="100" height="100"
+                            src="<?php echo $category[$i]->imagen; ?>"
                             alt="<?php echo $category[$i]->imagen; ?>">
                     </picture>
                   </td>
