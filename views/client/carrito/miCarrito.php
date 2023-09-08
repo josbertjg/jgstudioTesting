@@ -5,9 +5,11 @@
     <div class="carrito-productos">
       <?php if(count($carrito)<=0) { ?>
         <h1>Tu Carrito esta vacio.</h1>
-      <?php }else foreach($carrito as $item): ?>
+      <?php }else foreach($carrito as $item):
+              if(!$item->isCotizacion){  
+      ?>
         <article class="carrito-item-container">
-          <img src="/build/img/diseño.png" alt="">
+          <img src="<?php echo $item->categoria->imagen ?>" alt="">
           <div class="carrito-item-information">
             <label class="carrito-item-title"><?php echo $item->categoria->nombre ?> <b><?php echo $item->item_id ?></b></label>
             <?php foreach($item->productos as $productoItem): ?>
@@ -31,7 +33,39 @@
             </form>
           </div>
         </article>
-      <?php endforeach; ?>
+      <?php 
+          } else{
+            ?>
+              <article class="carrito-item-container">
+                <img src="/build/img/cotizacion.png" alt="cotizacion jgstudio">
+                <div class="carrito-item-information">
+                  <label class="carrito-item-title">Cotización <b><?php echo $item->item_id ?></b></label>
+                  <div class="d-flex flex-column mt-1">
+                    <span>
+                      <i class="fa-solid fa-check"></i>
+                      <label class="carrito-product-title">Solicitud:</b></label>
+                    </span>
+                    <p class="carrito-product-description"><?php echo $item->solicitud ?></p>
+                    <span>
+                      <i class="fa-solid fa-check"></i>
+                      <label class="carrito-product-title">Respuesta:</b></label>
+                    </span>
+                    <p class="carrito-product-description"><?php echo $item->respuesta ?></p>
+                    <div class="d-flex align-items-center">
+                      <span class="carrito-product-total">Total: <b>$<?php echo $item->monto_final ?></b></span>
+                    </div>
+                  </div>
+                  <form method="POST" class="d-flex justify-content-end">
+                    <input type="hidden" name="action" value="delete_item_carrito">
+                    <input type="hidden" name="item_id" value="<?php echo $item->item_id ?>">
+                    <button class="btn-delete-item-carrito btn btn-danger">Eliminar <i class="fa-solid fa-trash"></i></button>
+                  </form>
+                </div>
+              </article>
+            <?php
+          }
+        endforeach; 
+      ?>
     </div>
   </div>
 
@@ -56,8 +90,8 @@
             Total: 
             <?php 
               $acum = 0;
-              foreach($carrito as $item){
-                $acum += $item->total;
+              foreach($carrito as $item){  
+                $acum += $item->isCotizacion ? $item->monto_final : $item->total;
               }
               echo $acum;
             ?>$
@@ -70,6 +104,7 @@
           <?php
             endif;
             foreach($carrito as $item):
+              if(!$item->isCotizacion){
           ?>
             <span class="carrito-informacion-item">
               <span>
@@ -79,7 +114,21 @@
               </span>
               <b><?php echo $item->total ?>$</b>
             </span>
-          <?php endforeach; ?>
+          <?php 
+              }else{
+                ?>
+                  <span class="carrito-informacion-item">
+                    <span>
+                      <i class="fa-solid fa-check"></i>
+                      <b>Cotización</b>
+                      <?php echo $item->item_id ?> 
+                    </span>
+                    <b><?php echo $item->monto_final ?>$</b>
+                  </span>
+                <?php
+              }
+            endforeach;
+          ?>
           <hr class="my-1">
           <div class="d-flex justify-content-start mt-2">
             <input type="button" class="btn-realizar-pago btn-phantom-morado" value="Realizar Pago" <?php echo (count($carrito) == 0) ? 'disabled' : ''  ?>>

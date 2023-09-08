@@ -99,34 +99,34 @@ class Usuario extends ActiveRecord {
 
     // Validación para registro de usuarios por parte del admin
     public function validar_insercion() {
-        if(!$this->nombre) {
+        if(!trim($this->nombre)) {
             self::$alertas['error'][] = 'El Nombre es Obligatorio';
         }
-        if(!$this->apellido) {
+        if(!trim($this->apellido)) {
             self::$alertas['error'][] = 'El Apellido es Obligatorio';
         }
-        if(!$this->correo) {
+        if(!trim($this->correo)) {
             self::$alertas['error'][] = 'El Email es Obligatorio';
         }
         if(!filter_var($this->correo, FILTER_VALIDATE_EMAIL)) {
             self::$alertas['error'][] = 'Email no válido';
         }
-        if(!$this->clave) {
+        if(!trim($this->clave)) {
             self::$alertas['error'][] = 'El Password no puede ir vacio';
         }
         if(strlen($this->clave) < 6) {
             self::$alertas['error'][] = 'El password debe contener al menos 6 caracteres';
         }
-        if(!$this->numero_documento) {
+        if(!trim($this->numero_documento)) {
             self::$alertas['error'][] = 'El Número de documento no puede estar vacío';
         }
         if(strlen($this->numero_documento) < 6) {
             self::$alertas['error'][] = 'El número de documento no puede contener menos de 6 dígitos';
         }
-        if(!$this->direccion) {
+        if(!trim($this->direccion)) {
             self::$alertas['error'][] = 'La dirección no puede estar vacía';
         }
-        if(!$this->id_pais) {
+        if(!trim($this->id_pais)) {
             self::$alertas['error'][] = 'El país no puede estar vacío';
         }
         return self::$alertas;
@@ -134,43 +134,43 @@ class Usuario extends ActiveRecord {
 
     // Validación para la edicion de usuarios
     public function validar_edicion() {
-        if(!$this->nombre) {
+        if(!trim($this->nombre)) {
             self::$alertas['error'][] = 'El Nombre es Obligatorio';
         }
-        if(!$this->apellido) {
+        if(!trim($this->apellido)) {
             self::$alertas['error'][] = 'El Apellido es Obligatorio';
         }
         if(isset($this->correo) && !filter_var($this->correo, FILTER_VALIDATE_EMAIL)) {
             self::$alertas['error'][] = 'Email no válido';
         }
-        if(!$this->clave) {
+        if(!trim($this->clave)) {
             self::$alertas['error'][] = 'El Password no puede ir vacio';
         }
         if(strlen($this->clave) < 6) {
             self::$alertas['error'][] = 'El password debe contener al menos 6 caracteres';
         }
-        if(!$this->numero_documento) {
+        if(!trim($this->numero_documento)) {
             self::$alertas['error'][] = 'El Número de documento no puede estar vacío';
         }
         if(strlen($this->numero_documento) < 6) {
             self::$alertas['error'][] = 'El número de documento no puede contener menos de 6 dígitos';
         }
-        if(!$this->direccion) {
+        if(!trim($this->direccion)) {
             self::$alertas['error'][] = 'La dirección no puede estar vacía';
         }
-        if(!$this->telefono_celular) {
+        if(!trim($this->telefono_celular)) {
             self::$alertas['error'][] = 'El telefono celular no puede estar vacío';
         }
-        if(!$this->telefono_fijo) {
+        if(!trim($this->telefono_fijo)) {
             self::$alertas['error'][] = 'El telefono fijo no puede estar vacío';
         }
-        if(!$this->id_pais) {
+        if(!trim($this->id_pais)) {
             self::$alertas['error'][] = 'El país no puede estar vacío';
         }
-        if(!$this->id_estado) {
+        if(!trim($this->id_estado)) {
             self::$alertas['error'][] = 'El estado no puede estar vacío';
         }
-        if(!$this->id_ciudad) {
+        if(!trim($this->id_ciudad)) {
             self::$alertas['error'][] = 'La ciudad no puede estar vacía';
         }
 
@@ -179,7 +179,7 @@ class Usuario extends ActiveRecord {
 
     // Valida un email
     public function validarEmail() {
-        if(!$this->email) {
+        if(!trim($this->email)) {
             self::$alertas['error'][] = 'El Email es Obligatorio';
         }
         if(!filter_var($this->email, FILTER_VALIDATE_EMAIL)) {
@@ -190,7 +190,7 @@ class Usuario extends ActiveRecord {
 
     // Valida el Password 
     public function validarPassword() {
-        if(!$this->password) {
+        if(!trim($this->password)) {
             self::$alertas['error'][] = 'El Password no puede ir vacio';
         }
         if(strlen($this->password) < 6) {

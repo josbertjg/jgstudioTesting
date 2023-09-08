@@ -688,6 +688,9 @@
     }
     img{
         width: 450px;
+        @media screen and (max-width: 750px) {
+            width: 200px;
+        }
     }
 }
 // LOGIN
@@ -716,23 +719,15 @@
         form{
             width: 100%;
             .btn-submit{
-                background-color: v.$morado;
-                border: 2px solid v.$morado;
-                border-radius: 50px;
-                padding: 1rem 2rem;
-                font-size: 1rem;
-                font-weight: bold;
-                color: white;
-                transition: all 200ms;
-                &:hover{
-                    background-color: lighten(v.$morado, 5);
-                    border: 2px solid lighten(v.$morado, 5);
-                }
+                @include m.btnSubmit;
             }
         }
     }
     img{
         width: 450px;
+        @media screen and (max-width: 750px) {
+            width: 200px;
+        }
     }
 }
 //FOOTER

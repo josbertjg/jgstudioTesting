@@ -21,16 +21,16 @@ class Producto extends ActiveRecord {
 
     // Validación para productos nuevos
     public function validar_servicio() {
-        if(!$this->nombre) {
+        if(!trim($this->nombre)) {
             self::$alertas['error'][] = 'El Nombre del servicio es obligatorio';
         }
-        if(!$this->descripcion) {
+        if(!trim($this->descripcion)) {
             self::$alertas['error'][] = 'La descripcion del servicio es obligatoria';
         }
-        if(!$this->id_categoria) {
+        if(!trim($this->id_categoria)) {
             self::$alertas['error'][] = 'La categoría es obligatoria';
         }
-        if(!$this->precio_unitario) {
+        if(!trim($this->precio_unitario)) {
             self::$alertas['error'][] = 'El precio unitario es obligatorio';
         }
         if(strlen($this->clave) < 6) {
@@ -41,16 +41,16 @@ class Producto extends ActiveRecord {
 
     // Validación para la edicion de productos
     public function validar_edicion() {
-        if(!$this->nombre) {
+        if(!trim($this->nombre)) {
             self::$alertas['error'][] = 'El Nombre del servicio es obligatorio';
         }
-        if(!$this->descripcion) {
+        if(!trim($this->descripcion)) {
             self::$alertas['error'][] = 'La descripcion del servicio es obligatoria';
         }
-        if(!$this->id_categoria) {
+        if(!trim($this->id_categoria)) {
             self::$alertas['error'][] = 'La categoría es obligatoria';
         }
-        if(!$this->precio_unitario) {
+        if(!trim($this->precio_unitario)) {
             self::$alertas['error'][] = 'El precio unitario es obligatorio';
         }
         if(strlen($this->clave) < 6) {
@@ -60,16 +60,16 @@ class Producto extends ActiveRecord {
 
     // Validación para registro de productos por parte del admin
     public function validar_insercion() {
-        if(!$this->nombre) {
+        if(!trim($this->nombre)) {
             self::$alertas['error'][] = 'El Nombre es Obligatorio';
         }
-        if(!$this->descripcion) {
+        if(!trim($this->descripcion)) {
             self::$alertas['error'][] = 'La descripcion es Obligatorio';
         }
-        if(!$this->id_categoria) {
+        if(!trim($this->id_categoria)) {
             self::$alertas['error'][] = 'La categoria es Obligatorio';
         }
-        if(!$this->precio_unitario) {
+        if(!trim($this->precio_unitario)) {
             self::$alertas['error'][] = 'El precio unitario es obligatorio';
         }
         return self::$alertas;

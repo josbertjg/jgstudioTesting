@@ -1,5 +1,7 @@
 <?php
 
+use Model\Cotizacion;
+
 $imageCategoryPath = '/img/categories/';
 $path = '../public';
 
@@ -84,7 +86,6 @@ function getCarrito(): array {
 
 function setCarrito($carrito) {
     $_SESSION['carrito'] = json_encode($carrito);
-    header('location: '.$_SERVER['PATH_INFO']);
 }
 
 function deleteItemCarrito($id) {
@@ -99,6 +100,22 @@ function deleteItemCarrito($id) {
             }
         }
     }
+}
+
+function getNotifications(): array {
+    $cotizaciones = Cotizacion::getPendientes();
+    $notifications = [];
+    if(count($cotizaciones)>0){
+        $objCotizacion = (object)[];
+        foreach($cotizaciones as $cotizacion){
+            $objCotizacion->nombre = 'Cotización';
+            $objCotizacion->imagen = '/build/img/cotizacion.png';
+            $objCotizacion->mensaje = $cotizacion->solicitud;
+
+            array_push($notifications, $objCotizacion);
+        }
+    }
+    return $notifications;
 }
 
 // Guardar imagen en la ruta del proyecto

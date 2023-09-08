@@ -78,65 +78,38 @@
               <li role="presentation" class="nav-item dropdown open">
                 <a href="javascript:;" class="dropdown-toggle info-number" id="navbarDropdown1" data-toggle="dropdown" aria-expanded="false">
                 <i class="fa-regular fa-envelope"></i>
-                  <span class="badge bg-red">6</span>
+                <?php 
+                  $notifications = getNotifications();
+                  if(count($notifications)>0){
+                    ?>
+                      <span class="badge bg-red"><?php echo count($notifications) ?></span>
+                    <?php
+                  }
+                ?>
                 </a>
                 <ul class="dropdown-menu list-unstyled msg_list" role="menu" aria-labelledby="navbarDropdown1">
-                  <li class="nav-item">
-                    <a class="dropdown-item">
-                      <span class="image"><img src="<?php echo $_SESSION['avatar'] ?? '/build/img/defaultUser.svg' ?>" alt="Profile Image" /></span>
-                      <span>
-                        <span>John Smith</span>
-                        <span class="time">3 mins ago</span>
-                      </span>
-                      <span class="message">
-                        Film festivals used to be do-or-die moments for movie makers. They were where...
-                      </span>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="dropdown-item">
-                      <span class="image"><img src="<?php echo $_SESSION['avatar'] ?? '/build/img/defaultUser.svg' ?>" alt="Profile Image" /></span>
-                      <span>
-                        <span>John Smith</span>
-                        <span class="time">3 mins ago</span>
-                      </span>
-                      <span class="message">
-                        Film festivals used to be do-or-die moments for movie makers. They were where...
-                      </span>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="dropdown-item">
-                      <span class="image"><img src="<?php echo $_SESSION['avatar'] ?? '/build/img/defaultUser.svg' ?>" alt="Profile Image" /></span>
-                      <span>
-                        <span>John Smith</span>
-                        <span class="time">3 mins ago</span>
-                      </span>
-                      <span class="message">
-                        Film festivals used to be do-or-die moments for movie makers. They were where...
-                      </span>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="dropdown-item">
-                      <span class="image"><img src="<?php echo $_SESSION['avatar'] ?? '/build/img/defaultUser.svg' ?>" alt="Profile Image" /></span>
-                      <span>
-                        <span>John Smith</span>
-                        <span class="time">3 mins ago</span>
-                      </span>
-                      <span class="message">
-                        Film festivals used to be do-or-die moments for movie makers. They were where...
-                      </span>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <div class="text-center">
-                      <a class="dropdown-item">
-                        <strong>See All Alerts</strong>
-                        <i class="fa fa-angle-right"></i>
+                  <?php
+                    if(count($notifications)>0){
+                      foreach($notifications as $notification):
+                  ?>
+                    <li class="nav-item">
+                      <a class="dropdown-item" href="<?php echo ($notification->nombre == 'Cotización') ? '/admin/dashboard/cotizaciones': '/admin/dashboard' ?>">
+                        <span class="image"><img src="<?php echo $notification->imagen ?>" alt="Profile Image" /></span>
+                        <span>
+                          <span><?php echo $notification->nombre ?></span>
+                          <!-- <span class="time"><?php echo uniqid(); ?></span> -->
+                        </span>
+                        <span class="message"> <?php echo $notification->mensaje ?> </span>
                       </a>
-                    </div>
-                  </li>
+                    </li>
+                  <?php 
+                      endforeach;
+                    }else{
+                      ?>
+                        <h2 style='text-align: center'>Tu buzón esta vacío</h2>
+                      <?php
+                    }
+                  ?>
                 </ul>
               </li>
             </ul>
