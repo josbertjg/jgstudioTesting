@@ -1,4 +1,4 @@
 /node_modules
 # /vendor
 # .babelrc
-/public/img
+# /public/img
