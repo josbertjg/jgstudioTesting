@@ -8,7 +8,7 @@
         <h2 class="accordion-header">
           <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<?php echo $servicios[$i]->categoria->id ?>" aria-expanded="true" aria-controls="collapse<?php echo $servicios[$i]->categoria->id ?>">
             <span class="jg-service-title"><?php echo $servicios[$i]->categoria->nombre ?></span>
-            <img src="/build/img/rrss.png" alt="">
+            <img src="<?php echo $servicios[$i]->categoria->imagen ?>" alt="<?php echo $servicios[$i]->categoria->nombre ?>">
           </button>
         </h2>
         <div id="collapse<?php echo $servicios[$i]->categoria->id ?>" class="accordion-collapse collapse" data-bs-parent="#servicio<?php echo $servicios[$i]->categoria->id ?>">
@@ -28,6 +28,7 @@
                   value='<?php 
                     $objeto = (object)[];
                     $objeto->id_categoria = $servicios[$i]->categoria->id;
+                    $objeto->imagen_categoria = $servicios[$i]->categoria->imagen;
                     $objeto->nombre_categoria = $servicios[$i]->categoria->nombre;
                     $objeto->id_producto = $producto->id;
                     $objeto->nombre_producto = $producto->nombre;
@@ -80,4 +81,23 @@
       }
     }
   ?>
+
+</div>
+<div class="jg-cotizacion-container flex-md-row flex-column">
+  <div>
+    <h5>¿No encontraste lo que buscabas?, ¡Tranquilo!</h5>
+    <h1>Cotización</h1>
+    <p><b>Escríbenos</b> un mensaje solicitándonos lo que necesitas y te <b>responderemos</b> lo mas pronto posible! </p>
+    <input type="hidden" class="jg-alert" value='<?php echo json_encode($alertas) ?>'>
+    <form method="POST">
+      <?php
+        // include "../views/templates/alertas.php";
+      ?>
+      <input type="hidden" name="action" value="cotizacion">
+      <input type="hidden" name="id_usuario" value="<?php echo currentUser_id(); ?>">
+      <textarea class="form-control" name="solicitud" cols="10" rows="6" placeholder="Mensaje:"></textarea>
+      <input type="submit" class="btn-submit mt-3" value="Enviar Solicitud">
+    </form>
+  </div>
+  <img src="build/img/cotizacion-form.png" alt="cotizacion jgstudio">
 </div>

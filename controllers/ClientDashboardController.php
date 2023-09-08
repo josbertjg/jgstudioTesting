@@ -5,6 +5,7 @@ namespace Controllers;
 use Model\Usuario;
 use Model\Producto;
 use Model\Categoria;
+use Model\Cotizacion;
 use MVC\Router;
 
 class ClientDashboardController {
@@ -27,47 +28,66 @@ class ClientDashboardController {
     }
 
     if($_SERVER['REQUEST_METHOD'] === 'POST'){
-      $carrito = getCarrito();
-      
-      $firstProducto = json_decode($_POST[array_key_first($_POST)]);
-      $categoria = (object)[];
-      $categoria->id = $firstProducto->id_categoria;
-      $categoria->nombre = $firstProducto->nombre_categoria;
 
-      $itemRepetido=false;
-      foreach($carrito as $item){
-        if($item->item_id == $firstProducto->item_id){ 
-          $itemRepetido = true;
-          // debuguear($itemRepetido);
-          break;
-        }
-      }
-
-      if(!$itemRepetido){
-        $objetoCarrito = (object)[];
-        $objetoCarrito->item_id = $firstProducto->item_id;
-        $objetoCarrito->categoria = $categoria;
-        $objetoCarrito->productos = [];
+      if(empty($_POST['action'])){ // Añadir items al carrito
+        $carrito = getCarrito();
+        
+        $firstProducto = json_decode($_POST[array_key_first($_POST)]);
+        $categoria = (object)[];
+        $categoria->id = $firstProducto->id_categoria;
+        $categoria->nombre = $firstProducto->nombre_categoria;
+        $categoria->imagen = $firstProducto->imagen_categoria;
   
-        foreach($_POST as $producto){
-          $prod = json_decode($producto);
-          if($prod->cantidad_producto>0){
-            unset($prod->id_categoria);
-            unset($prod->nombre_categoria);
-            unset($prod->item_id);
-            array_push($objetoCarrito->productos,$prod);
+        $itemRepetido=false;
+        foreach($carrito as $item){
+          if($item->item_id == $firstProducto->item_id){ 
+            $itemRepetido = true;
+            // debuguear($itemRepetido);
+            break;
           }
         }
   
-        if(count($objetoCarrito->productos)>0){
-          array_push($carrito,$objetoCarrito);
-          //mandar alerta exitosa
-        }else {
-          //mandar una alerta de que debe añadir al menos un producto de la categoria seleccionada
+        if(!$itemRepetido){
+          $objetoCarrito = (object)[];
+          $objetoCarrito->item_id = $firstProducto->item_id;
+          $objetoCarrito->categoria = $categoria;
+          $objetoCarrito->isCotizacion = false;
+          $objetoCarrito->productos = [];
+    
+          foreach($_POST as $producto){
+            $prod = json_decode($producto);
+            if($prod->cantidad_producto>0){
+              unset($prod->id_categoria);
+              unset($prod->nombre_categoria);
+              unset($prod->item_id);
+              array_push($objetoCarrito->productos,$prod);
+            }
+          }
+    
+          if(count($objetoCarrito->productos)>0){
+            array_push($carrito,$objetoCarrito);
+            //mandar alerta exitosa
+          }else {
+            //mandar una alerta de que debe añadir al menos un producto de la categoria seleccionada
+          }
+          setCarrito($carrito);
         }
-        setCarrito($carrito);
-        // setcookie('carrito',json_encode());
-        // header('location: /dashboard');
+      }else if($_POST['action'] == 'cotizacion'){ // Cotizacion
+        $cotizacion = new Cotizacion;
+        $cotizacion->sincronizar($_POST);
+        $alertas = $cotizacion->validate_insert_byClient();
+
+        if(empty($alertas)){
+          $resultado = $cotizacion->guardar();
+
+          if($resultado) {
+            Usuario::setAlerta('success', 'Solicitud de cotizacion enviada, sera revisada por uno de nuestros administradores, podrás ver la respuesta en el panel "Mis Cotizaciones"');
+            $alertas = Usuario::getAlertas();
+          }else{
+              Usuario::setAlerta('error', 'Error al enviar la cotización, intentalo mas tarde...');
+              $alertas = Usuario::getAlertas();
+          }
+        }
       }
     }
 
@@ -131,7 +151,8 @@ class ClientDashboardController {
       ]
     );
   }
-
+  
+  // Carrito de compra
   public static function miCarrito(Router $router) {
     if(!is_cliente()) {
       header('location: /');
@@ -150,28 +171,35 @@ class ClientDashboardController {
     foreach($carrito as $itemCarrito){
       $acum = 0;
       $objetoItemCarritoToSend = (object)[];
-      $objetoItemCarritoToSend->item_id = $itemCarrito->item_id;
-      
-      // Recorriendo las categorias para guardar la encontrada
-      foreach($allCategorias as $category){
-        if($category->id == $itemCarrito->categoria->id){
-          $objetoItemCarritoToSend->categoria = $category;
-          break;
-        }
-      }
 
-      // Recorriendo los productos para guardar los encontrados
-      $objetoItemCarritoToSend->productos = [];
-      foreach($itemCarrito->productos as $productoCarrito){
-        foreach($allProductos as $producto){
-          if($productoCarrito->id_producto == $producto->id){
-            $producto->cantidad_producto = $productoCarrito->cantidad_producto;
-            $acum += $producto->precio_unitario * $producto->cantidad_producto;
-            array_push($objetoItemCarritoToSend->productos,$producto);
+      $objetoItemCarritoToSend->isCotizacion = $itemCarrito->isCotizacion;
+
+      if(!$objetoItemCarritoToSend->isCotizacion){
+        $objetoItemCarritoToSend->item_id = $itemCarrito->item_id;
+        
+        // Recorriendo las categorias para guardar la encontrada
+        foreach($allCategorias as $category){
+          if($category->id == $itemCarrito->categoria->id){
+            $objetoItemCarritoToSend->categoria = $category;
+            break;
           }
         }
+  
+        // Recorriendo los productos para guardar los encontrados
+        $objetoItemCarritoToSend->productos = [];
+        foreach($itemCarrito->productos as $productoCarrito){
+          foreach($allProductos as $producto){
+            if($productoCarrito->id_producto == $producto->id){
+              $producto->cantidad_producto = $productoCarrito->cantidad_producto;
+              $acum += $producto->precio_unitario * $producto->cantidad_producto;
+              array_push($objetoItemCarritoToSend->productos,$producto);
+            }
+          }
+        }
+        $objetoItemCarritoToSend->total = $acum;
+      }else{
+        $objetoItemCarritoToSend = $itemCarrito;
       }
-      $objetoItemCarritoToSend->total = $acum;
       array_push($carritoToSend,$objetoItemCarritoToSend);
     }
 
@@ -190,7 +218,7 @@ class ClientDashboardController {
             if(empty($alertas)){
               
               $resultado =  $cliente->guardar();
-   
+
               if($resultado) {
                 Usuario::setAlerta('success', 'Tus datos se han guardado correctamente.');
                 $alertas = Usuario::getAlertas();
@@ -270,6 +298,53 @@ class ClientDashboardController {
         'userCanBuy' => $currentUser->userCanBuy(),
         'userWereRegistering' => $userWereRegistering,
         'userHasBeenRegistered' => $userHasBeenRegistered
+      ]
+    );
+  }
+
+  // Cotizaciones
+  public static function cotizaciones(Router $router) {
+   
+    if(!is_cliente()) {
+      header('Location: /');
+    };
+
+    $alertas = [];
+    
+    if($_SERVER['REQUEST_METHOD'] === 'POST'){
+      if(isset($_POST['action']) && $_POST['action'] == 'addToCarrito'){
+        $carrito = getCarrito();
+        
+        $objetoCarrito = (object)[];
+        $objetoCarrito->isCotizacion = true;
+        $objetoCarrito->solicitud = $_POST['solicitud'];
+        $objetoCarrito->respuesta = $_POST['respuesta'];
+        $objetoCarrito->monto_final = $_POST['monto_final'];
+        $objetoCarrito->item_id = $_POST['item_id'];
+        
+        array_push($carrito,$objetoCarrito);
+                
+        setCarrito($carrito);
+
+        Cotizacion::setAlerta('success', '¡Cotizacion añadida al Carrito!');
+        
+      }else if(isset($_POST['action']) && $_POST['action'] == 'deleteCotizacion'){
+        $resultado = Cotizacion::eliminarById($_POST['id']);
+        if($resultado){
+          Cotizacion::setAlerta('success', '¡Cotización eliminada exitosamente!');
+        }else{
+          Cotizacion::setAlerta('error', 'Ocurrio un error al intentar borrar la cotización, intentalo mas tarde.');
+        }
+      }
+    }
+    
+    $alertas = Cotizacion::getAlertas();
+
+    // Render a la vista 
+    $router->render('client/cotizaciones/misCotizaciones', 
+      [
+        'alertas' => $alertas,
+        'cotizaciones' => Cotizacion::findAll('id_usuario', currentUser_id())
       ]
     );
   }

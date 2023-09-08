@@ -80,7 +80,6 @@
                   <i class="fa-solid fa-cart-shopping"></i>
                   <?php 
                     $carrito = getCarrito();
-
                     if(count($carrito)>0):
                   ?>
                   <span class="badge bg-red"><?php echo count($carrito) ?></span>
@@ -90,10 +89,11 @@
                   <?php
                     if(count($carrito)>0){
                       foreach($carrito as $producto):
+                        if(!$producto->isCotizacion){
                   ?>
                     <li class="nav-item">
                       <a class="dropdown-item" href="/dashboard/miCarrito">
-                        <span class="image"><img src="<?php echo $_SESSION['avatar'] ?? '/build/img/diseño.png' ?>" alt="Profile Image" /></span>
+                        <span class="image"><img src="<?php echo $producto->categoria->imagen ?? '/build/img/diseño.png' ?>" alt="Category Image" /></span>
                         <span>
                           <span><?php echo $producto->categoria->nombre ?></span>
                           <span class="time"><?php echo $producto->item_id ?></span>
@@ -109,6 +109,22 @@
                       </a>
                     </li>
                   <?php 
+                        }else{
+                          ?>
+                          <li class="nav-item">
+                            <a class="dropdown-item" href="/dashboard/miCarrito">
+                              <span class="image"><img src="/build/img/cotizacion.png" alt="Category Image" /></span>
+                              <span>
+                                <span>Cotización <?php echo $producto->item_id ?></span>
+                                <span class="time"><?php echo $producto->monto_final ?>$</span>
+                              </span>
+                              <span class="message">
+                                <?php echo $producto->respuesta ?>
+                              </span>
+                            </a>
+                          </li>
+                          <?php
+                        }
                       endforeach; 
                      }else echo "<h2 style='text-align: center'>Tu carrito esta vacío</h2>";
                   ?>

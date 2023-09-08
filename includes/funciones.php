@@ -1,15 +1,22 @@
 <?php
 
+use Model\Cotizacion;
+
+$imageCategoryPath = '/img/categories/';
+$path = '../public';
+
 function debuguear($variable) : string {
     echo "<pre>";
     var_dump($variable);
     echo "</pre>";
     exit;
 }
+
 function s($html) : string {
     $s = htmlspecialchars($html);
     return $s;
 }
+
 function pagina_actual($path) : bool {
     return str_contains($_SERVER['PATH_INFO'], $path) ? true : false;
 }
@@ -79,7 +86,6 @@ function getCarrito(): array {
 
 function setCarrito($carrito) {
     $_SESSION['carrito'] = json_encode($carrito);
-    header('location: '.$_SERVER['PATH_INFO']);
 }
 
 function deleteItemCarrito($id) {
@@ -94,4 +100,99 @@ function deleteItemCarrito($id) {
             }
         }
     }
+}
+
+function getNotifications(): array {
+    $cotizaciones = Cotizacion::getPendientes();
+    $notifications = [];
+    if(count($cotizaciones)>0){
+        $objCotizacion = (object)[];
+        foreach($cotizaciones as $cotizacion){
+            $objCotizacion->nombre = 'Cotización';
+            $objCotizacion->imagen = '/build/img/cotizacion.png';
+            $objCotizacion->mensaje = $cotizacion->solicitud;
+
+            array_push($notifications, $objCotizacion);
+        }
+    }
+    return $notifications;
+}
+
+// Guardar imagen en la ruta del proyecto
+function uploadImage($newFile, $modelImage){
+
+    if(!empty($newFile)) {
+
+        $file = $_FILES['file'];
+        $filename = $file['name'];
+        $relativePath;
+
+        //debuguear($filename);
+
+        switch($modelImage){
+            // POST Para Eliminar un articulo del carrito
+            case 'Category':
+                $relativePath = $GLOBALS['path'] . $GLOBALS['imageCategoryPath'];
+                //debuguear($relativePath);
+                break;
+            // POST Para Culminar el registro
+            case 'UserAvatar': 
+                
+            break;
+            // POST Para realizar pago
+            case 'ProductImage':
+                
+            break;
+            }
+
+        //debuguear($relativePath);
+
+        if(!is_dir($relativePath)) {
+            mkdir($relativePath, 0755, true);
+        }
+
+        $fileNameAux = $filename;
+        $targetFile = $relativePath . basename($_FILES['file']['name']);
+        $imageFileType = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
+
+        //debuguear($targetFile);
+
+        $check = getimagesize($_FILES['file']['tmp_name']);
+        //debuguear($check);
+
+        $finalName = $filename;
+
+        if ($check !== false) {
+            if (file_exists($targetFile)) {
+                $filename = pathinfo($targetFile, PATHINFO_FILENAME);
+                $extension = pathinfo($targetFile, PATHINFO_EXTENSION);
+                $counter = 1;
+                while (file_exists($targetFile)) {
+                    $newFilename = $filename . '_' . $counter . '.' . $extension;
+                    $fileNameAux = $newFilename;
+                    $targetFile = $relativePath . $newFilename;
+                    $counter++;
+                }
+                $finalName = $newFilename;
+            }
+
+            if (move_uploaded_file($_FILES['file']['tmp_name'], $targetFile)) {
+                //debuguear($newFilename);
+
+                $realPath = $GLOBALS['imageCategoryPath'].$finalName;
+                //debuguear($realPath);
+
+                return $realPath;
+            } else {
+                $alertas['error'][] = 'Hubo un error al subir la imagen.';
+                echo 'Hubo un error al subir la imagen.';
+                return $alertas;
+            }
+        } else {
+            $alertas['error'][] = 'El archivo seleccionado no es una imagen válida.';
+            echo 'El archivo seleccionado no es una imagen válida.';
+            return $alertas;
+        }
+    }
+
 }

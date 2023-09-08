@@ -37,7 +37,7 @@
   <!-- footer content -->
   <footer>
     <div class="pull-right">
-      Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
+      JG Studio - Expertos en Marketing Digital
     </div>
     <div class="clearfix"></div>
   </footer>
@@ -47,9 +47,9 @@
     <!-- jQuery -->
     <script src="/build/external_imports/js/jquery.min.js"></script>
     <!-- Bootstrap -->
-   <script src="/build/external_imports/js/bootstrap.bundle.min.js"></script>
-   <!-- BOOTSTRAP JAVASCRIPT (CDN) -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+    <script src="/build/external_imports/js/bootstrap.bundle.min.js"></script>
+    <!-- BOOTSTRAP JAVASCRIPT (CDN) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
     <!-- FastClick -->
     <script src="/build/external_imports/js/fastclick.js"></script>
     <!-- NProgress -->
@@ -60,6 +60,8 @@
     <script src="/build/js/gentella/custom.min.js"></script>
     <!-- Validaciones -->
     <script src="/build/js/validaciones.js"></script>
+    <!-- SWEET ALERT -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- Custom Javascript -->
     <script src="/build/js/main.min.js?05"></script>
 </body>
