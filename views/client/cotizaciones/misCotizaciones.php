@@ -18,10 +18,10 @@
           <?php endif; ?>
           <p class="mb-1 text-secondary">
             <b>Estado:</b>
-            <?php echo ($cotizacion->estado == 1) ? 'Esperando Revisión' : ''; echo ($cotizacion->estado == 2) ? 'Aprobada' : 'Rechazada'; ?>
+            <?php echo ($cotizacion->estado == 1) ? 'Esperando Revisión' : ''; echo ($cotizacion->estado == 2) ? 'Aprobada' : ''; echo ($cotizacion->estado == 3) ? 'Rechazada' : '' ?>
           </p>
           <div class="progress">
-            <div class="progress-bar progress-bar-striped bg-<?php echo ($cotizacion->estado == 1) ? 'warning' : ''; echo ($cotizacion->estado == 2) ? 'success' : 'danger' ?>" role="progressbar" style="width: <?php echo $cotizacion->estado > 1 ? '100%' : '50%' ?>" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+            <div class="progress-bar progress-bar-striped bg-<?php echo ($cotizacion->estado == 1) ? 'warning' : ''; echo ($cotizacion->estado == 2) ? 'success' : ''; echo ($cotizacion->estado == 3) ? 'danger' : '' ?>" role="progressbar" style="width: <?php echo $cotizacion->estado > 1 ? '100%' : '50%' ?>" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
           </div>
           <?php if($cotizacion->estado > 1): ?>
             <div class="d-flex justify-content-end mt-2">
