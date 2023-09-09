@@ -50,6 +50,9 @@ $router->get('/admin/configuracion', [AdminDashboardController::class, 'configur
 // Categorias
 $router->get('/admin/category', [AdminDashboardController::class, 'category']);
 $router->post('/admin/category', [AdminDashboardController::class, 'category']);
-
+$router->post('/admin/delete', [AdminDashboardController::class, 'deleteCategory']);
+// Detalle de las categorias
+$router->get('/admin/category/categoryDetail', [AdminDashboardController::class, 'categoryDetail']);
+$router->post('/admin/category/categoryDetail', [AdminDashboardController::class, 'categoryDetail']);
 
 $router->comprobarRutas();

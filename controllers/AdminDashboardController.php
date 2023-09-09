@@ -220,7 +220,7 @@ class AdminDashboardController {
           $existeproducto = Producto::where('nombre', $producto->nombre);
   
           if($existeproducto->id != $producto->id) {
-            Producto::setAlerta('error', 'Ya existe un usuario registrado con este correo');
+            Producto::setAlerta('error', 'Ya un producto registrado con este nombre');
             $alertas = Producto::getAlertas();
           }else{
             // Guardar los cambios
@@ -299,9 +299,7 @@ class AdminDashboardController {
             } else {
 
               $pathToSave = uploadImage($_FILES,$modelImage);
-
-              $category->imagen = $pathToSave; //. $filename;
-
+              $category->imagen = $pathToSave;
               $resultado =  $category->guardar();
               //debuguear($category);
 
@@ -309,62 +307,6 @@ class AdminDashboardController {
                 Categoria::setAlerta('success', 'Categoria registrada correctamente');
                 $alertas = Categoria::getAlertas();
               }
-
-              //debuguear(empty($file));
-
-              // if(!empty($file)) {
-
-              //   $targetPath = '../public/img/categories/';
-              //   //debuguear($targetPath);
-
-              //   if(!is_dir($targetPath)) {
-              //     mkdir($targetPath, 0755, true);
-              //   }
-
-              //   $fileNameAux = $filename;
-              //   $targetFile = $targetPath . basename($_FILES['file']['name']);
-              //   $imageFileType = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
-
-              //   //debuguear($targetFile);
-
-              //   $check = getimagesize($_FILES['file']['tmp_name']);
-
-              //   if ($check !== false) {
-              //     if (file_exists($targetFile)) {
-              //         $filename = pathinfo($targetFile, PATHINFO_FILENAME);
-              //         $extension = pathinfo($targetFile, PATHINFO_EXTENSION);
-              //         $counter = 1;
-              //         while (file_exists($targetFile)) {
-              //             $newFilename = $filename . '_' . $counter . '.' . $extension;
-              //             $fileNameAux = $newFilename;
-              //             $targetFile = $targetPath . $newFilename;
-              //             $counter++;
-              //         }
-              //     }
-
-              //     if (move_uploaded_file($_FILES['file']['tmp_name'], $targetFile)) {
-              //         $alertas['success'][] = 'La imagen se ha subido correctamente.';
-
-              //         $category->imagen = $fileNameAux;
-
-              //         $resultado =  $category->guardar();
-              //         //debuguear($category);
-
-              //         if($resultado) {
-              //           Categoria::setAlerta('success', 'Categoria registrada correctamente');
-              //           $alertas = Categoria::getAlertas();
-              //         }
-
-              //         echo 'La imagen se ha subido correctamente.';
-              //     } else {
-              //         $alertas['error'][] = 'Hubo un error al subir la imagen.';
-              //         echo 'Hubo un error al subir la imagen.';
-              //     }
-              //   } else {
-              //       $alertas['error'][] = 'El archivo seleccionado no es una imagen válida.';
-              //       echo 'El archivo seleccionado no es una imagen válida.';
-              //   }
-              // }
             }
           }
         }        
@@ -377,6 +319,271 @@ class AdminDashboardController {
           'routeName' => 'category',
           'alertas' => $alertas,
           'category' => Categoria::all()
+        ]
+      );
+    }
+
+    public static function deleteCategory(Router $router) {
+      // Obtener el id del registro a eliminar de la URL
+      $id = $_POST['id'];
+
+      //debuguear($_POST['id']);
+
+      if(!is_admin_empleado()) {
+        header('Location: /');
+      };
+      
+      $alertas = [];
+      $category = new Categoria;
+
+      $category->sincronizar($_POST);
+  
+      //debuguear($category);
+
+      $category->id = $id;
+      $category->estado = 0;
+
+      $files = array (        
+        "estado" => 0,
+      );
+
+      $condiciones = array(
+        'files' => $files,
+        "id" => $id
+      );
+
+      $categoryUpdated = Categoria::dinamicUpdate($condiciones);
+
+      // Realizar la eliminación del registro (código necesario)
+
+      // Redireccionar a la página de categorías después de eliminar el registro
+
+      $router->render('admin/category/category', 
+        [
+          'titulo' => 'Registrar categorias',
+          'routeName' => 'category',
+          'alertas' => $alertas,
+          'category' => Categoria::all()
+        ]
+      );
+    }
+
+    // Detalle de las categorías
+    public static function categoryDetail(Router $router) {
+
+      if(!is_admin_empleado()) is_auth() ? header('location: /dashboard') : header('location: /');
+  
+      $id = $_GET['id'];
+    
+      if(!is_admin()) {
+        if(currentUser_id() != $id){
+          header('Location: /admin/dashboard');
+        }
+      };
+      
+      $alertas = [];
+      $categoria = new Categoria;
+      $categoriaOld = Categoria::find($id);
+
+  
+      if($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $categoria->sincronizar($_POST);
+  
+        //$alertas = $service->validar_edicion();
+  
+        if(empty($alertas)) {
+  
+          $existecategoria = Categoria::where('nombre', $categoria->nombre);
+  
+          //debuguear($existecategoria);
+
+          if($existecategoria && $existecategoria->id != $categoria->id) {
+            Categoria::setAlerta('error', 'Ya existe una categoría con el nombre ingresado');
+            $alertas = Categoria::getAlertas();
+          }else{
+            // Guardar los cambios
+            $categoria->imagen = $categoriaOld->imagen;
+            $resultado =  $categoria->guardar();
+  
+            if($resultado) {
+              Categoria::setAlerta('success', 'Cambios guardados correctamente');
+              $alertas = Categoria::getAlertas();
+            }
+          }
+        }
+      }
+  
+      $categoria = Categoria::find($id);
+  
+      // Render a la vista 
+      $router->render('admin/category/categoryDetail', 
+        [
+          'routeName' => currentUser_id() == $id ? 'Perfil' : 'Detalle de la categoría',
+          'categoria' => $categoria,
+          'alertas' => $alertas
+        ]
+      );
+    }
+
+    public static function bank(Router $router){
+
+      if(!is_admin_empleado()) {
+        header('Location: /');
+      };
+
+      $alertas = [];
+      $category = new Categoria;
+      $modelImage = 'Category';
+
+      if($_SERVER['REQUEST_METHOD'] === 'POST' ) {
+
+        $category->sincronizar($_POST);
+        $file = $_FILES['file'];
+        $filename = $file['name'];
+
+        //debuguear($pathToSave);
+
+        if($category){
+          $alertas = $category->validar_insercion();
+  
+          if(empty($alertas)) {
+
+            $condiciones = array(
+              "nombre" => $category->nombre,
+            );
+
+            $existeproducto = Categoria::dinamicWhere($condiciones);
+    
+            //debuguear($existeproducto);
+
+            if($existeproducto) {
+              Categoria::setAlerta('error', 'Ya existe una cateoria registrada con el mismo nombre');
+              $alertas = Categoria::getAlertas();
+            } else {
+
+              $pathToSave = uploadImage($_FILES,$modelImage);
+              $category->imagen = $pathToSave;
+              $resultado =  $category->guardar();
+              //debuguear($category);
+
+              if($resultado) {
+                Categoria::setAlerta('success', 'Categoria registrada correctamente');
+                $alertas = Categoria::getAlertas();
+              }
+            }
+          }
+        }        
+      }
+
+      // Render a la vista 
+      $router->render('admin/category/category', 
+        [
+          'titulo' => 'Registrar categorias',
+          'routeName' => 'category',
+          'alertas' => $alertas,
+          'category' => Categoria::all()
+        ]
+      );
+    }
+
+    public static function deleteBank(Router $router) {
+      // Obtener el id del registro a eliminar de la URL
+      $id = $_POST['id'];
+
+      //debuguear($_POST['id']);
+
+      if(!is_admin_empleado()) {
+        header('Location: /');
+      };
+      
+      $alertas = [];
+      $category = new Categoria;
+
+      $category->sincronizar($_POST);
+  
+      //debuguear($category);
+
+      $category->id = $id;
+      $category->estado = 0;
+
+      $files = array (        
+        "estado" => 0,
+      );
+
+      $condiciones = array(
+        'files' => $files,
+        "id" => $id
+      );
+
+      $categoryUpdated = Categoria::dinamicUpdate($condiciones);
+
+      // Realizar la eliminación del registro (código necesario)
+
+      // Redireccionar a la página de categorías después de eliminar el registro
+
+      $router->render('admin/category/category', 
+        [
+          'titulo' => 'Registrar categorias',
+          'routeName' => 'category',
+          'alertas' => $alertas,
+          'category' => Categoria::all()
+        ]
+      );
+    }
+
+    // Detalle de las categorías
+    public static function bankDetail(Router $router) {
+
+      if(!is_admin_empleado()) is_auth() ? header('location: /dashboard') : header('location: /');
+  
+      $id = $_GET['id'];
+    
+      if(!is_admin()) {
+        if(currentUser_id() != $id){
+          header('Location: /admin/dashboard');
+        }
+      };
+      
+      $alertas = [];
+      $categoria = new Categoria;
+      $categoriaOld = Categoria::find($id);
+
+  
+      if($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $categoria->sincronizar($_POST);
+  
+        //$alertas = $service->validar_edicion();
+  
+        if(empty($alertas)) {
+  
+          $existecategoria = Categoria::where('nombre', $categoria->nombre);
+  
+          //debuguear($existecategoria);
+
+          if($existecategoria && $existecategoria->id != $categoria->id) {
+            Categoria::setAlerta('error', 'Ya existe una categoría con el nombre ingresado');
+            $alertas = Categoria::getAlertas();
+          }else{
+            // Guardar los cambios
+            $categoria->imagen = $categoriaOld->imagen;
+            $resultado =  $categoria->guardar();
+  
+            if($resultado) {
+              Categoria::setAlerta('success', 'Cambios guardados correctamente');
+              $alertas = Categoria::getAlertas();
+            }
+          }
+        }
+      }
+  
+      $categoria = Categoria::find($id);
+  
+      // Render a la vista 
+      $router->render('admin/category/categoryDetail', 
+        [
+          'routeName' => currentUser_id() == $id ? 'Perfil' : 'Detalle de la categoría',
+          'categoria' => $categoria,
+          'alertas' => $alertas
         ]
       );
     }

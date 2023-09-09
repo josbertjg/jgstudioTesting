@@ -129,8 +129,9 @@ class ActiveRecord {
     public static function where($columna, $valor) {
         $query = "SELECT * FROM " . static::$tabla . " WHERE ${columna} = '${valor}'";
         
+        //debuguear($query);
+
         $resultado = self::consultarSQL($query);
-        //debuguear($resultado);
 
         return array_shift( $resultado ) ;
     }
@@ -185,6 +186,64 @@ class ActiveRecord {
 
         //debuguear($query);
 
+        // Actualizar BD
+        $resultado = self::$db->query($query);
+        //debuguear($resultado);
+        return $resultado;
+    }
+
+    // Actualizar campos específicos de registro
+    public function actualizarCHAT($datosActualizacion) {
+        // Sanitizar los datos
+        //$atributos = $this->sanitizarAtributos();
+
+        debuguear($datosActualizacion);
+
+        // Iterar para ir agregando cada campo de la BD
+        $valores = [];
+        $id = $datosActualizacion->id;
+        $estado = $datosActualizacion->estado;
+
+        // Consulta SQL
+        $query = "UPDATE " . static::$tabla ." SET ";
+        $query .=  join(', ', $estado );
+        $query .= " WHERE id = ${id}";
+        $query .= " LIMIT 1 ";
+
+        debuguear($query);
+
+        // Actualizar BD
+        $resultado = self::$db->query($query);
+        //debuguear($resultado);
+        return $resultado;
+    }
+
+    public function dinamicUpdate($datosActualizacion) {
+
+        $query = "UPDATE " . static::$tabla ." SET ";
+
+        //debuguear($datosActualizacion);
+
+        // Sanitizar los datos
+        //$atributos = $this->sanitizarAtributos();
+    
+        // Iterar para ir agregando cada campo de la BD
+        $first = true;
+        foreach ($datosActualizacion['files'] as $columna => $valor) {
+            if (!$first) {
+                $query .= " AND ";
+            }
+            $query .= "${columna} = '${valor}'";
+    
+            $first = false;
+        }
+    
+        // Consulta SQL
+        $query .= " WHERE id = '" . $datosActualizacion['id'] . "' ";
+        $query .= " LIMIT 1 ";
+    
+        //debuguear($query);
+    
         // Actualizar BD
         $resultado = self::$db->query($query);
         //debuguear($resultado);

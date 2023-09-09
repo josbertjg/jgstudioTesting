@@ -6,6 +6,7 @@ class Router
 {
     public $getRoutes = [];
     public $postRoutes = [];
+    public $putRoutes = [];
 
     public function get($url, $fn)
     {
@@ -17,6 +18,11 @@ class Router
         $this->postRoutes[$url] = $fn;
     }
 
+    public function put($url, $fn)
+    {
+        $this->putRoutes[$url] = $fn;
+    }
+
     public function comprobarRutas()
     {
 
@@ -25,8 +31,10 @@ class Router
 
         if ($method === 'GET') {
             $fn = $this->getRoutes[$url_actual] ?? null;
-        } else {
+        } else if ($method === 'POST') {
             $fn = $this->postRoutes[$url_actual] ?? null;
+        } else {
+            $fn = $this->putRoutes[$url_actual] ?? null;
         }
 
         if ( $fn ) {
