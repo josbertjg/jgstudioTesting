@@ -54,5 +54,12 @@ $router->post('/admin/delete', [AdminDashboardController::class, 'deleteCategory
 // Detalle de las categorias
 $router->get('/admin/category/categoryDetail', [AdminDashboardController::class, 'categoryDetail']);
 $router->post('/admin/category/categoryDetail', [AdminDashboardController::class, 'categoryDetail']);
+// Bancos
+$router->get('/admin/banco', [AdminDashboardController::class, 'bank']);
+$router->post('/admin/banco', [AdminDashboardController::class, 'bank']);
+$router->post('/admin/banco', [AdminDashboardController::class, 'deleteBank']);
+// Detalle de las Bancos
+$router->get('/admin/banco/bancoDetalle', [AdminDashboardController::class, 'bankDetail']);
+$router->post('/admin/banco/bancoDetalle', [AdminDashboardController::class, 'bankDetail']);
 
 $router->comprobarRutas();

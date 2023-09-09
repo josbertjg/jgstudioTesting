@@ -1,6 +1,7 @@
 <?php
 
 $imageCategoryPath = '/img/categories/';
+$imageBankPath = '/img/banks/';
 $path = '../public';
 
 function debuguear($variable) : string {
@@ -116,6 +117,7 @@ function uploadImage($newFile, $modelImage){
             // POST Para Eliminar un articulo del carrito
             case 'Category':
                 $relativePath = $GLOBALS['path'] . $GLOBALS['imageCategoryPath'];
+                $realPath = $GLOBALS['imageCategoryPath'];
                 //debuguear($relativePath);
                 break;
             // POST Para Culminar el registro
@@ -123,8 +125,9 @@ function uploadImage($newFile, $modelImage){
                 
             break;
             // POST Para realizar pago
-            case 'ProductImage':
-                
+            case 'Bank':
+                $relativePath = $GLOBALS['path'] . $GLOBALS['imageBankPath'];
+                $realPath = $GLOBALS['imageBankPath'];
             break;
             }
 
@@ -162,7 +165,7 @@ function uploadImage($newFile, $modelImage){
             if (move_uploaded_file($_FILES['file']['tmp_name'], $targetFile)) {
                 //debuguear($newFilename);
 
-                $realPath = $GLOBALS['imageCategoryPath'].$finalName;
+                $realPath = $realPath.$finalName;
                 //debuguear($realPath);
 
                 return $realPath;

@@ -5,8 +5,9 @@ namespace Controllers;
 use Model\Usuario;
 use Model\Categoria;
 use Model\Producto;
-use MVC\Router;
+use Model\Banco;
 use Model\UploadImage;
+use MVC\Router;
 
 class AdminDashboardController {
 
@@ -432,43 +433,44 @@ class AdminDashboardController {
       };
 
       $alertas = [];
-      $category = new Categoria;
-      $modelImage = 'Category';
+      $banco = new Banco;
+      $modelImage = 'Bank';
 
       if($_SERVER['REQUEST_METHOD'] === 'POST' ) {
 
-        $category->sincronizar($_POST);
+        $banco->sincronizar($_POST);
         $file = $_FILES['file'];
         $filename = $file['name'];
 
         //debuguear($pathToSave);
 
-        if($category){
-          $alertas = $category->validar_insercion();
+        if($banco){
+          $alertas = $banco->validar_insercion();
   
           if(empty($alertas)) {
 
             $condiciones = array(
-              "nombre" => $category->nombre,
+              "nombre" => $banco->nombre,
+              "codigo" => $banco->codigo,
             );
 
-            $existeproducto = Categoria::dinamicWhere($condiciones);
+            $existeBanco = Banco::dinamicWhere($condiciones);
     
             //debuguear($existeproducto);
 
-            if($existeproducto) {
-              Categoria::setAlerta('error', 'Ya existe una cateoria registrada con el mismo nombre');
-              $alertas = Categoria::getAlertas();
+            if($existeBanco) {
+              Banco::setAlerta('error', 'Ya existe un banco registrado con los datos ingresados');
+              $alertas = Banco::getAlertas();
             } else {
 
               $pathToSave = uploadImage($_FILES,$modelImage);
-              $category->imagen = $pathToSave;
-              $resultado =  $category->guardar();
+              $banco->imagen = $pathToSave;
+              $resultado =  $banco->guardar();
               //debuguear($category);
 
               if($resultado) {
-                Categoria::setAlerta('success', 'Categoria registrada correctamente');
-                $alertas = Categoria::getAlertas();
+                Banco::setAlerta('success', 'Banco registrado correctamente');
+                $alertas = Banco::getAlertas();
               }
             }
           }
@@ -476,12 +478,12 @@ class AdminDashboardController {
       }
 
       // Render a la vista 
-      $router->render('admin/category/category', 
+      $router->render('admin/bank/bank', 
         [
-          'titulo' => 'Registrar categorias',
-          'routeName' => 'category',
+          'titulo' => 'Registrar banco',
+          'routeName' => 'bank',
           'alertas' => $alertas,
-          'category' => Categoria::all()
+          'banco' => Banco::all()
         ]
       );
     }
@@ -497,14 +499,14 @@ class AdminDashboardController {
       };
       
       $alertas = [];
-      $category = new Categoria;
+      $banco = new Banco;
 
-      $category->sincronizar($_POST);
+      $banco->sincronizar($_POST);
   
       //debuguear($category);
 
-      $category->id = $id;
-      $category->estado = 0;
+      $banco->id = $id;
+      $banco->estado = 0;
 
       $files = array (        
         "estado" => 0,
@@ -515,18 +517,15 @@ class AdminDashboardController {
         "id" => $id
       );
 
-      $categoryUpdated = Categoria::dinamicUpdate($condiciones);
+      $bancoUpdated = Banco::dinamicUpdate($condiciones);
 
-      // Realizar la eliminación del registro (código necesario)
-
-      // Redireccionar a la página de categorías después de eliminar el registro
-
-      $router->render('admin/category/category', 
+      // Redireccionar a la página de bancos después de eliminar el registro
+      $router->render('admin/bank/bank', 
         [
-          'titulo' => 'Registrar categorias',
+          'titulo' => 'Registrar banco',
           'routeName' => 'category',
           'alertas' => $alertas,
-          'category' => Categoria::all()
+          'banco' => Banco::all()
         ]
       );
     }
@@ -545,44 +544,44 @@ class AdminDashboardController {
       };
       
       $alertas = [];
-      $categoria = new Categoria;
-      $categoriaOld = Categoria::find($id);
+      $banco = new Banco;
+      $bancoOld = Banco::find($id);
 
   
       if($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $categoria->sincronizar($_POST);
+        $banco->sincronizar($_POST);
   
         //$alertas = $service->validar_edicion();
   
         if(empty($alertas)) {
   
-          $existecategoria = Categoria::where('nombre', $categoria->nombre);
+          $existeBanco = Banco::where('nombre', $categoria->nombre);
   
           //debuguear($existecategoria);
 
-          if($existecategoria && $existecategoria->id != $categoria->id) {
-            Categoria::setAlerta('error', 'Ya existe una categoría con el nombre ingresado');
-            $alertas = Categoria::getAlertas();
+          if($existeBanco && $existeBanco->id != $banco->id) {
+            Banco::setAlerta('error', 'Ya existe un banco con los datos ingresados');
+            $alertas = Banco::getAlertas();
           }else{
             // Guardar los cambios
-            $categoria->imagen = $categoriaOld->imagen;
-            $resultado =  $categoria->guardar();
+            $banco->imagen = $bancoOld->imagen;
+            $resultado =  $banco->guardar();
   
             if($resultado) {
-              Categoria::setAlerta('success', 'Cambios guardados correctamente');
-              $alertas = Categoria::getAlertas();
+              Banco::setAlerta('success', 'Cambios guardados correctamente');
+              $alertas = Banco::getAlertas();
             }
           }
         }
       }
   
-      $categoria = Categoria::find($id);
+      $banco = Banco::find($id);
   
       // Render a la vista 
-      $router->render('admin/category/categoryDetail', 
+      $router->render('admin/bank/bankDetail', 
         [
-          'routeName' => currentUser_id() == $id ? 'Perfil' : 'Detalle de la categoría',
-          'categoria' => $categoria,
+          'routeName' => currentUser_id() == $id ? 'Perfil' : 'Detalle del banco',
+          'banco' => $banco,
           'alertas' => $alertas
         ]
       );
