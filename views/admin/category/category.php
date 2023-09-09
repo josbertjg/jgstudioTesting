@@ -16,7 +16,7 @@
                         <label for="">Nombre</label>
                         <input type="text" name="nombre" class="form-control">
                     </div>
-                    <div class="col-sm-6 col-12 d-flex align-items-center">
+                    <div class="col-sm-6 col-12" style="margin-top:2%;">
                         <input type="file" name="file"><br>
                     </div>
                     <input type="submit" value="Añadir" class="btn btn-primary col-12 mt-3">

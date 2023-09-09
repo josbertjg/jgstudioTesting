@@ -12,7 +12,7 @@
     </div>
     <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 ">
       <div class="tile-stats">
-      <a href="/admin/category">
+      <a href="/admin/banco">
         <div class="icon"><i class="fa fa-comments-o"></i></div>
         <div class="count">179</div>
         <h3>New Sign ups</h3>
