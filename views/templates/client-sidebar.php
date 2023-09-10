@@ -3,9 +3,10 @@
     <div class="menu_section">
       <h3>General</h3>
       <ul class="nav side-menu">
-        <li><a href="/dashboard"><i class="fa-solid fa-store"></i> Adquirir un Servicio</a></li>
+        <li><a href="/dashboard"><i class="fa-solid fa fa-store"></i> Adquirir Servicios</a></li>
         <li><a href="/dashboard/myServices"><i class="fa-solid fa fa-tasks"></i> Mis Servicios</a></li>
-        <li><a href="/dashboard/myServices"><i class="fa-solid fa fa-money"></i> Mis Pagos</a></li>
+        <li><a href="/dashboard/myServices"><i class="fa-solid fa fa-bag-shopping"></i> Mis Compras</a></li>
+        <li><a href="/dashboard/misCotizaciones"><i class="fa-solid fa fa-money"></i> Mis Cotizaciones</a></li>
         <!-- <li><a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
           <ul class="nav child_menu">
             <li><a href="index.html">Dashboard</a></li>

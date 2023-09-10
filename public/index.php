@@ -31,15 +31,9 @@ $router->post('/admin/dashboard/userList', [AdminDashboardController::class, 'de
 // Detalle del Usuario
 $router->get('/admin/dashboard/users/userDetail', [AdminDashboardController::class, 'userDetail']);
 $router->post('/admin/dashboard/users/userDetail', [AdminDashboardController::class, 'userDetail']);
-// Dashboard del cliente
-$router->get('/dashboard', [ClientDashboardController::class, 'clientDashboard']);
-$router->post('/dashboard', [ClientDashboardController::class, 'clientDashboard']);
-// Detalle del Usuario cliente
-$router->get('/client/profile', [ClientDashboardController::class, 'clientProfile']);
-$router->post('/client/profile', [ClientDashboardController::class, 'clientProfile']);
-// Carrito
-$router->get('/dashboard/miCarrito', [ClientDashboardController::class, 'miCarrito']);
-$router->post('/dashboard/miCarrito', [ClientDashboardController::class, 'miCarrito']);
+// CRUD de Cotizaciones
+$router->get('/admin/dashboard/cotizaciones', [AdminDashboardController::class, 'cotizaciones']);
+$router->post('/admin/dashboard/cotizaciones', [AdminDashboardController::class, 'cotizaciones']);
 // CRUD de Servicios
 $router->get('/admin/productos', [AdminDashboardController::class, 'productos']);
 $router->post('/admin/productos', [AdminDashboardController::class, 'productos']);
@@ -52,6 +46,18 @@ $router->get('/admin/configuracion', [AdminDashboardController::class, 'configur
 // Categorias
 $router->get('/admin/category', [AdminDashboardController::class, 'category']);
 $router->post('/admin/category', [AdminDashboardController::class, 'category']);
+// Dashboard del cliente
+$router->get('/dashboard', [ClientDashboardController::class, 'clientDashboard']);
+$router->post('/dashboard', [ClientDashboardController::class, 'clientDashboard']);
+// Detalle del Usuario cliente
+$router->get('/client/profile', [ClientDashboardController::class, 'clientProfile']);
+$router->post('/client/profile', [ClientDashboardController::class, 'clientProfile']);
+// Carrito
+$router->get('/dashboard/miCarrito', [ClientDashboardController::class, 'miCarrito']);
+$router->post('/dashboard/miCarrito', [ClientDashboardController::class, 'miCarrito']);
+// Mis Cotizaciones
+$router->get('/dashboard/misCotizaciones', [ClientDashboardController::class, 'cotizaciones']);
+$router->post('/dashboard/misCotizaciones', [ClientDashboardController::class, 'cotizaciones']);
 $router->post('/admin/delete', [AdminDashboardController::class, 'deleteCategory']);
 // Detalle de las categorias
 $router->get('/admin/category/categoryDetail', [AdminDashboardController::class, 'categoryDetail']);

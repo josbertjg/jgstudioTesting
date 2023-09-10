@@ -254,6 +254,13 @@ class ActiveRecord {
         return $resultado;
     }
 
+    // Eliminar un Registro por su ID
+    public static function eliminarById($id) {
+        $query = "DELETE FROM "  . static::$tabla . " WHERE id = '${id}' LIMIT 1";
+        $resultado = self::$db->query($query);
+        return $resultado;
+    }
+
     // Busqueda Where con columnas dinámicas 
     public static function dinamicWhere($condiciones) {
         $query = "SELECT * FROM " . static::$tabla . " WHERE ";

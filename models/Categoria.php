@@ -19,7 +19,7 @@ class Categoria extends ActiveRecord {
 
     // Validación para categorias nuevas
     public function validar_cuenta() {
-        if(!$this->nombre) {
+        if(!trim($this->nombre)) {
             self::$alertas['error'][] = 'El nombre de la categoría es Obligatorio';
         }
         return self::$alertas;
@@ -28,7 +28,7 @@ class Categoria extends ActiveRecord {
     //TODO VALIDAR QUE NO SE DUPLIQUE EL NOMBRE
     // Validación para registro de categorías (solo admin)
     public function validar_insercion() {
-        if(!$this->nombre) {
+        if(!trim($this->nombre)) {
             self::$alertas['error'][] = 'El nombre de la categoría es Obligatorio';
         }
         return self::$alertas;
@@ -37,7 +37,7 @@ class Categoria extends ActiveRecord {
     //TODO VALIDAR QUE NO SE DUPLIQUE EL NOMBRE
     // Validación para editar
     public function validar_edicion() {
-        if(!$this->nombre) {
+        if(!trim($this->nombre)) {
             self::$alertas['error'][] = 'El nombre de la categoría es Obligatorio';
         }
         return self::$alertas;
