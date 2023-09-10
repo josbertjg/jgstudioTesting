@@ -95,10 +95,10 @@ class AdminDashboardController {
     
     $alertas = [];
     $usuario = new Usuario;
+    $modelImage = 'UserAvatar';
 
     if($_SERVER['REQUEST_METHOD'] === 'POST') {
       $usuario->sincronizar($_POST);
-      //debuguear($usuario);
 
       $alertas = $usuario->validar_edicion();
 
@@ -112,6 +112,15 @@ class AdminDashboardController {
           Usuario::setAlerta('error', 'Ya existe un usuario registrado con este correo');
           $alertas = Usuario::getAlertas();
         }else{
+
+          $file = $_FILES['file'];
+          $filename = $file['name'];
+
+          if($file){
+            $pathToSave = uploadImage($_FILES,$modelImage);
+            $usuario->avatar = $pathToSave;
+          }
+
           // Guardar los cambios
           $resultado =  $usuario->guardar();
           

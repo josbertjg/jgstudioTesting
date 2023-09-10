@@ -2,6 +2,7 @@
 
 $imageCategoryPath = '/img/categories/';
 $imageBankPath = '/img/banks/';
+$imageUserAvatarPath = '/img/avatar/';
 $path = '../public';
 
 function debuguear($variable) : string {
@@ -122,7 +123,8 @@ function uploadImage($newFile, $modelImage){
                 break;
             // POST Para Culminar el registro
             case 'UserAvatar': 
-                
+                $relativePath = $GLOBALS['path'] . $GLOBALS['imageUserAvatarPath'];
+                $realPath = $GLOBALS['imageUserAvatarPath'];
             break;
             // POST Para realizar pago
             case 'Bank':

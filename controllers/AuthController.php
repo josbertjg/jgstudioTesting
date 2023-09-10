@@ -29,13 +29,13 @@ class AuthController {
                 // Verificar que el usuario exista
                 $usuario = Usuario::where('correo', $usuario->correo);
                 if(!$usuario) {
-                    Usuario::setAlerta('error', 'El Usuario No Existe en la base de datos');
+                    Usuario::setAlerta('error', 'Usuario o contraseña incorrecta');
                 } else {
                     // El Usuario existe
                     // $test = password_verify($_POST['clave'], $usuario->clave);
                     // debuguear($_POST['clave']);
                     
-                    if( $_POST['clave'] == $usuario->clave ) {
+                    if( $_POST['clave'] == $usuario->clave &&  $usuario->estado == 1 ) {
                         // Iniciar la sesión
                         session_start();    
                         $_SESSION['id'] = $usuario->id;
@@ -43,6 +43,9 @@ class AuthController {
                         $_SESSION['apellido'] = $usuario->apellido;
                         $_SESSION['correo'] = $usuario->correo;
                         $_SESSION['id_rol'] = $usuario->id_rol;
+                        if($usuario->avatar){
+                            $_SESSION['avatar'] = $usuario->avatar;
+                        }
 
                         // cosa a utilizar para usar el boton de redireccion
                         // Redireccion
@@ -53,7 +56,7 @@ class AuthController {
                         }
                         
                     } else {
-                        Usuario::setAlerta('error', 'Password Incorrecto');
+                        Usuario::setAlerta('error', 'Usuario incorrecto o inhabilitado');
                     }
                 }
             }
