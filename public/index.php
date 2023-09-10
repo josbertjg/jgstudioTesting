@@ -27,6 +27,7 @@ $router->post('/admin/dashboard', [AdminDashboardController::class, 'adminDashbo
 // CRUD de Usuarios
 $router->get('/admin/dashboard/users', [AdminDashboardController::class, 'users']);
 $router->post('/admin/dashboard/users', [AdminDashboardController::class, 'users']);
+$router->post('/admin/dashboard/userList', [AdminDashboardController::class, 'deleteUser']);
 // Detalle del Usuario
 $router->get('/admin/dashboard/users/userDetail', [AdminDashboardController::class, 'userDetail']);
 $router->post('/admin/dashboard/users/userDetail', [AdminDashboardController::class, 'userDetail']);
@@ -45,6 +46,7 @@ $router->post('/admin/productos', [AdminDashboardController::class, 'productos']
 // Detalle del servicio
 $router->get('/admin/productos/productoDetail', [AdminDashboardController::class, 'productoDetail']);
 $router->post('/admin/productos/productoDetail', [AdminDashboardController::class, 'productoDetail']);
+$router->post('/admin/productsList', [AdminDashboardController::class, 'deleteProduct']);
 // Lista donfiguración
 $router->get('/admin/configuracion', [AdminDashboardController::class, 'configuracionView']);
 // Categorias
@@ -57,7 +59,7 @@ $router->post('/admin/category/categoryDetail', [AdminDashboardController::class
 // Bancos
 $router->get('/admin/banco', [AdminDashboardController::class, 'bank']);
 $router->post('/admin/banco', [AdminDashboardController::class, 'bank']);
-$router->post('/admin/banco', [AdminDashboardController::class, 'deleteBank']);
+$router->post('/admin/bancos', [AdminDashboardController::class, 'deleteBank']);
 // Detalle de las Bancos
 $router->get('/admin/banco/bancoDetalle', [AdminDashboardController::class, 'bankDetail']);
 $router->post('/admin/banco/bancoDetalle', [AdminDashboardController::class, 'bankDetail']);

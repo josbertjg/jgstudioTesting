@@ -12,7 +12,7 @@ class Banco extends ActiveRecord {
         $this->nombre = $args['nombre'] ?? '';
         $this->estado = $args['estado'] ?? 1;
         $this->imagen = $args['imagen'] ?? '';
-        $this->imagen = $args['codigo'] ?? '';
+        $this->codigo = $args['codigo'] ?? '';
 
         //TODO AGREGAR EN DB
         //$this->fecha_modif = $args['fecha_modif'] ?? '';
@@ -33,6 +33,7 @@ class Banco extends ActiveRecord {
     //TODO VALIDAR QUE NO SE DUPLIQUE EL NOMBRE
     // Validación para registro de categorías (solo admin)
     public function validar_insercion() {
+
         if(!$this->nombre) {
             self::$alertas['error'][] = 'El nombre del banco es obligatorio';
         }

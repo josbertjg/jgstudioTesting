@@ -15,7 +15,7 @@
         <h3>
           <a href="/admin/banco">
             <i class="fa fa-bank"></i>
-            Categorias
+            Bancos
           </a>
         </h3>
       </div>

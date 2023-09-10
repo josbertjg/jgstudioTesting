@@ -223,9 +223,6 @@ class ActiveRecord {
         $query = "UPDATE " . static::$tabla ." SET ";
 
         //debuguear($datosActualizacion);
-
-        // Sanitizar los datos
-        //$atributos = $this->sanitizarAtributos();
     
         // Iterar para ir agregando cada campo de la BD
         $first = true;

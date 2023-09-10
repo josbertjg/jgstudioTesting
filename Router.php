@@ -40,7 +40,8 @@ class Router
         if ( $fn ) {
             call_user_func($fn, $this);
         } else {
-            echo "Página No Encontrada o Ruta no válida";
+            // echo "Página No Encontrada o Ruta no válida";
+            $this->render(include_once __DIR__ . '/views/error404.php');
         }
     }
 

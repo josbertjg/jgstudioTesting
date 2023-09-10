@@ -60,6 +60,7 @@ class Producto extends ActiveRecord {
 
     // Validación para registro de productos por parte del admin
     public function validar_insercion() {
+
         if(!$this->nombre) {
             self::$alertas['error'][] = 'El Nombre es Obligatorio';
         }
