@@ -110,47 +110,61 @@ class ClientDashboardController {
     if(!is_cliente()) {
       header('location: /');
     }
-      $id = currentUser_id() ;
-      $client = new Usuario;
-      //$client = Usuario::find($id);
-      $alertas = [];
+    $id = currentUser_id() ;
+    $client = new Usuario;
+    $modelImage = 'UserAvatar';
 
-      if($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $client->sincronizar($_POST);
+    //$clientLoged = Usuario::find($id);
+    $alertas = [];
 
-        //debuguear($client);
+    if($_SERVER['REQUEST_METHOD'] === 'POST') {
+      $client->sincronizar($_POST);
 
-        $alertas = $client->validar_edicion();
+      //debuguear($client);
 
-        if(empty($alertas)) {
+      $alertas = $client->validar_edicion();
 
-          $existeUsuario = Usuario::where('correo', $client->correo);
+      if(empty($alertas)) {
 
-          if($existeUsuario->id != $client->id) {
-            Usuario::setAlerta('error', 'Ya existe un usuario registrado con este correo');
+        $existeUsuario = Usuario::where('correo', $client->correo);
+
+        if($existeUsuario->id != $client->id) {
+          Usuario::setAlerta('error', 'Ya existe un usuario registrado con este correo');
+          $alertas = Usuario::getAlertas();
+        }else{
+
+          $file = $_FILES['file'];
+          $filename = $file['name'];
+
+          if($file){
+            $pathToSave = uploadImage($_FILES,$modelImage);
+            $client->avatar = $pathToSave;
+          }
+
+          // Guardar los cambios
+          $resultado =  $client->guardar();
+        
+
+          // Enviar email
+          // $email = new Email($usuario->email, $usuario->nombre, $usuario->token);
+          // $email->enviarConfirmacion();
+  
+          if($resultado) {
+            Usuario::setAlerta('success', 'Cambios guardados correctamente');
             $alertas = Usuario::getAlertas();
-          }else{
-            // Guardar los cambios
-            $resultado =  $client->guardar();
-            
-            // Enviar email
-            // $email = new Email($usuario->email, $usuario->nombre, $usuario->token);
-            // $email->enviarConfirmacion();
-    
-            if($resultado) {
-              Usuario::setAlerta('success', 'Cambios guardados correctamente');
-              $alertas = Usuario::getAlertas();
-            }
           }
         }
       }
-      // Render a la vista 
+    }
+    
+    $client = Usuario::find($id);
+
+    // Render a la vista 
     $router->render('client/profile', 
       [
         'routeName' => 'Perfil',
         'client' => $client,
         'alertas' => $alertas
-        
       ]
     );
   }
