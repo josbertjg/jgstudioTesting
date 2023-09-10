@@ -98,6 +98,7 @@ class ActiveRecord {
             // actualizar
             $resultado = $this->actualizar();
         } else {
+
             // Creando un nuevo registro
             $resultado = $this->crear();
         }
@@ -201,6 +202,13 @@ class ActiveRecord {
     // Eliminar un Registro por su ID
     public static function eliminarById($id) {
         $query = "DELETE FROM "  . static::$tabla . " WHERE id = '${id}' LIMIT 1";
+        $resultado = self::$db->query($query);
+        return $resultado;
+    }
+
+    // Eliminar todos los registros por id
+    public static function eliminarAll($column,$valor) {
+        $query = "DELETE FROM "  . static::$tabla . " WHERE ${columna} = '${valor}'";
         $resultado = self::$db->query($query);
         return $resultado;
     }

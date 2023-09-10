@@ -226,21 +226,28 @@
             <div class="tab-content" id="myTabContent">
               <!-- Contenido para transferencia -->
               <div class="tab-pane fade show active" id="transferencia-tab-pane" role="tabpanel" aria-labelledby="transferencia-tab" tabindex="0">
-                <form method="POST">
+                <form method="POST" enctype="multipart/form-data">
                   <input type="hidden" name="action" value="realizar_pago">
                   <input type="hidden" name="carrito" value='<?php echo json_encode($carrito) ?>'>
-                  
-                    <!-- ANGI aqui te deje el formulario para las transferencias -->
-                    <!-- Agrega los campos que sean necesarios, te deje dos de ejemplo para que solo copies y pegues -->
-                    Formulario para transferencia
+                  <input type="hidden" name="monto" value='<?php echo $acum ?>'>
+                  <input type="hidden" name="id_tipo_pago" value='1'>
+                    <b class="mt-3 mb-2">Total a cancelar: <?php echo $acum ?>$ (Al cambio del día)</b>
+                    <p class="mt-3 mb-0"><b class="mt-3">Cancelar a la siguiente cuenta:</b></p>
+                    <p class="text-secondary m-0"><b>Tlf: </b>0414-5598216</p>
+                    <p class="text-secondary m-0"><b>C.I: </b>28.150.010</p>
+                    <p class="text-secondary m-0 mb-3"><b>Banco: </b>Banesco Banco Universal</p>
                     <div class="row">
-                      <div class="col-sm-6 col-12">
-                        <label for="" class="mb-0">Campo1</label>
-                        <input type="text" name="campo1" class="form-control">
+                      <div class="col-sm-6 col-12 mb-2">
+                        <label for="" class="mb-0">Nro. Referencia de la transferencia:</label>
+                        <input type="text" name="referencia" class="form-control" placeholder="Referencia:">
                       </div>
-                      <div class="col-sm-6 col-12">
-                        <label for="" class="mb-0">Campo2</label>
-                        <input type="text" name="campo2" class="form-control">
+                      <div class="col-sm-6 col-12 mb-2">
+                        <label for="" class="mb-0">Documento del Titular de la cuenta:</label>
+                        <input type="text" name="numero_documento" class="form-control" placeholder="Nro. Documento:">
+                      </div>
+                      <div class="col-12">
+                        <label for="image" class="mb-0">Comprobante/Imagen de la Transferencia:</label>
+                        <input type="file" name="file" class="form-control" accept="image/png, image/gif, image/jpeg, image, images">
                       </div>
                     </div>
 
@@ -255,21 +262,10 @@
                 <form method="POST">
                   <input type="hidden" name="action" value="realizar_pago">
                   <input type="hidden" name="carrito" value='<?php echo json_encode($carrito) ?>'>
-
-                    <!-- ANGI aqui te deje el formulario para las efectivo -->
-                    <!-- Agrega los campos que sean necesarios, te deje dos de ejemplo para que solo copies y pegues -->
-                    Formulario para efectivo
-                    <div class="row">
-                      <div class="col-sm-6 col-12">
-                        <label for="" class="mb-0">Campo1</label>
-                        <input type="text" name="campo1" class="form-control">
-                      </div>
-                      <div class="col-sm-6 col-12">
-                        <label for="" class="mb-0">Campo2</label>
-                        <input type="text" name="campo2" class="form-control">
-                      </div>
-                    </div>
-
+                  <input type="hidden" name="id_tipo_pago" value='4'>
+                  <input type="hidden" name="monto" value='<?php echo $acum ?>'>
+                  <b class="mt-3 mb-2">Total a cancelar: <?php echo $acum ?>$ (Al cambio del día o en $ efectivo)</b>
+                  <p class="mt-3 mb-0"><b class="mt-3">Si haces click en pagar, uno de nuestros administradores se pondrá en contacto contigo para poder retirar los dolares en efectivo, se comunicaran en un plazo de 1 a 2 días hábiles.</b></p>
                   <div class="d-flex align-items-end justify-content-between">
                     <a class="btn-back-carrito-informacion text-primary pointer"><i class="fa-solid fa-arrow-left"></i> Volver a Información</a>
                     <input class="btn-phantom-morado mt-3" type="submit" value="Pagar">

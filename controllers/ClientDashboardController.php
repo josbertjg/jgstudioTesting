@@ -6,6 +6,9 @@ use Model\Usuario;
 use Model\Producto;
 use Model\Categoria;
 use Model\Cotizacion;
+use Model\Pago;
+use Model\Contrato;
+use Model\ContratoProducto;
 use MVC\Router;
 
 class ClientDashboardController {
@@ -275,11 +278,78 @@ class ClientDashboardController {
               }
             }
             */
-            json_decode($_POST['carrito']);
-            //Aqui en esta parte del codigo es donde debemos registrar el pago y registrar el contrato y contrato item, ya cuando el administrador
-            //Confirme el pago el status del contrato debe cambiar
-            //El administrador debe tener una seccion de pagos en su sidebar (revisa views/templates/admin-sidebar.php)
-            //Y por supuesto debe ver todos los pagos que aun estan pendientes
+            $carritoToProducto = json_decode($_POST['carrito']);
+            $pago = new Pago();
+            if($_POST['id_tipo_pago'] < 3){
+              $pago->comprobante = $_FILES['file'];
+            }
+            $pago->sincronizar($_POST);
+
+            if($_POST['id_tipo_pago'] < 3){
+              $alertas = $pago->validar_transferencia();
+            }
+            
+            if(empty($alertas)){
+
+              //Registrando un nuevo contrato
+              $contrato = new Contrato();
+              $contrato->id_usuario = currentUser_Id();
+              $contrato->estado = 1;
+              $contrato->monto = $pago->monto;
+              $contrato->monto_total = $pago->monto;
+
+              $resultado = $contrato->guardar();
+
+              if(!$resultado["resultado"]){
+                Pago::setAlerta('error', 'Ocurrio un error (Entidad Contrato), intentalo mas tarde.');
+                $alertas = Pago::getAlertas();
+              }else{
+                $idContrato = $resultado["id"];
+                $errorContrato = false;
+
+                foreach($carritoToProducto as $productoItem){
+                  $contratoProducto = new ContratoProducto();
+
+                  foreach($productoItem->productos as $producto){
+                    $contratoProducto->id_contrato = $idContrato;
+                    $contratoProducto->id_categoria = $productoItem->categoria->id;
+                    $contratoProducto->precio_unitario = $producto->precio_unitario;
+                    $contratoProducto->cantidad = $producto->cantidad_producto;
+                    $contratoProducto->precio_total = $productoItem->total;
+                    $contratoProducto->detalles = 'Sin detalles...';
+
+                    $resultadoProducto = $contratoProducto->guardar();
+                    if(!$resultadoProducto["resultado"]){
+                      $errorContrato = true;
+                      ContratoProducto::eliminarAll('id_contrato',$idContrato);
+                      break;
+                    }
+                  }
+
+                  if($errorContrato){
+                    Cotizacion::eliminarById($idContrato);
+                    Pago::setAlerta('error', 'Ocurrio un error (Entidad ContratoProducto), al procesar el ingreso del pago, intentalo más tarde.');
+                    $alertas = Pago::getAlertas();
+                    break;
+                  }
+                }
+
+                if(!$errorContrato){
+                  $pago->id_contrato = $idContrato;
+                  $pago->comprobante = uploadImage($_FILES, 'Category');
+                  $resultadoPago = $pago->registrar_pago();
+
+                  if($resultadoPago["resultado"]){
+                    Pago::setAlerta('success', 'Pago registrado, espera a que un administrador lo revise.');
+                    $alertas = Pago::getAlertas();
+                  }else{
+                    Pago::setAlerta('error', 'Ha ocurrido un error al registrar el pago (Entidad Pago), intentalo mas tarde.');
+                    $alertas = Pago::getAlertas();
+                  }
+                }
+              }
+
+            }
           break;
         }
       }

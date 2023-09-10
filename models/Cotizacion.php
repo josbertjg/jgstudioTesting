@@ -16,7 +16,7 @@ class Cotizacion extends ActiveRecord {
         $this->id_cupon = $args['id_cupon'] ?? null;
         $this->solicitud = $args['solicitud'] ?? '';
         $this->respuesta = $args['respuesta'] ?? '';
-        $this->fecha = $args['fecha'] ?? '';
+        $this->fecha = $args['fecha'] ?? date('Y-m-d H:i:s');
     }
 
     // Validar el envio de la cotizacion por parte del cliente

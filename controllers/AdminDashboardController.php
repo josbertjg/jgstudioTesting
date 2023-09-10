@@ -310,62 +310,6 @@ class AdminDashboardController {
               Categoria::setAlerta('success', 'Categoria registrada correctamente');
               $alertas = Categoria::getAlertas();
             }
-
-            //debuguear(empty($file));
-
-            // if(!empty($file)) {
-
-            //   $targetPath = '../public/img/categories/';
-            //   //debuguear($targetPath);
-
-            //   if(!is_dir($targetPath)) {
-            //     mkdir($targetPath, 0755, true);
-            //   }
-
-            //   $fileNameAux = $filename;
-            //   $targetFile = $targetPath . basename($_FILES['file']['name']);
-            //   $imageFileType = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
-
-            //   //debuguear($targetFile);
-
-            //   $check = getimagesize($_FILES['file']['tmp_name']);
-
-            //   if ($check !== false) {
-            //     if (file_exists($targetFile)) {
-            //         $filename = pathinfo($targetFile, PATHINFO_FILENAME);
-            //         $extension = pathinfo($targetFile, PATHINFO_EXTENSION);
-            //         $counter = 1;
-            //         while (file_exists($targetFile)) {
-            //             $newFilename = $filename . '_' . $counter . '.' . $extension;
-            //             $fileNameAux = $newFilename;
-            //             $targetFile = $targetPath . $newFilename;
-            //             $counter++;
-            //         }
-            //     }
-
-            //     if (move_uploaded_file($_FILES['file']['tmp_name'], $targetFile)) {
-            //         $alertas['success'][] = 'La imagen se ha subido correctamente.';
-
-            //         $category->imagen = $fileNameAux;
-
-            //         $resultado =  $category->guardar();
-            //         //debuguear($category);
-
-            //         if($resultado) {
-            //           Categoria::setAlerta('success', 'Categoria registrada correctamente');
-            //           $alertas = Categoria::getAlertas();
-            //         }
-
-            //         echo 'La imagen se ha subido correctamente.';
-            //     } else {
-            //         $alertas['error'][] = 'Hubo un error al subir la imagen.';
-            //         echo 'Hubo un error al subir la imagen.';
-            //     }
-            //   } else {
-            //       $alertas['error'][] = 'El archivo seleccionado no es una imagen válida.';
-            //       echo 'El archivo seleccionado no es una imagen válida.';
-            //   }
-            // }
           }
         }
       }        
