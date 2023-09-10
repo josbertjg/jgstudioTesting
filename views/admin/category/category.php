@@ -1,13 +1,13 @@
 <div class="col-12">
     <div class="x_panel">
-        <div class="xtitle">
+        <div class="x_title">
             <h2>Agregar categoría de producto</h2>
             <ul class="navbar-right panel_toolbox">
                 <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
             </ul>
             <div class="clearfix"></div>
         </div>
-        <div class="xcontent">
+        <div class="x_content">
             <?php include "../views/templates/alertas.php"; ?>
 
             <form method="POST" class="form" enctype="multipart/form-data">
@@ -28,14 +28,14 @@
 
 <div class="col-12">
     <div class="x_panel">
-        <div class="xtitle">
+        <div class="x_title">
             <h2>Listado de categorías</h2>
             <ul class="navbar-right panel_toolbox">
                 <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
             </ul>
             <div class="clearfix"></div>
         </div>
-        <div class="xcontent">
+        <div class="x_content">
             <div class="table-responsive">
                 <table class="table table-striped jambotable bulkaction">
                     <thead>
