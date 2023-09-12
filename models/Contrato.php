@@ -28,4 +28,13 @@ class Contrato extends ActiveRecord {
     }
     return self::$alertas;
   }
+  // Aprobar un pago
+  public function aprobar(){
+    $this->estado = 2;
+  }
+
+  // Rechazar un pago
+  public function rechazar(){
+    $this->estado = 3;
+  }
 }

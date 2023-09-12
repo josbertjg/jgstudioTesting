@@ -112,7 +112,7 @@
           <div class="col-12 d-flex justify-content-end mt-3">
             <input type="button" value="Editar" class="btn btn-outline-primary btnEditar">
             <input type="submit" value="Guardar" class="btn btn-success btnGuardar">
-            <a href="/admin/dashboard/users" class="btn btn-primary btnVolver">Volver</a>          
+            <a href="/admin/dashboard<?php echo (is_admin()) ? '/users' : '' ?>" class="btn btn-primary btnVolver">Volver</a>          
           </div>
         </div>
       </form>

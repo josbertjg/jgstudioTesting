@@ -239,11 +239,11 @@
                     <div class="row">
                       <div class="col-sm-6 col-12 mb-2">
                         <label for="" class="mb-0">Nro. Referencia de la transferencia:</label>
-                        <input type="text" name="referencia" class="form-control" placeholder="Referencia:">
+                        <input type="text" name="referencia" class="form-control soloNumeros" placeholder="Referencia:">
                       </div>
                       <div class="col-sm-6 col-12 mb-2">
                         <label for="" class="mb-0">Documento del Titular de la cuenta:</label>
-                        <input type="text" name="numero_documento" class="form-control" placeholder="Nro. Documento:">
+                        <input type="text" name="numero_documento" class="form-control soloNumeros" placeholder="Nro. Documento:">
                       </div>
                       <div class="col-12">
                         <label for="image" class="mb-0">Comprobante/Imagen de la Transferencia:</label>

@@ -97,6 +97,13 @@ class Usuario extends ActiveRecord {
         return true;
     }
 
+    // Devolviendo empleados
+    public static function getEmpleados() {
+        $query = "SELECT * FROM " . static::$tabla . " WHERE id_rol >= '2' AND id_rol <= '4'";
+        $resultado = self::consultarSQL($query);
+        return $resultado;
+    }
+
     // Validación para registro de usuarios por parte del admin
     public function validar_insercion() {
         if(!trim($this->nombre)) {

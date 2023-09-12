@@ -156,7 +156,7 @@ class ActiveRecord {
         $query .= join("', '", array_values($atributos));
         $query .= "') ";
 
-        //debuguear($query); // Descomentar si no te funciona algo
+        // debuguear($query); // Descomentar si no te funciona algo
 
         // Resultado de la consulta
         $resultado = self::$db->query($query);
@@ -185,7 +185,7 @@ class ActiveRecord {
         $query .= " WHERE id = '" . self::$db->escape_string($this->id) . "' ";
         $query .= " LIMIT 1 "; 
 
-        //debuguear($query);
+        // debuguear($query);
 
         // Actualizar BD
         $resultado = self::$db->query($query);
@@ -211,7 +211,7 @@ class ActiveRecord {
         $query .= " WHERE id = ${id}";
         $query .= " LIMIT 1 ";
 
-        debuguear($query);
+        // debuguear($query);
 
         // Actualizar BD
         $resultado = self::$db->query($query);
@@ -264,7 +264,7 @@ class ActiveRecord {
 
     // Eliminar todos los registros por id
     public static function eliminarAll($column,$valor) {
-        $query = "DELETE FROM "  . static::$tabla . " WHERE ${columna} = '${valor}'";
+        $query = "DELETE FROM "  . static::$tabla . " WHERE ${column} = '${valor}'";
         $resultado = self::$db->query($query);
         return $resultado;
     }

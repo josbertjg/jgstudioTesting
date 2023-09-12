@@ -34,13 +34,13 @@
         
         <!-- /menu footer buttons -->
         <div class="sidebar-footer hidden-small">
-          <a class="btn-footer" data-toggle="tooltip" data-placement="top" title="Settings">
+          <a class="btn-footer" data-toggle="tooltip" data-placement="top" title="Configuraciones" href="/client/profile">
             <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
           </a>
-          <a class="btn-footer" data-toggle="tooltip" data-placement="top" title="FullScreen">
-            <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
+          <a class="btn-footer" data-toggle="tooltip" data-placement="top" title="Ver Carrito" href="/dashboard/miCarrito">
+            <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
           </a>
-          <a class="btn-footer" data-toggle="tooltip" data-placement="top" title="User" href="/client/profile">
+          <a class="btn-footer" data-toggle="tooltip" data-placement="top" title="Perfil" href="/client/profile">
             <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
           </a>
           <a class="btn-footer" data-toggle="tooltip" data-placement="top" title="Logout" href="/logout">
@@ -66,11 +66,7 @@
                   <img src="<?php echo $_SESSION['avatar'] ?? '/build/img/defaultUser.svg' ?>" alt=""><?php echo ucfirst($_SESSION['nombre']) ?></a>
                 <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
                   <a class="dropdown-item"  href="/client/profile"> Profile</a>
-                    <a class="dropdown-item"  href="javascript:;">
-                      <span class="badge bg-red pull-right">50%</span>
-                      <span>Settings</span>
-                    </a>
-                <a class="dropdown-item"  href="javascript:;">Help</a>
+                  <a class="dropdown-item"  href="javascript:;">Help</a>
                   <a class="dropdown-item"  href="/logout"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
                 </div>
               </li>

@@ -2,7 +2,7 @@
   <?php 
     // debuguear($servicios);
     for($i = 0; $i<count($servicios);$i++){
-      if(count($servicios[$i]->productos)>0){
+      if(count($servicios[$i]->productos)>0 && $servicios[$i]->categoria->nombre != 'Cotizacion'){
   ?>
     <div class="accordion jg-accordion-service me-md-3 me-none my-3 my-md-none" id="servicio<?php echo $servicios[$i]->categoria->id ?>">
       <div class="accordion-item">

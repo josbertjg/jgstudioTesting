@@ -5298,3 +5298,235 @@ ul.notifications {
     margin: 0%;
   }
 }
+
+// Pagos
+.pago-item{
+  background-color: darken(v.$gris,1);
+  width: 100%;
+  height: auto;
+  .pago-header{
+    a{
+      padding: .75rem 1.5rem;
+      border-radius: 10px;
+      display: flex;
+      div{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        width: 100%;
+      }
+      img{
+        height: 100px;
+        margin-right: .5rem;
+      }
+      h2{
+        display: flex;
+        justify-content: space-between;
+        font-size: 1.5rem;
+        color: v.$morado;
+        span{
+          display: flex;
+          align-items: center;
+          font-style: italic;
+          font-size: 1.2rem;
+        }
+      }
+      p{
+        font-size: .9rem;
+      }
+    }
+  }
+  .pago-body{
+    padding: 1.5rem;
+    padding-top: 0%;
+    @media screen and (max-width: 700px) {
+      flex-direction: column;
+    }
+    h2{
+      font-size: 1.2rem;
+      margin: 0%;
+      margin-bottom: .2rem;
+      font-weight: bold;
+      @media screen and (max-width: 700px) {
+        margin-top: 1rem;
+      }
+    }
+    p{
+      margin: 0%;
+      margin-top: .2rem;
+      // font-weight: bold;
+      color: gray;
+      b{
+        color: v.$morado;
+      }
+    }
+    .info-pago{
+      width: 50%;
+      @media screen and (max-width: 700px) {
+        width: 100%;
+      }
+      img{
+        width: 250px;
+      }
+    }
+    .info-usuario{
+      width: 50%;
+      @media screen and (max-width: 700px) {
+        width: 100%;
+      }
+    }
+    .btn-rechazar{
+      @include m.btnSubmit();
+      background-color: v.$rojo;
+      border: 2px solid v.$rojo;
+      margin-right: 1rem;
+      &:hover{
+        background-color: lighten(v.$rojo,3);
+        border: 2px solid lighten(v.$rojo,3);
+      }
+    }
+    .btn-submit{
+      @include m.btnSubmit();
+    }
+  }
+}
+
+// Proyectos
+.proyecto-item{
+  background-color: darken(v.$gris,1);
+  width: 100%;
+  height: auto;
+  .proyecto-header{
+    a{
+      padding: .75rem 1.5rem;
+      border-radius: 10px;
+      display: flex;
+      div{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        width: 100%;
+      }
+      img{
+        height: 100px;
+        margin-right: .5rem;
+      }
+      h2{
+        font-size: 1.5rem;
+        color: v.$morado;
+      }
+      p{
+        font-size: .9rem;
+      }
+    }
+  }
+  .proyecto-body{
+    padding: 1.5rem;
+    padding-top: 0%;
+    @media screen and (max-width: 700px) {
+      flex-direction: column;
+    }
+    h2{
+      font-size: 1.2rem;
+      margin: 0%;
+      margin-bottom: .2rem;
+      font-weight: bold;
+      @media screen and (max-width: 700px) {
+        margin-top: 1rem;
+      }
+    }
+    p{
+      margin: 0%;
+      margin-top: .2rem;
+      // font-weight: bold;
+      color: gray;
+      b{
+        color: v.$morado;
+      }
+    }
+    .info-proyecto{
+      width: 50%;
+      @media screen and (max-width: 700px) {
+        width: 100%;
+      }
+      img{
+        width: 250px;
+      }
+    }
+    .info-usuario{
+      width: 50%;
+      @media screen and (max-width: 700px) {
+        width: 100%;
+      }
+    }
+    .btn-submit{
+      @include m.btnSubmit();
+      padding: .5rem 1rem;
+    }
+  }
+}
+// Mis Servicios (Cliente)
+.jg-servicios-comprados{
+  height: 90vh;
+  .servicio-item{
+    background-color: darken(v.$gris,2);
+    border-radius: 10px;
+    padding: .8rem 1rem;
+    transition: all 200ms;
+    &:hover{
+      cursor: pointer;
+      background-color: v.$gris;
+    }
+
+    h2{
+      margin: 0%;
+      b{
+        color: v.$morado;
+        font-style: italic;
+      }
+    }
+    p{
+      text-align: justify;
+      line-height: 15px;
+    }
+    .monto-total{
+      color: v.$morado;
+      font-style: italic;
+    }
+    span{
+      color: v.$morado;
+      font-weight: bold;
+      b{
+        color: black;
+        font-weight: 600;
+      }
+    }
+
+    // .deleteCotizacion{
+    //   background-color: v.$rosado;
+    //   padding: .2rem .5rem;
+    //   border-radius: 5px;
+    //   border: 2px solid v.$rosado;
+    //   transition: all 200ms;
+    //   font-size: 14px;
+    //   color: white;
+    //   &:hover{
+    //     background-color: transparent;
+    //     color: v.$rosado;
+    //   }
+    // }
+    // .addToCarrito{
+    //   background-color: v.$morado;
+    //   padding: .2rem .5rem;
+    //   border-radius: 5px;
+    //   border: 2px solid v.$morado;
+    //   transition: all 200ms;
+    //   font-size: 14px;
+    //   color: white;
+    //   &:hover{
+    //     background-color: transparent;
+    //     color: v.$morado;
+    //   }
+    // }
+  }
+}

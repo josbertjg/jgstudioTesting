@@ -26,7 +26,7 @@
   <!-- page content -->
   <div class="right_col" role="main">
     <div class="">
-      <div class="page-title">
+      <!-- <div class="page-title">
         <div class="title_left">
           <h3>Admin Panel</h3>
         </div>
@@ -52,7 +52,7 @@
             </h2>
           </div>
         </div>
-      </div>
+      </div> -->
 
       <div class="row">
         <?php echo $contenido ?>

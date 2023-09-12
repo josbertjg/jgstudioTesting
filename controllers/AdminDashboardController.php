@@ -7,6 +7,11 @@ use Model\Categoria;
 use Model\Producto;
 use Model\Banco;
 use Model\Cotizacion;
+use Model\Pago;
+use Model\Contrato;
+use Model\ContratoProducto;
+use Model\Proyecto;
+use Model\UsuarioProyecto;
 use MVC\Router;
 use Model\UploadImage;
 
@@ -352,16 +357,9 @@ public static function deleteProduct(Router $router) {
 // llamado a la vista de configuraciones
 public static function configuracionView(Router $router){
 
-  if(!is_admin_empleado()) is_auth() ? header('location: /dashboard') : header('location: /');
+  if(!is_admin()) header('location: /');
 
-  $id = $_GET['id'];
-  
-  if(!is_admin()) {
-    if(currentUser_id() != $id){
-      header('Location: /admin/dashboard');
-    }
-  };
-  
+ 
   $router->render('admin/settings/indexSettings',[]);
 
 }
@@ -695,88 +693,273 @@ public static function deleteBank(Router $router) {
   );
 }
 
-  // Vista para las cotizaciones
-  public static function cotizaciones(Router $router) {
+// Vista para las cotizaciones
+public static function cotizaciones(Router $router) {
 
-    if(!is_admin()) {
-      header('Location: /');
-    };
+  if(!is_admin()) {
+    header('Location: /');
+  };
 
-    $alertas = [];
-    $cotizacion = new Cotizacion();
-    $idCotizacionWorked = null;
+  $alertas = [];
+  $cotizacion = new Cotizacion();
+  $idCotizacionWorked = null;
 
-    if($_SERVER['REQUEST_METHOD'] === 'POST' ){
-      if($_POST['action']=='aceptarCotizacion'){
+  if($_SERVER['REQUEST_METHOD'] === 'POST' ){
+    if($_POST['action']=='aceptarCotizacion'){
 
-        $cotizacion->sincronizar($_POST);
+      $cotizacion->sincronizar($_POST);
 
-        $alertas = $cotizacion->validarAprobacion();
+      $alertas = $cotizacion->validarAprobacion();
 
-        if(empty($alertas)){
-          $resultado = $cotizacion->actualizar();
-          if($resultado){
-            Cotizacion::setAlerta('success', 'Cotizacion aprobada exitosamente.');
-            $alertas = Cotizacion::getAlertas();
-          }else{
-            Cotizacion::setAlerta('error', 'Ocurrió un error intentar aprobar la cotizacion, intentalo mas tarde.');
-            $alertas = Cotizacion::getAlertas();
-          }
-        }else $idCotizacionWorked = $cotizacion->id;
-      }else if($_POST['action']=='rechazarCotizacion'){
+      if(empty($alertas)){
+        $resultado = $cotizacion->actualizar();
+        if($resultado){
+          Cotizacion::setAlerta('success', 'Cotizacion aprobada exitosamente.');
+          $alertas = Cotizacion::getAlertas();
+        }else{
+          Cotizacion::setAlerta('error', 'Ocurrió un error intentar aprobar la cotizacion, intentalo mas tarde.');
+          $alertas = Cotizacion::getAlertas();
+        }
+      }else $idCotizacionWorked = $cotizacion->id;
+    }else if($_POST['action']=='rechazarCotizacion'){
 
-        $cotizacion->sincronizar($_POST);
+      $cotizacion->sincronizar($_POST);
 
-        $alertas = $cotizacion->validarRechazo();
+      $alertas = $cotizacion->validarRechazo();
 
-        if(empty($alertas)){
-          $resultado = $cotizacion->actualizar();
-          if($resultado){
-            Cotizacion::setAlerta('success', 'Cotizacion rechazada exitosamente.');
-            $alertas = Cotizacion::getAlertas();
-          }else{
-            Cotizacion::setAlerta('error', 'Ocurrió un error intentar rechazar la cotizacion, intentalo mas tarde.');
-            $alertas = Cotizacion::getAlertas();
-          }
-        }else $idCotizacionWorked = $cotizacion->id;
-      }
+      if(empty($alertas)){
+        $resultado = $cotizacion->actualizar();
+        if($resultado){
+          Cotizacion::setAlerta('success', 'Cotizacion rechazada exitosamente.');
+          $alertas = Cotizacion::getAlertas();
+        }else{
+          Cotizacion::setAlerta('error', 'Ocurrió un error intentar rechazar la cotizacion, intentalo mas tarde.');
+          $alertas = Cotizacion::getAlertas();
+        }
+      }else $idCotizacionWorked = $cotizacion->id;
     }
-
-    $pendientes = Cotizacion::getPendientes();
-    $completadas = Cotizacion::getCompletadas();
-
-    $pendientesFormatted = [];
-    $completadasFormatted = [];
-
-    foreach($pendientes as $cotizacion){
-      // Añadiendo el nombre y el correo del usuario al arreglo de cotizaciones pendientes
-      $userCotizacion = Usuario::find($cotizacion->id_usuario);
-      $cotizacion->nombre_usuario = $userCotizacion->nombre;
-      $cotizacion->correo_usuario = $userCotizacion->correo;
-      
-      array_push($pendientesFormatted, $cotizacion);
-    }
-
-    foreach($completadas as $cotizacion){
-      // Añadiendo el nombre y el correo del usuario al arreglo de cotizaciones completadas
-      $userCotizacion = Usuario::find($cotizacion->id_usuario);
-      $cotizacion->nombre_usuario = $userCotizacion->nombre;
-      $cotizacion->correo_usuario = $userCotizacion->correo;
-      
-      array_push($completadasFormatted, $cotizacion);
-    }
-    
-
-    // Render a la vista 
-    $router->render('admin/cotizaciones/cotizaciones'
-      , 
-      [
-          'routeName' => 'Cotizaciones',
-          'alertas' => $alertas,
-          'pendientes' => $pendientesFormatted,
-          'completadas' => $completadasFormatted,
-          'idCotizacionWorked' => $idCotizacionWorked
-      ]
-    );
   }
+
+  $pendientes = Cotizacion::getPendientes();
+  $completadas = Cotizacion::getCompletadas();
+
+  $pendientesFormatted = [];
+  $completadasFormatted = [];
+
+  foreach($pendientes as $cotizacion){
+    // Añadiendo el nombre y el correo del usuario al arreglo de cotizaciones pendientes
+    $userCotizacion = Usuario::find($cotizacion->id_usuario);
+    $cotizacion->nombre_usuario = $userCotizacion->nombre;
+    $cotizacion->correo_usuario = $userCotizacion->correo;
+    
+    array_push($pendientesFormatted, $cotizacion);
+  }
+
+  foreach($completadas as $cotizacion){
+    // Añadiendo el nombre y el correo del usuario al arreglo de cotizaciones completadas
+    $userCotizacion = Usuario::find($cotizacion->id_usuario);
+    $cotizacion->nombre_usuario = $userCotizacion->nombre;
+    $cotizacion->correo_usuario = $userCotizacion->correo;
+    
+    array_push($completadasFormatted, $cotizacion);
+  }
+  
+
+  // Render a la vista 
+  $router->render('admin/cotizaciones/cotizaciones'
+    , 
+    [
+        'routeName' => 'Cotizaciones',
+        'alertas' => $alertas,
+        'pendientes' => $pendientesFormatted,
+        'completadas' => $completadasFormatted,
+        'idCotizacionWorked' => $idCotizacionWorked
+    ]
+  );
+}
+
+// llamado a la vista de pagos
+public static function pagos(Router $router){
+  if(!is_admin()) header('location: /');
+
+  $alertas = [];
+
+  if($_SERVER['REQUEST_METHOD'] === 'POST' ){
+    
+    if( $_POST['action'] == 'rechazar_pago' ){ // Logica para rechazar pagos
+      $pago = Pago::find($_POST['id_pago']);
+      $pago->rechazar();
+      $resultado = $pago->guardar();
+      if($resultado){
+
+        $contrato = Contrato::find($pago->id_contrato);
+        $contrato->rechazar();
+        $resultadoContrato = $contrato->guardar();
+
+        if($resultadoContrato){
+
+          $proyectos = Proyecto::findAll('id_contrato',$pago->id_contrato);
+
+          foreach($proyectos as $proyecto){
+            $proyecto->rechazar();
+            $proyecto->guardar();
+          }
+
+          Pago::setAlerta('success', 'Pago Rechazado exitosamente.');
+          $alertas = Pago::getAlertas();
+        }else{
+          $pago->estado_pago = 1;
+          $pago->guardar();
+          Pago::setAlerta('error', 'Ocurrio un error al rechazar el pago (Entidad Contrato), intentalo mas tarde');
+          $alertas = Pago::getAlertas();
+        }
+
+      }else{
+        Pago::setAlerta('error', 'Ocurrio un error al rechazar el pago, intentalo mas tarde.');
+        $alertas = Pago::getAlertas();
+      }
+    }else if( $_POST['action'] == 'aprobar_pago' ){ // Logica para aprobar pagos
+
+      $pago = Pago::find($_POST['id_pago']);
+      $pago->aprobar();
+      $resultado = $pago->guardar();
+
+      if($resultado){
+
+        $contrato = Contrato::find($pago->id_contrato);
+        $contrato->aprobar();
+        $resultadoContrato = $contrato->guardar();
+
+        if($resultadoContrato){
+
+          $proyectos = Proyecto::findAll('id_contrato',$pago->id_contrato);
+
+          foreach($proyectos as $proyecto){
+            $proyecto->setPorHacer();
+            $proyecto->guardar();
+          }
+
+          Pago::setAlerta('success', 'Pago Aprobado exitosamente.');
+          $alertas = Pago::getAlertas();
+        }else{
+          $pago->estado_pago = 1;
+          $pago->guardar();
+          Pago::setAlerta('error', 'Ocurrio un error al aprobar el pago (Entidad Contrato), intentalo mas tarde');
+          $alertas = Pago::getAlertas();
+        }
+
+      }else{
+        Pago::setAlerta('error', 'Ocurrio un error al aprobar el pago, intentalo mas tarde.');
+        $alertas = Pago::getAlertas();
+      }
+
+    }
+  }
+
+  $pendientes = Pago::getPendientes();
+
+  // Añadiendo la informacion del usuario a cada pago
+  foreach($pendientes as $i=>$pago){
+    $pendientes[$i]->usuario = Usuario::find($pago->id_usuario);
+  }
+
+  $router->render('admin/pagos/pagos',[
+    'alertas' => $alertas,
+    'pagos' => $pendientes
+  ]);
+
+}
+
+// llamado a la vista de proyectos
+public static function proyectos(Router $router){
+  if(!is_admin()) header('location: /');
+
+  $alertas = [];
+
+  $proyectos = Proyecto::all();
+
+  foreach($proyectos as $i=>$proyecto){
+    $proyectos[$i]->categoria = Categoria::find($proyecto->id_categoria);
+    $proyectos[$i]->estado = $proyecto->getEstadoProyecto();
+  }
+ 
+  $router->render('admin/proyectos/proyectos',[
+    'alertas' => $alertas,
+    'proyectos' => $proyectos,
+  ]);
+
+}
+
+// llamado a la vista de proyectos
+public static function pendingProyectos(Router $router){
+  if(!is_admin()) header('location: /');
+
+  $alertas = [];
+
+  if($_SERVER['REQUEST_METHOD'] === 'POST' ){
+    $usuario_proyecto = new UsuarioProyecto();
+    $usuario_proyecto->id_proyecto = $_POST['id_proyecto'];
+    $usuario_proyecto->id_usuario = $_POST['id_empleado'];
+    $resultado = $usuario_proyecto->guardar();
+
+    if($resultado["resultado"]){
+
+      $proyecto = Proyecto::find($_POST['id_proyecto']);
+      $proyecto->setEnCurso();
+
+      $resultadoProyecto = $proyecto->guardar();
+
+      if($resultadoProyecto){
+        Proyecto::setAlerta('success', 'Empleado Asignado exitosamente, el proyecto ya esta en curso.');
+        $alertas = Proyecto::getAlertas();
+      }else{
+        Proyecto::setAlerta('error', 'Ocurrio un error al asignar al empleado (Entidad Proyecto).');
+        $alertas = Proyecto::getAlertas();
+      }
+
+    }else{
+      Proyecto::setAlerta('error', 'Ocurrio un error al asignar al empleado (Entidad Usuario Proyecto).');
+      $alertas = Proyecto::getAlertas();
+    }
+  }
+
+  $proyectos = Proyecto::getPorHacer();
+  $empleados = [];
+
+  if(!empty($proyectos)){
+    foreach($proyectos as $i=>$proyecto){
+      $usuariosProyecto = UsuarioProyecto::findAll('id_proyecto',$proyecto->id);
+      $productosProyecto = ContratoProducto::findAll('id_proyecto',$proyecto->id);
+      $proyectos[$i]->productos = [];
+  
+      if(!empty($usuariosProyecto)){
+        $proyectos[$i]->usuarios = $usuariosProyecto;
+      }
+      if(!empty($productosProyecto)){
+        foreach($productosProyecto as $producto){
+          $productoToProyecto = Producto::find($producto->id_producto);
+          array_push($proyectos[$i]->productos,$productoToProyecto);
+        }
+      }
+      $proyectos[$i]->categoria = Categoria::find($proyecto->id_categoria);
+      $proyectos[$i]->contrato = Contrato::find($proyecto->id_contrato);
+      $proyectos[$i]->contrato->usuario = Usuario::find($proyectos[$i]->contrato->id_usuario);
+    }
+  
+    $empleados = Usuario::getEmpleados();
+    
+    foreach($empleados as $i=>$empleado){
+      $empleados[$i]->rol = showRol($empleado->id_rol);
+    }
+  }
+  
+  // debuguear(showRol(2));
+
+  $router->render('admin/proyectos/proyectosPendientes',[
+    'alertas' => $alertas,
+    'proyectos' => $proyectos,
+    'empleados' => $empleados
+  ]);
+
+}
 }
