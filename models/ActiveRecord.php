@@ -98,6 +98,7 @@ class ActiveRecord {
             // actualizar
             $resultado = $this->actualizar();
         } else {
+
             // Creando un nuevo registro
             $resultado = $this->crear();
         }
@@ -129,8 +130,9 @@ class ActiveRecord {
     public static function where($columna, $valor) {
         $query = "SELECT * FROM " . static::$tabla . " WHERE ${columna} = '${valor}'";
         
+        //debuguear($query);
+
         $resultado = self::consultarSQL($query);
-        //debuguear($resultado);
 
         return array_shift( $resultado ) ;
     }
@@ -154,7 +156,7 @@ class ActiveRecord {
         $query .= join("', '", array_values($atributos));
         $query .= "') ";
 
-        //debuguear($query); // Descomentar si no te funciona algo
+        // debuguear($query); // Descomentar si no te funciona algo
 
         // Resultado de la consulta
         $resultado = self::$db->query($query);
@@ -183,8 +185,63 @@ class ActiveRecord {
         $query .= " WHERE id = '" . self::$db->escape_string($this->id) . "' ";
         $query .= " LIMIT 1 "; 
 
-        //debuguear($query);
+        // debuguear($query);
 
+        // Actualizar BD
+        $resultado = self::$db->query($query);
+        //debuguear($resultado);
+        return $resultado;
+    }
+
+    // Actualizar campos específicos de registro
+    public function actualizarCHAT($datosActualizacion) {
+        // Sanitizar los datos
+        //$atributos = $this->sanitizarAtributos();
+
+        debuguear($datosActualizacion);
+
+        // Iterar para ir agregando cada campo de la BD
+        $valores = [];
+        $id = $datosActualizacion->id;
+        $estado = $datosActualizacion->estado;
+
+        // Consulta SQL
+        $query = "UPDATE " . static::$tabla ." SET ";
+        $query .=  join(', ', $estado );
+        $query .= " WHERE id = ${id}";
+        $query .= " LIMIT 1 ";
+
+        // debuguear($query);
+
+        // Actualizar BD
+        $resultado = self::$db->query($query);
+        //debuguear($resultado);
+        return $resultado;
+    }
+
+    public function dinamicUpdate($datosActualizacion) {
+
+        $query = "UPDATE " . static::$tabla ." SET ";
+
+        //debuguear($datosActualizacion);
+    
+        // Iterar para ir agregando cada campo de la BD
+        $first = true;
+        foreach ($datosActualizacion['files'] as $columna => $valor) {
+            if (!$first) {
+                $query .= " AND ";
+            }
+            $query .= "${columna} = '${valor}'";
+    
+            $first = false;
+        }
+    
+        // Consulta SQL
+        $query .= " WHERE id = '" . $datosActualizacion['id'] . "' ";
+        $query .= " LIMIT 1 ";
+    
+        //debuguear($query);
+    
         // Actualizar BD
         $resultado = self::$db->query($query);
         //debuguear($resultado);
@@ -201,6 +258,13 @@ class ActiveRecord {
     // Eliminar un Registro por su ID
     public static function eliminarById($id) {
         $query = "DELETE FROM "  . static::$tabla . " WHERE id = '${id}' LIMIT 1";
+        $resultado = self::$db->query($query);
+        return $resultado;
+    }
+
+    // Eliminar todos los registros por id
+    public static function eliminarAll($column,$valor) {
+        $query = "DELETE FROM "  . static::$tabla . " WHERE ${column} = '${valor}'";
         $resultado = self::$db->query($query);
         return $resultado;
     }

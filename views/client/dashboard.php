@@ -1,7 +1,7 @@
 <div class="jg-accordion-service-container flex-column flex-md-row align-items-md-start align-items-center">
   <?php 
     for($i = 0; $i<count($servicios);$i++){
-      if(count($servicios[$i]->productos)>0){
+      if(count($servicios[$i]->productos)>0 && $servicios[$i]->categoria->nombre != 'Cotizacion'){
   ?>
     <div class="accordion jg-accordion-service me-md-3 me-none my-3 my-md-none" id="servicio<?php echo $servicios[$i]->categoria->id ?>">
       <div class="accordion-item">

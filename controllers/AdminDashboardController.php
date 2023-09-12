@@ -5,7 +5,13 @@ namespace Controllers;
 use Model\Usuario;
 use Model\Categoria;
 use Model\Producto;
+use Model\Banco;
 use Model\Cotizacion;
+use Model\Pago;
+use Model\Contrato;
+use Model\ContratoProducto;
+use Model\Proyecto;
+use Model\UsuarioProyecto;
 use MVC\Router;
 use Model\UploadImage;
 
@@ -95,10 +101,10 @@ class AdminDashboardController {
     
     $alertas = [];
     $usuario = new Usuario;
+    $modelImage = 'UserAvatar';
 
     if($_SERVER['REQUEST_METHOD'] === 'POST') {
       $usuario->sincronizar($_POST);
-      //debuguear($usuario);
 
       $alertas = $usuario->validar_edicion();
 
@@ -112,6 +118,15 @@ class AdminDashboardController {
           Usuario::setAlerta('error', 'Ya existe un usuario registrado con este correo');
           $alertas = Usuario::getAlertas();
         }else{
+
+          $file = $_FILES['file'];
+          $filename = $file['name'];
+
+          if($file){
+            $pathToSave = uploadImage($_FILES,$modelImage);
+            $usuario->avatar = $pathToSave;
+          }
+
           // Guardar los cambios
           $resultado =  $usuario->guardar();
           
@@ -142,328 +157,809 @@ class AdminDashboardController {
     );
   }
 
-  // Vista del CRUD para productos
-  public static function productos(Router $router) {
+ // Eliminación lógica de usuarios
+ public static function deleteUser(Router $router) {
+  // Obtener el id del registro a eliminar de la URL
+  $id = $_POST['id'];
 
-    if(!is_admin_empleado()) {
-      header('Location: /');
-    };
+  //debuguear($_POST['id']);
 
-    $alertas = [];
-    $producto = new Producto;
-
-    if($_SERVER['REQUEST_METHOD'] === 'POST' ) {
-      $producto->sincronizar($_POST);
-
-      if($producto){
-        $alertas = $producto->validar_insercion();
-
-        if(empty($alertas)) {
-
-          $condiciones = array(
-            "nombre" => $producto->nombre,
-            "descripcion" => $producto->descripcion
-          );
-
-          $existeproducto = Producto::dinamicWhere($condiciones);
+  if(!is_admin_empleado()) {
+    header('Location: /');
+  };
   
-          //debuguear($existeproducto);
+  $alertas = [];
+  $usuario = new Usuario;
 
-          if($existeproducto) {
-            Producto::setAlerta('error', 'Ya existe un producto registrado con este correo');
-            $alertas = Producto::getAlertas();
-          } else {
-            $resultado =  $producto->guardar();
-            // debuguear($resultado);
-            if($resultado) {
-              Producto::setAlerta('success', 'Producto ingresado correctamente');
-              $alertas = Producto::getAlertas();
-            }
-          }
-        }
-      }        
-    }
+  $usuario->sincronizar($_POST);
 
-    // Render a la vista 
-    $router->render('admin/productos/productos', 
-      [
-        'titulo' => 'Registrar producto',
-        'routeName' => 'productos',
-        'alertas' => $alertas,
-        'productos' => Producto::all()
-      ]
-    );
-  }
+  //debuguear($usuario);
 
-  // Vista para el detalle del productos
-  public static function productoDetail(Router $router) {
+  $usuario->id = $id;
+  $usuario->estado = 0;
 
-    if(!is_admin_empleado()) is_auth() ? header('location: /dashboard') : header('location: /');
+  $files = array (        
+    "estado" => 0,
+  );
 
-    $id = $_GET['id'];
-    
-    if(!is_admin()) {
-      if(currentUser_id() != $id){
-        header('Location: /admin/dashboard');
-      }
-    };
-    
-    $alertas = [];
-    $producto = new Producto;
+  $condiciones = array(
+    'files' => $files,
+    "id" => $id
+  );
 
-    if($_SERVER['REQUEST_METHOD'] === 'POST') {
-      $producto->sincronizar($_POST);
+  $usuarioUpdated = Usuario::dinamicUpdate($condiciones);
 
-      //$alertas = $service->validar_edicion();
+  // Realizar la eliminación del registro (código necesario)
+
+  // Redireccionar a la página de categorías después de eliminar el registro
+
+  $router->render('admin/users/users', 
+    [
+      'titulo' => 'Crear Usuario',
+      'routeName' => 'Usuarios',
+      'alertas' => $alertas,
+      'users' => Usuario::all()
+    ]
+  );
+}
+
+// Vista del CRUD para productos
+public static function productos(Router $router) {
+
+  //debuguear('productos');
+
+  if(!is_admin_empleado()) {
+    header('Location: /');
+  };
+
+  $alertas = [];
+  $producto = new Producto;
+
+  if($_SERVER['REQUEST_METHOD'] === 'POST' ) {
+    $producto->sincronizar($_POST);
+
+    if($producto){
+      $alertas = $producto->validar_insercion();
 
       if(empty($alertas)) {
 
-        $existeproducto = Producto::where('nombre', $producto->nombre);
+        $condiciones = array(
+          "nombre" => $producto->nombre,
+          "descripcion" => $producto->descripcion
+        );
 
-        if($existeproducto->id != $producto->id) {
-          Producto::setAlerta('error', 'Ya existe un usuario registrado con este correo');
+        $existeproducto = Producto::dinamicWhere($condiciones);
+
+        // debuguear($existeproducto);
+
+        if($existeproducto) {
+          Producto::setAlerta('error', 'Ya existe un producto registrado con este correo');
           $alertas = Producto::getAlertas();
-        }else{
-          // Guardar los cambios
+        } else {
           $resultado =  $producto->guardar();
-
+          // debuguear($resultado);
           if($resultado) {
-            Producto::setAlerta('success', 'Cambios guardados correctamente');
+            Producto::setAlerta('success', 'Producto ingresado correctamente');
             $alertas = Producto::getAlertas();
           }
         }
       }
+    }        
+  }
+
+  // Render a la vista 
+  $router->render('admin/productos/productos', 
+    [
+      'titulo' => 'Registrar producto',
+      'routeName' => 'productos',
+      'alertas' => $alertas,
+      'productos' => Producto::all()
+    ]
+  );
+}
+
+// Vista para el detalle del productos
+public static function productoDetail(Router $router) {
+
+  if(!is_admin_empleado()) is_auth() ? header('location: /dashboard') : header('location: /');
+
+  $id = $_GET['id'];
+  
+  if(!is_admin()) {
+    if(currentUser_id() != $id){
+      header('Location: /admin/dashboard');
     }
+  };
+  
+  $alertas = [];
+  $producto = new Producto;
+  $productoOld = Producto::find($id);
 
-    $producto = Producto::find($id);
+  if($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $producto->sincronizar($_POST);
 
-    // Render a la vista 
-    $router->render('admin/productos/productoDetail', 
-      [
-        'routeName' => currentUser_id() == $id ? 'Perfil' : 'Detalle del producto',
-        'producto' => $producto,
-        'alertas' => $alertas
-      ]
-    );
-  }
+    if(empty($alertas)) {
 
-  public static function configuracionView(Router $router){
+      $existeproducto = Producto::where('nombre', $producto->nombre);
 
-    if(!is_admin_empleado()) is_auth() ? header('location: /dashboard') : header('location: /');
+      if($existeproducto && $existeproducto->id != $producto->id) {
+        Producto::setAlerta('error', 'Ya está registrado un producto con este nombre');
+        $alertas = Producto::getAlertas();
+      }else{
+        // Guardar los cambios
+        $resultado =  $producto->guardar();
 
-    $id = $_GET['id'];
-    
-    if(!is_admin()) {
-      if(currentUser_id() != $id){
-        header('Location: /admin/dashboard');
+        //debuguear($resultado);
+
+        if($resultado) {
+          Producto::setAlerta('success', 'Cambios guardados correctamente');
+          $alertas = Producto::getAlertas();
+        }
       }
-    };
-    
-    $router->render('admin/settings/indexSettings',[]);
-
+    }
   }
+
+  $producto = Producto::find($id);
+
+  // Render a la vista 
+  $router->render('admin/productos/productoDetail', 
+    [
+      'routeName' => currentUser_id() == $id ? 'Perfil' : 'Detalle del producto',
+      'producto' => $producto,
+      'alertas' => $alertas
+    ]
+  );
+}
+
+// Eliminación lógica de productos
+public static function deleteProduct(Router $router) {
+  // Obtener el id del registro a eliminar de la URL
+  $id = $_POST['id'];
+
+  //debuguear($_POST['id']);
+
+  if(!is_admin_empleado()) {
+    header('Location: /');
+  };
   
-  public static function category(Router $router){
+  $alertas = [];
+  $producto = new Producto;
 
-    if(!is_admin_empleado()) {
-      header('Location: /');
-    };
+  $producto->sincronizar($_POST);
 
-    $alertas = [];
-    $category = new Categoria;
-    $modelImage = 'Category';
+  //debuguear($producto);
 
-    if($_SERVER['REQUEST_METHOD'] === 'POST' ) {
+  $producto->id = $id;
+  $producto->estado = 0;
 
-      $category->sincronizar($_POST);
-      $file = $_FILES['file'];
-      $filename = $file['name'];
+  $files = array (        
+    "estado" => 0,
+  );
 
-      //debuguear($pathToSave);
+  $condiciones = array(
+    'files' => $files,
+    "id" => $id
+  );
 
-      if($category){
-        $alertas = $category->validar_insercion();
+  $cproductoUpdated = Producto::dinamicUpdate($condiciones);
 
-        if(empty($alertas)) {
+  // Render a la vista 
+  $router->render('admin/productos/productos', 
+    [
+      'titulo' => 'Registrar producto',
+      'routeName' => 'productos',
+      'alertas' => $alertas,
+      'productos' => Producto::all()
+    ]
+  );
+}
 
-          $condiciones = array(
-            "nombre" => $category->nombre,
-          );
+// llamado a la vista de configuraciones
+public static function configuracionView(Router $router){
 
-          $existeproducto = Categoria::dinamicWhere($condiciones);
-  
-          //debuguear($existeproducto);
+  if(!is_admin()) header('location: /');
 
-          if($existeproducto) {
-            Categoria::setAlerta('error', 'Ya existe una cateoria registrada con el mismo nombre');
+ 
+  $router->render('admin/settings/indexSettings',[]);
+
+}
+
+// Registro de categorías
+public static function category(Router $router){
+
+  if(!is_admin_empleado()) {
+    header('Location: /');
+  };
+
+  $alertas = [];
+  $category = new Categoria;
+  $modelImage = 'Category';
+
+  if($_SERVER['REQUEST_METHOD'] === 'POST' ) {
+
+    $category->sincronizar($_POST);
+    $file = $_FILES['file'];
+    $filename = $file['name'];
+
+    //debuguear($pathToSave);
+
+    if($category){
+      $alertas = $category->validar_insercion();
+
+      if(empty($alertas)) {
+
+        $condiciones = array(
+          "nombre" => $category->nombre,
+        );
+
+        $existeCategory = Categoria::dinamicWhere($condiciones);
+
+        //debuguear($existeproducto);
+
+        if($existeCategory) {
+          Categoria::setAlerta('error', 'Ya existe una cateoria registrada con el mismo nombre');
+          $alertas = Categoria::getAlertas();
+        } else {
+
+          $pathToSave = uploadImage($_FILES,$modelImage);
+          $category->imagen = $pathToSave;
+          $resultado =  $category->guardar();
+          //debuguear($category);
+
+          if($resultado) {
+            Categoria::setAlerta('success', 'Categoria registrada correctamente');
             $alertas = Categoria::getAlertas();
-          } else {
-
-            $pathToSave = uploadImage($_FILES,$modelImage);
-
-            $category->imagen = $pathToSave; //. $filename;
-
-            $resultado =  $category->guardar();
-            //debuguear($category);
-
-            if($resultado) {
-              Categoria::setAlerta('success', 'Categoria registrada correctamente');
-              $alertas = Categoria::getAlertas();
-            }
-
-            //debuguear(empty($file));
-
-            // if(!empty($file)) {
-
-            //   $targetPath = '../public/img/categories/';
-            //   //debuguear($targetPath);
-
-            //   if(!is_dir($targetPath)) {
-            //     mkdir($targetPath, 0755, true);
-            //   }
-
-            //   $fileNameAux = $filename;
-            //   $targetFile = $targetPath . basename($_FILES['file']['name']);
-            //   $imageFileType = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
-
-            //   //debuguear($targetFile);
-
-            //   $check = getimagesize($_FILES['file']['tmp_name']);
-
-            //   if ($check !== false) {
-            //     if (file_exists($targetFile)) {
-            //         $filename = pathinfo($targetFile, PATHINFO_FILENAME);
-            //         $extension = pathinfo($targetFile, PATHINFO_EXTENSION);
-            //         $counter = 1;
-            //         while (file_exists($targetFile)) {
-            //             $newFilename = $filename . '_' . $counter . '.' . $extension;
-            //             $fileNameAux = $newFilename;
-            //             $targetFile = $targetPath . $newFilename;
-            //             $counter++;
-            //         }
-            //     }
-
-            //     if (move_uploaded_file($_FILES['file']['tmp_name'], $targetFile)) {
-            //         $alertas['success'][] = 'La imagen se ha subido correctamente.';
-
-            //         $category->imagen = $fileNameAux;
-
-            //         $resultado =  $category->guardar();
-            //         //debuguear($category);
-
-            //         if($resultado) {
-            //           Categoria::setAlerta('success', 'Categoria registrada correctamente');
-            //           $alertas = Categoria::getAlertas();
-            //         }
-
-            //         echo 'La imagen se ha subido correctamente.';
-            //     } else {
-            //         $alertas['error'][] = 'Hubo un error al subir la imagen.';
-            //         echo 'Hubo un error al subir la imagen.';
-            //     }
-            //   } else {
-            //       $alertas['error'][] = 'El archivo seleccionado no es una imagen válida.';
-            //       echo 'El archivo seleccionado no es una imagen válida.';
-            //   }
-            // }
           }
         }
-      }        
-    }
-
-    // Render a la vista 
-    $router->render('admin/category/category', 
-      [
-        'titulo' => 'Registrar categorias',
-        'routeName' => 'category',
-        'alertas' => $alertas,
-        'category' => Categoria::all()
-      ]
-    );
+      }
+    }        
   }
 
-  // Vista para las cotizaciones
-  public static function cotizaciones(Router $router) {
+  // Render a la vista 
+  $router->render('admin/category/category', 
+    [
+      'titulo' => 'Registrar categorias',
+      'routeName' => 'category',
+      'alertas' => $alertas,
+      'category' => Categoria::all()
+    ]
+  );
+}
 
-    if(!is_admin()) {
-      header('Location: /');
-    };
+// Eliminación lógica Category
+public static function deleteCategory(Router $router) {
+  // Obtener el id del registro a eliminar de la URL
+  $id = $_POST['id'];
 
-    $alertas = [];
-    $cotizacion = new Cotizacion();
-    $idCotizacionWorked = null;
+  //debuguear($_POST['id']);
 
-    if($_SERVER['REQUEST_METHOD'] === 'POST' ){
-      if($_POST['action']=='aceptarCotizacion'){
+  if(!is_admin_empleado()) {
+    header('Location: /');
+  };
+  
+  $alertas = [];
+  $category = new Categoria;
 
-        $cotizacion->sincronizar($_POST);
+  $category->sincronizar($_POST);
 
-        $alertas = $cotizacion->validarAprobacion();
+  //debuguear($category);
 
-        if(empty($alertas)){
-          $resultado = $cotizacion->actualizar();
-          if($resultado){
-            Cotizacion::setAlerta('success', 'Cotizacion aprobada exitosamente.');
-            $alertas = Cotizacion::getAlertas();
-          }else{
-            Cotizacion::setAlerta('error', 'Ocurrió un error intentar aprobar la cotizacion, intentalo mas tarde.');
-            $alertas = Cotizacion::getAlertas();
-          }
-        }else $idCotizacionWorked = $cotizacion->id;
-      }else if($_POST['action']=='rechazarCotizacion'){
+  $category->id = $id;
+  $category->estado = 0;
 
-        $cotizacion->sincronizar($_POST);
+  $files = array (        
+    "estado" => 0,
+  );
 
-        $alertas = $cotizacion->validarRechazo();
+  $condiciones = array(
+    'files' => $files,
+    "id" => $id
+  );
 
-        if(empty($alertas)){
-          $resultado = $cotizacion->actualizar();
-          if($resultado){
-            Cotizacion::setAlerta('success', 'Cotizacion rechazada exitosamente.');
-            $alertas = Cotizacion::getAlertas();
-          }else{
-            Cotizacion::setAlerta('error', 'Ocurrió un error intentar rechazar la cotizacion, intentalo mas tarde.');
-            $alertas = Cotizacion::getAlertas();
-          }
-        }else $idCotizacionWorked = $cotizacion->id;
+  $categoryUpdated = Categoria::dinamicUpdate($condiciones);
+
+  // Realizar la eliminación del registro (código necesario)
+
+  // Redireccionar a la página de categorías después de eliminar el registro
+
+  $router->render('admin/category/category', 
+    [
+      'titulo' => 'Registrar categorias',
+      'routeName' => 'category',
+      'alertas' => $alertas,
+      'category' => Categoria::all()
+    ]
+  );
+}
+
+// Detalle de las categorías
+public static function categoryDetail(Router $router) {
+
+  if(!is_admin_empleado()) is_auth() ? header('location: /dashboard') : header('location: /');
+
+  $id = $_GET['id'];
+
+  if(!is_admin()) {
+    if(currentUser_id() != $id){
+      header('Location: /admin/dashboard');
+    }
+  };
+  
+  $alertas = [];
+  $categoria = new Categoria;
+  $categoriaOld = Categoria::find($id);
+
+
+  if($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $categoria->sincronizar($_POST);
+
+    //$alertas = $service->validar_edicion();
+
+    if(empty($alertas)) {
+
+      $existecategoria = Categoria::where('nombre', $categoria->nombre);
+
+      //debuguear($existecategoria);
+
+      if($existecategoria && $existecategoria->id != $categoria->id) {
+        Categoria::setAlerta('error', 'Ya existe una categoría con el nombre ingresado');
+        $alertas = Categoria::getAlertas();
+      }else{
+        // Guardar los cambios
+        $categoria->imagen = $categoriaOld->imagen;
+        $resultado =  $categoria->guardar();
+
+        if($resultado) {
+          Categoria::setAlerta('success', 'Cambios guardados correctamente');
+          $alertas = Categoria::getAlertas();
+        }
       }
     }
-
-    $pendientes = Cotizacion::getPendientes();
-    $completadas = Cotizacion::getCompletadas();
-
-    $pendientesFormatted = [];
-    $completadasFormatted = [];
-
-    foreach($pendientes as $cotizacion){
-      // Añadiendo el nombre y el correo del usuario al arreglo de cotizaciones pendientes
-      $userCotizacion = Usuario::find($cotizacion->id_usuario);
-      $cotizacion->nombre_usuario = $userCotizacion->nombre;
-      $cotizacion->correo_usuario = $userCotizacion->correo;
-      
-      array_push($pendientesFormatted, $cotizacion);
-    }
-
-    foreach($completadas as $cotizacion){
-      // Añadiendo el nombre y el correo del usuario al arreglo de cotizaciones completadas
-      $userCotizacion = Usuario::find($cotizacion->id_usuario);
-      $cotizacion->nombre_usuario = $userCotizacion->nombre;
-      $cotizacion->correo_usuario = $userCotizacion->correo;
-      
-      array_push($completadasFormatted, $cotizacion);
-    }
-    
-
-    // Render a la vista 
-    $router->render('admin/cotizaciones/cotizaciones'
-      , 
-      [
-          'routeName' => 'Cotizaciones',
-          'alertas' => $alertas,
-          'pendientes' => $pendientesFormatted,
-          'completadas' => $completadasFormatted,
-          'idCotizacionWorked' => $idCotizacionWorked
-      ]
-    );
   }
+
+  $categoria = Categoria::find($id);
+
+  // Render a la vista 
+  $router->render('admin/category/categoryDetail', 
+    [
+      'routeName' => currentUser_id() == $id ? 'Perfil' : 'Detalle de la categoría',
+      'categoria' => $categoria,
+      'alertas' => $alertas
+    ]
+  );
+}
+
+
+// Detalle de las categorías
+public static function bankDetail(Router $router) {
+
+  if(!is_admin_empleado()) is_auth() ? header('location: /dashboard') : header('location: /');
+
+  $id = $_GET['id'];
+
+  if(!is_admin()) {
+    if(currentUser_id() != $id){
+      header('Location: /admin/dashboard');
+    }
+  };
+  
+  $alertas = [];
+  $banco = new Banco;
+  $bancoOld = Banco::find($id);
+
+
+  if($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $banco->sincronizar($_POST);
+
+    //$alertas = $service->validar_edicion();
+
+    if(empty($alertas)) {
+
+      $existeBanco = Banco::where('nombre', $banco->nombre);
+
+      //debuguear($existecategoria);
+
+      if($existeBanco && $existeBanco->id != $banco->id) {
+        Banco::setAlerta('error', 'Ya existe un banco con los datos ingresados');
+        $alertas = Banco::getAlertas();
+      }else{
+        // Guardar los cambios
+        $banco->imagen = $bancoOld->imagen;
+        $resultado =  $banco->guardar();
+
+        if($resultado) {
+          Banco::setAlerta('success', 'Cambios guardados correctamente');
+          $alertas = Banco::getAlertas();
+        }
+      }
+    }
+  }
+
+  $banco = Banco::find($id);
+
+  // Render a la vista 
+  $router->render('admin/bank/bankDetail', 
+    [
+      'routeName' => currentUser_id() == $id ? 'Perfil' : 'Detalle del banco',
+      'banco' => $banco,
+      'alertas' => $alertas
+    ]
+  );
+}
+
+// Agregar banco
+public static function bank(Router $router){
+
+  if(!is_admin_empleado()) {
+    header('Location: /');
+  };
+
+  $alertas = [];
+  $banco = new Banco;
+  $modelImage = 'Bank';
+
+  if($_SERVER['REQUEST_METHOD'] === 'POST' ) {
+
+    $banco->sincronizar($_POST);
+    $file = $_FILES['file'];
+    $filename = $file['name'];
+
+    //debuguear($banco);
+
+    if($banco){
+      $alertas = $banco->validar_insercion();
+
+      if(empty($alertas)) {
+
+        $condiciones = array(
+          "nombre" => $banco->nombre,
+          "codigo" => $banco->codigo,
+        );
+
+        $existeBanco = Banco::dinamicWhere($condiciones);
+
+        //debuguear($existeBanco);
+
+        if($existeBanco) {
+          Banco::setAlerta('error', 'Ya existe un banco registrado con los datos ingresados');
+          $alertas = Banco::getAlertas();
+        } else {
+
+          $pathToSave = uploadImage($_FILES,$modelImage);
+          $banco->imagen = $pathToSave;
+          $resultado =  $banco->guardar();
+          //debuguear($resultado);
+
+          if($resultado) {
+            Banco::setAlerta('success', 'Banco registrado correctamente');
+            $alertas = Banco::getAlertas();
+          }
+        }
+      }
+    }        
+  }
+
+  // Render a la vista 
+  $router->render('admin/bank/bank', 
+    [
+      'titulo' => 'Registrar banco',
+      'routeName' => 'bank',
+      'alertas' => $alertas,
+      'banco' => Banco::all()
+    ]
+  );
+}
+
+// Eliminación lógica de Banco
+public static function deleteBank(Router $router) {
+  // Obtener el id del registro a eliminar de la URL
+  $id = $_POST['id'];
+
+  //debuguear($_POST['id']);
+
+  if(!is_admin_empleado()) {
+    header('Location: /');
+  };
+  
+  $alertas = [];
+  $banco = new Banco;
+
+  $banco->sincronizar($_POST);
+
+  //debuguear($category);
+
+  $banco->id = $id;
+  $banco->estado = 0;
+
+  $files = array (        
+    "estado" => 0,
+  );
+
+  $condiciones = array(
+    'files' => $files,
+    "id" => $id
+  );
+
+  $bancoUpdated = Banco::dinamicUpdate($condiciones);
+
+  // Redireccionar a la página de bancos después de eliminar el registro
+  $router->render('admin/bank/bank', 
+    [
+      'titulo' => 'Registrar banco',
+      'routeName' => 'bank',
+      'alertas' => $alertas,
+      'banco' => Banco::all()
+    ]
+  );
+}
+
+// Vista para las cotizaciones
+public static function cotizaciones(Router $router) {
+
+  if(!is_admin()) {
+    header('Location: /');
+  };
+
+  $alertas = [];
+  $cotizacion = new Cotizacion();
+  $idCotizacionWorked = null;
+
+  if($_SERVER['REQUEST_METHOD'] === 'POST' ){
+    if($_POST['action']=='aceptarCotizacion'){
+
+      $cotizacion->sincronizar($_POST);
+
+      $alertas = $cotizacion->validarAprobacion();
+
+      if(empty($alertas)){
+        $resultado = $cotizacion->actualizar();
+        if($resultado){
+          Cotizacion::setAlerta('success', 'Cotizacion aprobada exitosamente.');
+          $alertas = Cotizacion::getAlertas();
+        }else{
+          Cotizacion::setAlerta('error', 'Ocurrió un error intentar aprobar la cotizacion, intentalo mas tarde.');
+          $alertas = Cotizacion::getAlertas();
+        }
+      }else $idCotizacionWorked = $cotizacion->id;
+    }else if($_POST['action']=='rechazarCotizacion'){
+
+      $cotizacion->sincronizar($_POST);
+
+      $alertas = $cotizacion->validarRechazo();
+
+      if(empty($alertas)){
+        $resultado = $cotizacion->actualizar();
+        if($resultado){
+          Cotizacion::setAlerta('success', 'Cotizacion rechazada exitosamente.');
+          $alertas = Cotizacion::getAlertas();
+        }else{
+          Cotizacion::setAlerta('error', 'Ocurrió un error intentar rechazar la cotizacion, intentalo mas tarde.');
+          $alertas = Cotizacion::getAlertas();
+        }
+      }else $idCotizacionWorked = $cotizacion->id;
+    }
+  }
+
+  $pendientes = Cotizacion::getPendientes();
+  $completadas = Cotizacion::getCompletadas();
+
+  $pendientesFormatted = [];
+  $completadasFormatted = [];
+
+  foreach($pendientes as $cotizacion){
+    // Añadiendo el nombre y el correo del usuario al arreglo de cotizaciones pendientes
+    $userCotizacion = Usuario::find($cotizacion->id_usuario);
+    $cotizacion->nombre_usuario = $userCotizacion->nombre;
+    $cotizacion->correo_usuario = $userCotizacion->correo;
+    
+    array_push($pendientesFormatted, $cotizacion);
+  }
+
+  foreach($completadas as $cotizacion){
+    // Añadiendo el nombre y el correo del usuario al arreglo de cotizaciones completadas
+    $userCotizacion = Usuario::find($cotizacion->id_usuario);
+    $cotizacion->nombre_usuario = $userCotizacion->nombre;
+    $cotizacion->correo_usuario = $userCotizacion->correo;
+    
+    array_push($completadasFormatted, $cotizacion);
+  }
+  
+
+  // Render a la vista 
+  $router->render('admin/cotizaciones/cotizaciones'
+    , 
+    [
+        'routeName' => 'Cotizaciones',
+        'alertas' => $alertas,
+        'pendientes' => $pendientesFormatted,
+        'completadas' => $completadasFormatted,
+        'idCotizacionWorked' => $idCotizacionWorked
+    ]
+  );
+}
+
+// llamado a la vista de pagos
+public static function pagos(Router $router){
+  if(!is_admin()) header('location: /');
+
+  $alertas = [];
+
+  if($_SERVER['REQUEST_METHOD'] === 'POST' ){
+    
+    if( $_POST['action'] == 'rechazar_pago' ){ // Logica para rechazar pagos
+      $pago = Pago::find($_POST['id_pago']);
+      $pago->rechazar();
+      $resultado = $pago->guardar();
+      if($resultado){
+
+        $contrato = Contrato::find($pago->id_contrato);
+        $contrato->rechazar();
+        $resultadoContrato = $contrato->guardar();
+
+        if($resultadoContrato){
+
+          $proyectos = Proyecto::findAll('id_contrato',$pago->id_contrato);
+
+          foreach($proyectos as $proyecto){
+            $proyecto->rechazar();
+            $proyecto->guardar();
+          }
+
+          Pago::setAlerta('success', 'Pago Rechazado exitosamente.');
+          $alertas = Pago::getAlertas();
+        }else{
+          $pago->estado_pago = 1;
+          $pago->guardar();
+          Pago::setAlerta('error', 'Ocurrio un error al rechazar el pago (Entidad Contrato), intentalo mas tarde');
+          $alertas = Pago::getAlertas();
+        }
+
+      }else{
+        Pago::setAlerta('error', 'Ocurrio un error al rechazar el pago, intentalo mas tarde.');
+        $alertas = Pago::getAlertas();
+      }
+    }else if( $_POST['action'] == 'aprobar_pago' ){ // Logica para aprobar pagos
+
+      $pago = Pago::find($_POST['id_pago']);
+      $pago->aprobar();
+      $resultado = $pago->guardar();
+
+      if($resultado){
+
+        $contrato = Contrato::find($pago->id_contrato);
+        $contrato->aprobar();
+        $resultadoContrato = $contrato->guardar();
+
+        if($resultadoContrato){
+
+          $proyectos = Proyecto::findAll('id_contrato',$pago->id_contrato);
+
+          foreach($proyectos as $proyecto){
+            $proyecto->setPorHacer();
+            $proyecto->guardar();
+          }
+
+          Pago::setAlerta('success', 'Pago Aprobado exitosamente.');
+          $alertas = Pago::getAlertas();
+        }else{
+          $pago->estado_pago = 1;
+          $pago->guardar();
+          Pago::setAlerta('error', 'Ocurrio un error al aprobar el pago (Entidad Contrato), intentalo mas tarde');
+          $alertas = Pago::getAlertas();
+        }
+
+      }else{
+        Pago::setAlerta('error', 'Ocurrio un error al aprobar el pago, intentalo mas tarde.');
+        $alertas = Pago::getAlertas();
+      }
+
+    }
+  }
+
+  $pendientes = Pago::getPendientes();
+
+  // Añadiendo la informacion del usuario a cada pago
+  foreach($pendientes as $i=>$pago){
+    $pendientes[$i]->usuario = Usuario::find($pago->id_usuario);
+  }
+
+  $router->render('admin/pagos/pagos',[
+    'alertas' => $alertas,
+    'pagos' => $pendientes
+  ]);
+
+}
+
+// llamado a la vista de proyectos
+public static function proyectos(Router $router){
+  if(!is_admin()) header('location: /');
+
+  $alertas = [];
+
+  $proyectos = Proyecto::all();
+
+  foreach($proyectos as $i=>$proyecto){
+    $proyectos[$i]->categoria = Categoria::find($proyecto->id_categoria);
+    $proyectos[$i]->estado = $proyecto->getEstadoProyecto();
+  }
+ 
+  $router->render('admin/proyectos/proyectos',[
+    'alertas' => $alertas,
+    'proyectos' => $proyectos,
+  ]);
+
+}
+
+// llamado a la vista de proyectos
+public static function pendingProyectos(Router $router){
+  if(!is_admin()) header('location: /');
+
+  $alertas = [];
+
+  if($_SERVER['REQUEST_METHOD'] === 'POST' ){
+    $usuario_proyecto = new UsuarioProyecto();
+    $usuario_proyecto->id_proyecto = $_POST['id_proyecto'];
+    $usuario_proyecto->id_usuario = $_POST['id_empleado'];
+    $resultado = $usuario_proyecto->guardar();
+
+    if($resultado["resultado"]){
+
+      $proyecto = Proyecto::find($_POST['id_proyecto']);
+      $proyecto->setEnCurso();
+
+      $resultadoProyecto = $proyecto->guardar();
+
+      if($resultadoProyecto){
+        Proyecto::setAlerta('success', 'Empleado Asignado exitosamente, el proyecto ya esta en curso.');
+        $alertas = Proyecto::getAlertas();
+      }else{
+        Proyecto::setAlerta('error', 'Ocurrio un error al asignar al empleado (Entidad Proyecto).');
+        $alertas = Proyecto::getAlertas();
+      }
+
+    }else{
+      Proyecto::setAlerta('error', 'Ocurrio un error al asignar al empleado (Entidad Usuario Proyecto).');
+      $alertas = Proyecto::getAlertas();
+    }
+  }
+
+  $proyectos = Proyecto::getPorHacer();
+  $empleados = [];
+
+  if(!empty($proyectos)){
+    foreach($proyectos as $i=>$proyecto){
+      $usuariosProyecto = UsuarioProyecto::findAll('id_proyecto',$proyecto->id);
+      $productosProyecto = ContratoProducto::findAll('id_proyecto',$proyecto->id);
+      $proyectos[$i]->productos = [];
+  
+      if(!empty($usuariosProyecto)){
+        $proyectos[$i]->usuarios = $usuariosProyecto;
+      }
+      if(!empty($productosProyecto)){
+        foreach($productosProyecto as $producto){
+          $productoToProyecto = Producto::find($producto->id_producto);
+          array_push($proyectos[$i]->productos,$productoToProyecto);
+        }
+      }
+      $proyectos[$i]->categoria = Categoria::find($proyecto->id_categoria);
+      $proyectos[$i]->contrato = Contrato::find($proyecto->id_contrato);
+      $proyectos[$i]->contrato->usuario = Usuario::find($proyectos[$i]->contrato->id_usuario);
+    }
+  
+    $empleados = Usuario::getEmpleados();
+    
+    foreach($empleados as $i=>$empleado){
+      $empleados[$i]->rol = showRol($empleado->id_rol);
+    }
+  }
+  
+  // debuguear(showRol(2));
+
+  $router->render('admin/proyectos/proyectosPendientes',[
+    'alertas' => $alertas,
+    'proyectos' => $proyectos,
+    'empleados' => $empleados
+  ]);
+
+}
 }

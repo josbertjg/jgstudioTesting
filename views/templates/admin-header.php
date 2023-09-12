@@ -34,13 +34,13 @@
 
         <!-- /menu footer buttons -->
         <div class="sidebar-footer hidden-small">
-          <a class="btn-footer" data-toggle="tooltip" data-placement="top" title="Settings">
+          <a class="btn-footer" data-toggle="tooltip" data-placement="top" title="Configuracion" href="/admin/configuracion">
             <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
           </a>
-          <a class="btn-footer" data-toggle="tooltip" data-placement="top" title="FullScreen">
-            <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
+          <a class="btn-footer" data-toggle="tooltip" data-placement="top" title="Pagos" href="/admin/dashboard/pagos">
+            <span class="glyphicon glyphicon-usd" aria-hidden="true"></span>
           </a>
-          <a class="btn-footer" data-toggle="tooltip" data-placement="top" title="User" href="/admin/dashboard/users/userDetail?id=<?php echo currentUser_id()  ?>">
+          <a class="btn-footer" data-toggle="tooltip" data-placement="top" title="Perfil" href="/admin/dashboard/users/userDetail?id=<?php echo currentUser_id()  ?>">
             <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
           </a>
           <a class="btn-footer" data-toggle="tooltip" data-placement="top" title="Logout" href="/logout">
@@ -66,11 +66,7 @@
                   <img src="<?php echo $_SESSION['avatar'] ?? '/build/img/defaultUser.svg' ?>" alt=""><?php echo ucfirst($_SESSION['nombre']) ?></a>
                 <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
                   <a class="dropdown-item"  href="/admin/dashboard/users/userDetail?id=<?php echo currentUser_id()  ?>"> Profile</a>
-                    <a class="dropdown-item"  href="javascript:;">
-                      <span class="badge bg-red pull-right">50%</span>
-                      <span>Settings</span>
-                    </a>
-                <a class="dropdown-item"  href="javascript:;">Help</a>
+                  <a class="dropdown-item"  href="javascript:;">Help</a>
                   <a class="dropdown-item"  href="/logout"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
                 </div>
               </li>
@@ -93,11 +89,17 @@
                       foreach($notifications as $notification):
                   ?>
                     <li class="nav-item">
-                      <a class="dropdown-item" href="<?php echo ($notification->nombre == 'Cotización') ? '/admin/dashboard/cotizaciones': '/admin/dashboard' ?>">
+                      <a class="dropdown-item" href="<?php
+                        if(is_admin()) 
+                          echo ($notification->nombre == 'Cotización') ? '/admin/dashboard/cotizaciones': '/admin/dashboard/pagos';
+                        else if(is_empleado()){
+                          echo '/admin/dashboard/myProjects';
+                        }
+                        ?>">
                         <span class="image"><img src="<?php echo $notification->imagen ?>" alt="Profile Image" /></span>
                         <span>
                           <span><?php echo $notification->nombre ?></span>
-                          <!-- <span class="time"><?php echo uniqid(); ?></span> -->
+                          <span class="time">hace <?php echo $notification->fecha; ?></span>
                         </span>
                         <span class="message"> <?php echo $notification->mensaje ?> </span>
                       </a>

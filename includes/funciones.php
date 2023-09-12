@@ -1,8 +1,14 @@
 <?php
 
 use Model\Cotizacion;
+use Model\Pago;
+use Model\UsuarioProyecto;
+use Model\Proyecto;
 
 $imageCategoryPath = '/img/categories/';
+$imageBankPath = '/img/banks/';
+$imageUserAvatarPath = '/img/avatar/';
+$imagePagosPath = '/img/pagos/';
 $path = '../public';
 
 function debuguear($variable) : string {
@@ -42,6 +48,13 @@ function is_admin_empleado() : bool {
     return is_auth() && ($_SESSION['id_rol'] == 1 || $_SESSION['id_rol'] == 2 || $_SESSION['id_rol'] == 3 || $_SESSION['id_rol'] == 4);
 }
 
+function is_empleado() : bool {
+    if(!isset($_SESSION)) {
+        session_start();
+    }
+    return is_auth() && ($_SESSION['id_rol'] == 2 || $_SESSION['id_rol'] == 3 || $_SESSION['id_rol'] == 4);
+}
+
 function is_programador() : bool {
     if(!isset($_SESSION)) {
         session_start();
@@ -68,6 +81,17 @@ function is_cliente() : bool {
         session_start();
     }
     return is_auth() && ($_SESSION['id_rol'] == 5);
+}
+
+function showRol($id_rol){
+    switch($id_rol){
+        case 1: return 'Super Administrador';
+        case 2: return 'Programador';
+        case 3: return 'Publicista';
+        case 4: return 'Diseñador';
+        case 5: return 'Cliente';
+        default: return 'Otro';
+    }
 }
 
 function currentUser_id() : int {
@@ -103,18 +127,61 @@ function deleteItemCarrito($id) {
 }
 
 function getNotifications(): array {
-    $cotizaciones = Cotizacion::getPendientes();
     $notifications = [];
-    if(count($cotizaciones)>0){
-        $objCotizacion = (object)[];
-        foreach($cotizaciones as $cotizacion){
-            $objCotizacion->nombre = 'Cotización';
-            $objCotizacion->imagen = '/build/img/cotizacion.png';
-            $objCotizacion->mensaje = $cotizacion->solicitud;
 
-            array_push($notifications, $objCotizacion);
+    if(is_admin()){ // Si es admin
+        // Obteniendo Cotizaciones Pendientes.
+        $cotizaciones = Cotizacion::getPendientes();
+        if(count($cotizaciones)>0){
+            $objCotizacion = (object)[];
+            foreach($cotizaciones as $cotizacion){
+                $objCotizacion->nombre = 'Cotización';
+                $objCotizacion->imagen = '/build/img/cotizacion.png';
+                $objCotizacion->mensaje = $cotizacion->solicitud;
+                $objCotizacion->fecha = timeAgo($cotizacion->fecha);
+    
+                array_push($notifications, $objCotizacion);
+            }
+        }
+    
+        // Obteniendo Pagos Pendientes
+        $pagos = Pago::getPendientes();
+        if(count($pagos)>0){
+            $objPago = (object)[];
+            foreach($pagos as $pago){
+                $tipoPago = $pago->id_tipo_pago < 3 ? 'Transferencia' : 'Efectivo';
+    
+                $objPago->nombre = 'Pago';
+                $objPago->imagen = '/build/img/pago.png';
+                $objPago->mensaje = $tipoPago.': '.$pago->monto.'$';
+                $objPago->fecha = timeAgo($pago->fecha_pago);
+    
+                array_push($notifications, $objPago);
+            }
+        }
+    }else if(is_empleado()){ // Si no es admin y es un empleado
+        // Obteniendo Proyectos asignados
+        $userProyectos = UsuarioProyecto::all();
+        if(count($userProyectos)>0){
+            $objProyecto = (object)[];
+            foreach($userProyectos as $userProyecto){
+
+                $proyecto = Proyecto::find($userProyecto->id_proyecto);
+
+                if($proyecto->id_estado_proyecto == 5){
+        
+                    $objProyecto->nombre = 'Proyecto';
+                    $objProyecto->imagen = '/build/img/proyecto.png';
+                    $objProyecto->mensaje = 'Se te ha asignado un nuevo proyecto.';
+                    $objProyecto->fecha = timeAgo($proyecto->fecha);
+        
+                    array_push($notifications, $objProyecto);
+                }
+
+            }
         }
     }
+
     return $notifications;
 }
 
@@ -128,20 +195,28 @@ function uploadImage($newFile, $modelImage){
         $relativePath;
 
         //debuguear($filename);
-
+        
         switch($modelImage){
-            // POST Para Eliminar un articulo del carrito
+            // Imagenes de categorias
             case 'Category':
                 $relativePath = $GLOBALS['path'] . $GLOBALS['imageCategoryPath'];
+                $realPath = $GLOBALS['imageCategoryPath'];
                 //debuguear($relativePath);
                 break;
-            // POST Para Culminar el registro
+            // Imagenes de usuarios
             case 'UserAvatar': 
-                
+                $relativePath = $GLOBALS['path'] . $GLOBALS['imageUserAvatarPath'];
+                $realPath = $GLOBALS['imageUserAvatarPath'];
             break;
-            // POST Para realizar pago
-            case 'ProductImage':
-                
+            // Imagenes de banco
+            case 'Bank':
+                $relativePath = $GLOBALS['path'] . $GLOBALS['imageBankPath'];
+                $realPath = $GLOBALS['imageBankPath'];
+            break;
+            // Imagenes de pagos
+            case 'Pago':
+                $relativePath = $GLOBALS['path'] . $GLOBALS['imagePagosPath'];
+                $realPath = $GLOBALS['imagePagosPath'];
             break;
             }
 
@@ -179,7 +254,7 @@ function uploadImage($newFile, $modelImage){
             if (move_uploaded_file($_FILES['file']['tmp_name'], $targetFile)) {
                 //debuguear($newFilename);
 
-                $realPath = $GLOBALS['imageCategoryPath'].$finalName;
+                $realPath = $realPath.$finalName;
                 //debuguear($realPath);
 
                 return $realPath;
@@ -194,5 +269,40 @@ function uploadImage($newFile, $modelImage){
             return $alertas;
         }
     }
+}
 
+// FORMATEO DE DATA
+
+// Formatear fechas del back
+function formatFecha($fecha) {
+    $date=date_create($fecha);
+    return date_format($date,"d/m/Y");
+}
+
+// Formatear diferencias de fechas del back con el presente
+function timeAgo($fecha){
+
+    $fecha_actual = date("Y-m-d H:i:s");
+
+    $fecha_pasada = DateTime::createFromFormat('Y-m-d H:i:s', $fecha);
+    $fecha_actual = DateTime::createFromFormat('Y-m-d H:i:s', $fecha_actual);
+
+    $intervalo = date_diff($fecha_actual, $fecha_pasada);
+
+    $segundos_transcurridos = $intervalo->s;
+    $minutos_transcurridos = $intervalo->i;
+    $horas_transcurridas = $intervalo->h;
+    $dias_transcurridos = $intervalo->d;
+
+    if( !$dias_transcurridos && !$horas_transcurridas && !$minutos_transcurridos ){
+        return $segundos_transcurridos.'seg';
+    }else if( !$dias_transcurridos && !$horas_transcurridas && $minutos_transcurridos ){
+        return $minutos_transcurridos.'min';
+    }else if( !$dias_transcurridos && $horas_transcurridas ){
+        $subfijo = ($horas_transcurridas>1)? ' horas':' hora';
+        return $horas_transcurridas.$subfijo;
+    }else if($dias_transcurridos){
+        $subfijo = ($dias_transcurridos>1)? ' días':' dia';
+        return $dias_transcurridos.$subfijo;
+    }
 }

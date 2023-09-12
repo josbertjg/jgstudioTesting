@@ -17,7 +17,7 @@
   <link href="/build/external_imports/css/nprogress.css" rel="stylesheet">
 
   <!-- Custom Theme Style -->
-  <link rel="stylesheet" href="/build/css/custom-gentella.css?08">
+  <link rel="stylesheet" href="/build/css/custom-gentella.css?12">
 </head>
 <body class="nav-md">
   <?php 
@@ -26,7 +26,7 @@
   <!-- page content -->
   <div class="right_col" role="main">
     <div class="">
-      <div class="page-title">
+      <!-- <div class="page-title">
         <div class="title_left">
           <h3>Admin Panel</h3>
         </div>
@@ -52,7 +52,7 @@
             </h2>
           </div>
         </div>
-      </div>
+      </div> -->
 
       <div class="row">
         <?php echo $contenido ?>
@@ -89,6 +89,6 @@
     <!-- SWEET ALERT -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- Custom Javascript -->
-    <script src="/build/js/main.min.js?08"></script>
+    <script src="/build/js/main.min.js?12"></script>
 </body>
 </html>

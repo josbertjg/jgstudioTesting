@@ -6,6 +6,10 @@ use Model\Usuario;
 use Model\Producto;
 use Model\Categoria;
 use Model\Cotizacion;
+use Model\Pago;
+use Model\Contrato;
+use Model\ContratoProducto;
+use Model\Proyecto;
 use MVC\Router;
 
 class ClientDashboardController {
@@ -107,47 +111,61 @@ class ClientDashboardController {
     if(!is_cliente()) {
       header('location: /');
     }
-      $id = currentUser_id() ;
-      $client = new Usuario;
-      //$client = Usuario::find($id);
-      $alertas = [];
+    $id = currentUser_id() ;
+    $client = new Usuario;
+    $modelImage = 'UserAvatar';
 
-      if($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $client->sincronizar($_POST);
+    //$clientLoged = Usuario::find($id);
+    $alertas = [];
 
-        //debuguear($client);
+    if($_SERVER['REQUEST_METHOD'] === 'POST') {
+      $client->sincronizar($_POST);
 
-        $alertas = $client->validar_edicion();
+      //debuguear($client);
 
-        if(empty($alertas)) {
+      $alertas = $client->validar_edicion();
 
-          $existeUsuario = Usuario::where('correo', $client->correo);
+      if(empty($alertas)) {
 
-          if($existeUsuario->id != $client->id) {
-            Usuario::setAlerta('error', 'Ya existe un usuario registrado con este correo');
+        $existeUsuario = Usuario::where('correo', $client->correo);
+
+        if($existeUsuario->id != $client->id) {
+          Usuario::setAlerta('error', 'Ya existe un usuario registrado con este correo');
+          $alertas = Usuario::getAlertas();
+        }else{
+
+          $file = $_FILES['file'];
+          $filename = $file['name'];
+
+          if($file){
+            $pathToSave = uploadImage($_FILES,$modelImage);
+            $client->avatar = $pathToSave;
+          }
+
+          // Guardar los cambios
+          $resultado =  $client->guardar();
+        
+
+          // Enviar email
+          // $email = new Email($usuario->email, $usuario->nombre, $usuario->token);
+          // $email->enviarConfirmacion();
+  
+          if($resultado) {
+            Usuario::setAlerta('success', 'Cambios guardados correctamente');
             $alertas = Usuario::getAlertas();
-          }else{
-            // Guardar los cambios
-            $resultado =  $client->guardar();
-            
-            // Enviar email
-            // $email = new Email($usuario->email, $usuario->nombre, $usuario->token);
-            // $email->enviarConfirmacion();
-    
-            if($resultado) {
-              Usuario::setAlerta('success', 'Cambios guardados correctamente');
-              $alertas = Usuario::getAlertas();
-            }
           }
         }
       }
-      // Render a la vista 
+    }
+    
+    $client = Usuario::find($id);
+
+    // Render a la vista 
     $router->render('client/profile', 
       [
         'routeName' => 'Perfil',
         'client' => $client,
         'alertas' => $alertas
-        
       ]
     );
   }
@@ -160,13 +178,172 @@ class ClientDashboardController {
     
     $alertas = [];
     $carrito = getCarrito();
-    $carritoToSend = [];
     $allCategorias = Categoria::all();
     $allProductos = Producto::all();
     $acum = 0;
     $userWereRegistering = false;
     $userHasBeenRegistered = false;
 
+
+    if($_SERVER['REQUEST_METHOD'] === 'POST') {
+      if($_POST['action']){
+        switch($_POST['action']){
+          // POST Para Eliminar un articulo del carrito
+          case 'delete_item_carrito': deleteItemCarrito($_POST['item_id']);
+          break;
+          // POST Para Culminar el registro
+          case 'culminar_registro': 
+            $cliente = new Usuario;
+            $cliente->sincronizar($_POST);
+            $alertas = $cliente->validar_edicion();
+
+            if(empty($alertas)){
+              
+              $resultado =  $cliente->guardar();
+
+              if($resultado) {
+                Usuario::setAlerta('success', 'Tus datos se han guardado correctamente.');
+                $alertas = Usuario::getAlertas();
+                $userHasBeenRegistered = true;
+              }
+            }else $userWereRegistering = true;
+          break;
+          // POST Para realizar pago
+          case 'realizar_pago':
+
+            $carritoToProducto = json_decode($_POST['carrito']);
+            $pago = new Pago();
+            if($_POST['id_tipo_pago'] < 3){
+              $pago->comprobante = $_FILES['file'];
+            }
+            $pago->id_usuario = currentUser_id();
+            $pago->sincronizar($_POST);
+
+            if($_POST['id_tipo_pago'] < 3){
+              $alertas = $pago->validar_transferencia();
+            }
+           
+            if(empty($alertas)){
+
+              //Registrando un nuevo contrato
+              $contrato = new Contrato();
+              $contrato->id_usuario = currentUser_Id();
+              $contrato->estado = 1;
+              $contrato->monto = $pago->monto;
+              $contrato->monto_total = $pago->monto;
+
+              // Creando el Contrato
+              $resultado = $contrato->guardar();
+
+              if(!$resultado["resultado"]){
+                Pago::setAlerta('error', 'Ocurrio un error (Entidad Contrato), intentalo mas tarde.');
+                $alertas = Pago::getAlertas();
+              }else{
+                $idContrato = $resultado["id"];
+                $errorContrato = false;
+
+                // Creando cada Contrato Producto y Creando cada Proyecto
+                foreach($carritoToProducto as $productoItem){
+
+                  // debuguear($productoItem);
+
+                  $proyecto = new Proyecto();
+                  $proyecto->id_contrato = $idContrato;
+                  $proyecto->id_categoria = $productoItem->categoria->id;
+                  $proyecto->id_usuario = currentUser_Id();
+                  $proyecto->nombre = $productoItem->categoria->nombre.' '.uniqid();
+
+                  if($productoItem->isCotizacion){
+                    $proyecto->detalles = '<strong>Solicitud: </strong> '.$productoItem->solicitud.'. <br><strong>Respuesta: </strong>'.$productoItem->respuesta;
+                  }
+
+                  $resultadoProyecto = $proyecto->registrar_proyecto();
+
+                  if($resultadoProyecto["resultado"]){
+                    $idProyecto = $resultadoProyecto["id"];
+
+                    // Revisando si el producto a guardar en el contrato es una cotizacion o no
+                    if(!$productoItem->isCotizacion){ // Si no es una cotizacion, entonces
+                      foreach($productoItem->productos as $producto){
+                        $contratoProducto = new ContratoProducto();
+  
+                        $contratoProducto->id_contrato = $idContrato;
+                        $contratoProducto->id_categoria = $productoItem->categoria->id;
+                        $contratoProducto->id_producto = $producto->id;
+                        $contratoProducto->id_proyecto = $idProyecto;
+                        $contratoProducto->precio_unitario = $producto->precio_unitario;
+                        $contratoProducto->cantidad = $producto->cantidad_producto;
+                        $contratoProducto->precio_total = $producto->precio_unitario * $producto->cantidad_producto;
+    
+                        $resultadoProducto = $contratoProducto->registrar_contratoProducto();
+                        if(!$resultadoProducto["resultado"]){
+                          $errorContrato = true;
+                          ContratoProducto::eliminarAll('id_contrato',$idContrato);
+                          Proyecto::eliminarAll('id_contrato',$idContrato);
+                          break;
+                        }
+                      }
+                    }else{ // Si es una cotizacion, entonces
+                      $contratoProducto = new ContratoProducto();
+
+                      
+                      $contratoProducto->id_contrato = $idContrato;
+                      $contratoProducto->id_categoria = $productoItem->categoria->id;
+                      $contratoProducto->id_producto = $productoItem->producto->id;
+                      $contratoProducto->id_proyecto = $idProyecto;
+                      $contratoProducto->precio_unitario = $productoItem->monto_final;
+                      $contratoProducto->cantidad = 1;
+                      $contratoProducto->precio_total = $productoItem->monto_final;
+ 
+                      $resultadoProducto = $contratoProducto->registrar_contratoProducto();
+                      if(!$resultadoProducto["resultado"]){
+                        $errorContrato = true;
+                        ContratoProducto::eliminarAll('id_contrato',$idContrato);
+                        Proyecto::eliminarAll('id_contrato',$idContrato);
+                        break;
+                      }
+                    }
+
+
+                  }else{
+                    $errorContrato = true;
+                    ContratoProducto::eliminarAll('id_contrato',$idContrato);
+                    Proyecto::eliminarAll('id_contrato',$idContrato);
+                    Pago::setAlerta('error', 'Ocurrio un error (Entidad Proyecto), al procesar el ingreso del pago, intentalo más tarde.');
+                    $alertas = Pago::getAlertas();
+                  }
+                  
+                  if($errorContrato){
+                    Contrato::eliminarById($idContrato);
+                    Pago::setAlerta('error', 'Ocurrio un error (Entidad ContratoProducto), al procesar el ingreso del pago, intentalo más tarde.');
+                    $alertas = Pago::getAlertas();
+                    break;
+                  }
+                }
+
+                if(!$errorContrato){
+                  $pago->id_contrato = $idContrato;
+                  $pago->comprobante = uploadImage($_FILES, 'Pago');
+                  $resultadoPago = $pago->registrar_pago();
+
+                  if($resultadoPago["resultado"]){
+                    Pago::setAlerta('success', 'Pago registrado, espera a que un administrador lo revise.');
+                    $alertas = Pago::getAlertas();
+                  }else{
+                    Pago::setAlerta('error', 'Ha ocurrido un error al registrar el pago (Entidad Pago), intentalo mas tarde.');
+                    $alertas = Pago::getAlertas();
+                  }
+                }
+              }
+
+            }
+          break;
+        }
+      }
+    }
+
+    $carritoToSend = [];
+    $carrito = getCarrito();
     // Armando la info del carrito para mandar al front
     foreach($carrito as $itemCarrito){
       $acum = 0;
@@ -201,88 +378,6 @@ class ClientDashboardController {
         $objetoItemCarritoToSend = $itemCarrito;
       }
       array_push($carritoToSend,$objetoItemCarritoToSend);
-    }
-
-    if($_SERVER['REQUEST_METHOD'] === 'POST') {
-      if($_POST['action']){
-        switch($_POST['action']){
-          // POST Para Eliminar un articulo del carrito
-          case 'delete_item_carrito': deleteItemCarrito($_POST['item_id']);
-          break;
-          // POST Para Culminar el registro
-          case 'culminar_registro': 
-            $cliente = new Usuario;
-            $cliente->sincronizar($_POST);
-            $alertas = $cliente->validar_edicion();
-
-            if(empty($alertas)){
-              
-              $resultado =  $cliente->guardar();
-
-              if($resultado) {
-                Usuario::setAlerta('success', 'Tus datos se han guardado correctamente.');
-                $alertas = Usuario::getAlertas();
-                $userHasBeenRegistered = true;
-              }
-            }else $userWereRegistering = true;
-          break;
-          // POST Para realizar pago
-          case 'realizar_pago':
-            /* ANGI esta variable "$_POST['carrito']" contiene lo que estas recibiendo del carrito de compra, debes hacerle el json_decode para trabajar con ella, aca esta todo, incluidos precios, pero para asegurarnos podrias recorrer este arreglo y actualizar los precios de los productos,
-             aqui tienes un ejemplo de como te va a llegar la respuesta, un array de objetos:
-             array(1) {
-              [0]=>
-              object(stdClass)#33 (4) {
-                ["item_id"]=>
-                string(13) "64f2871b1e025"
-                ["categoria"]=>
-                object(stdClass)#32 (3) {
-                  ["id"]=>
-                  string(1) "3"
-                  ["nombre"]=>
-                  string(14) "Redes Sociales"
-                  ["estado"]=>
-                  string(1) "1"
-                }
-                ["productos"]=>
-                array(1) {
-                  [0]=>
-                  object(stdClass)#30 (10) {
-                    ["id"]=>
-                    string(1) "4"
-                    ["nombre"]=>
-                    string(20) "Gestion de Instagram"
-                    ["descripcion"]=>
-                    string(56) "Gestion de instagram, publicacion, estrategias, hashtags"
-                    ["id_categoria"]=>
-                    string(1) "3"
-                    ["precio_unitario"]=>
-                    string(5) "80.00"
-                    ["estado"]=>
-                    string(1) "1"
-                    ["fecha_creacion"]=>
-                    string(19) "2023-08-24 16:32:48"
-                    ["fecha_modificacion"]=>
-                    string(19) "0000-00-00 00:00:00"
-                    ["cantidad_maxima"]=>
-                    string(1) "1"
-                    ["cantidad_producto"]=>
-                    int(1)
-                  }
-                }
-                ["total"]=>
-                int(80)
-              }
-            }
-            */
-            json_decode($_POST['carrito']);
-            //Aqui en esta parte del codigo es donde debemos registrar el pago y registrar el contrato y contrato item, ya cuando el administrador
-            //Confirme el pago el status del contrato debe cambiar
-            //El administrador debe tener una seccion de pagos en su sidebar (revisa views/templates/admin-sidebar.php)
-            //Y por supuesto debe ver todos los pagos que aun estan pendientes
-          break;
-        }
-      }
     }
 
     // Buscando al usuario para verificar si puede comprar o no
@@ -320,8 +415,12 @@ class ClientDashboardController {
         $objetoCarrito->solicitud = $_POST['solicitud'];
         $objetoCarrito->respuesta = $_POST['respuesta'];
         $objetoCarrito->monto_final = $_POST['monto_final'];
+        $objetoCarrito->categoria = Categoria::where('nombre','Cotizacion');
+        $objetoCarrito->producto = Producto::where('id_categoria',$objetoCarrito->categoria->id);
         $objetoCarrito->item_id = $_POST['item_id'];
-        
+
+        // debuguear($objetoCarrito);
+       
         array_push($carrito,$objetoCarrito);
                 
         setCarrito($carrito);
@@ -345,6 +444,33 @@ class ClientDashboardController {
       [
         'alertas' => $alertas,
         'cotizaciones' => Cotizacion::findAll('id_usuario', currentUser_id())
+      ]
+    );
+  }
+
+  // Vista para los servicios comprados por el cliente
+  public static function servicios(Router $router) {
+
+    if(!is_cliente()) {
+      header('location: /');
+    }
+
+    $alertas = [];
+
+    $proyectos = Proyecto::findAll('id_usuario', currentUser_Id());
+
+    foreach($proyectos as $i=>$proyecto){
+      $proyectos[$i]->categoria = Categoria::find($proyecto->id_categoria);
+      $proyectos[$i]->estado = $proyecto->getEstadoProyecto();
+      $proyectos[$i]->usuario = Usuario::find($proyecto->id_usuario);
+    }
+
+    // Render a la vista 
+    $router->render('client/servicios/servicios', 
+      [
+        'routeName' => 'Perfil',
+        'alertas' => $alertas,
+        'proyectos' => $proyectos
       ]
     );
   }

@@ -13,10 +13,10 @@ class Cotizacion extends ActiveRecord {
         $this->estado = $args['estado'] ?? 1;
         $this->monto_final = $args['monto_final'] ?? 0;
         $this->decontado = $args['decontado'] ?? 0;
-        $this->id_cupon = $args['id_cupon'] ?? null;
+        $this->id_cupon = $args['id_cupon'] ?? 1;
         $this->solicitud = $args['solicitud'] ?? '';
         $this->respuesta = $args['respuesta'] ?? '';
-        $this->fecha = $args['fecha'] ?? '';
+        $this->fecha = $args['fecha'] ?? date('Y-m-d H:i:s');
     }
 
     // Validar el envio de la cotizacion por parte del cliente
